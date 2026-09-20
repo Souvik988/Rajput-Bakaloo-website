@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
@@ -40,6 +41,7 @@ import 'package:bakaloo_flutter_app/features/wallet/presentation/screens/topup_s
 import 'package:bakaloo_flutter_app/features/wallet/presentation/screens/wallet_screen.dart';
 import 'package:bakaloo_flutter_app/features/wishlist/presentation/screens/wishlist_screen.dart';
 import 'package:bakaloo_flutter_app/routing/route_guards.dart';
+import 'package:bakaloo_flutter_app/routing/pending_startup_location.dart';
 import 'package:bakaloo_flutter_app/routing/route_access.dart';
 import 'package:bakaloo_flutter_app/routing/route_names.dart';
 import 'package:bakaloo_flutter_app/shared/widgets/app_bottom_nav.dart';
@@ -91,6 +93,23 @@ GoRouter appRouter(Ref ref) {
           location == RouteNames.phone || location == RouteNames.otp;
       final isSplashRoute = location == RouteNames.splash;
       final isOnboardingRoute = location == RouteNames.onboarding;
+
+      // WEB PORT: on mobile every launch starts at /splash, which runs the
+      // one-time session restore. On web a cold start keeps the browser's
+      // URL, so a refresh on a deep route would skip the restore entirely
+      // and silently drop a logged-in customer to guest state. Route
+      // through /splash exactly once per app run, remembering the URL so
+      // handleStartup returns the customer to the same page after the
+      // session is restored. Mobile is untouched: its first navigation is
+      // already /splash, so this branch never fires there (guarded by
+      // kIsWeb anyway).
+      if (kIsWeb &&
+          !ref.read(startupRestoreRedirectDoneProvider) &&
+          !isSplashRoute) {
+        ref.read(startupRestoreRedirectDoneProvider.notifier).markDone();
+        ref.read(pendingStartupLocationProvider.notifier).remember(location);
+        return RouteNames.splash;
+      }
 
       if (onboardingShown && isOnboardingRoute) {
         return RouteNames.home;

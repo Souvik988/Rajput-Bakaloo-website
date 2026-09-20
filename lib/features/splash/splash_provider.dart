@@ -9,6 +9,7 @@ import 'package:bakaloo_flutter_app/core/di/providers.dart';
 import 'package:bakaloo_flutter_app/core/security/root_detection.dart';
 import 'package:bakaloo_flutter_app/core/session/session_ready_gate.dart';
 import 'package:bakaloo_flutter_app/features/auth/presentation/providers/auth_notifier.dart';
+import 'package:bakaloo_flutter_app/routing/pending_startup_location.dart';
 import 'package:bakaloo_flutter_app/routing/route_names.dart';
 
 part 'splash_provider.g.dart';
@@ -40,12 +41,21 @@ class SplashController extends _$SplashController {
       final accessToken = await secureStorage.getAccessToken();
       final refreshToken = await secureStorage.getRefreshToken();
 
+      // WEB PORT: a web cold start is detoured through /splash from a deep
+      // URL so this restore runs (see app_router.dart's redirect). Return
+      // the customer to the URL they actually refreshed on instead of
+      // always landing on /home. Null on mobile and on a direct /splash
+      // start — matching the original behavior there.
+      final pendingStartupLocation =
+          ref.read(pendingStartupLocationProvider.notifier).take();
+      final postRestoreDestination = pendingStartupLocation ?? RouteNames.home;
+
       if (!context.mounted) {
         return;
       }
 
       if (accessToken == null || refreshToken == null) {
-        context.go(RouteNames.home);
+        context.go(postRestoreDestination);
         return;
       }
 
@@ -54,7 +64,7 @@ class SplashController extends _$SplashController {
             .read(authNotifierProvider.notifier)
             .restoreSession(accessToken);
         if (context.mounted) {
-          context.go(RouteNames.home);
+          context.go(postRestoreDestination);
         }
         return;
       }
@@ -67,7 +77,7 @@ class SplashController extends _$SplashController {
         return;
       }
 
-      context.go(RouteNames.home);
+      context.go(postRestoreDestination);
     } finally {
       ref.read(sessionReadyGateProvider).markReady();
     }

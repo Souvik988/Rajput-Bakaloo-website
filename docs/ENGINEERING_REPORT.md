@@ -63,13 +63,20 @@ Entire feature set from the baseline compiles and runs as-is — no UI, route, t
 | Check | Result |
 |---|---|
 | Cold boot (debug + release), splash → `#/home`, guest routing | ✅ no blank screens, no provider errors |
-| Home: branding, delivery header, search, live store status, dynamic tabs, banners, fee strip, section registry, product cards | ✅ real `/api/v1` data |
-| Product detail (tap + deep link `#/product/:id` after full reload) | ✅ gallery, pricing, variants, CTAs |
-| Categories (`#/categories` refresh) | ✅ sidebar + grid |
+| Home: branding, delivery header, search, live store status, dynamic tabs, banners, fee strip, full section registry with infinite pagination | ✅ real `/api/v1` data |
+| Product detail (tap + deep link `#/product/:id` after full reload), option chips (price/qty react), share | ✅ |
+| Categories (`#/categories` refresh), category products (`#/categories/:id/products`) | ✅ |
 | Search (`#/search`, query "milk") | ✅ 67 results, sort, disabled ADD for out-of-stock |
-| Auth guard (`#/cart` guest → phone entry), client validation, `send-otp` preflight+POST path | ✅ (OTP SMS reception not verifiable without a device; verify/refresh logic unchanged + unit-tested) |
-| Guest add-to-cart → original "Log in to add items" sheet | ✅ |
-| Console errors across the whole flow | ✅ zero app-caused |
+| **Authentication**: phone entry → send-otp → OTP entry (keystrokes) → verify-otp (wrong-code error path + auto-submit) → logged in | ✅ full pipeline |
+| **Session restore on refresh** | ✅ after fix — see below |
+| **Cart**: add, increment (server-persisted), totals, address header, tip presets, delivery instructions entry points, store-closed scheduling (Express/Schedule sheet, slot confirm) | ✅ |
+| **Order placement**: scheduled order created on real backend (`BKLOO-20260920-013`), success route → order details with full status timeline | ✅ |
+| **Orders**: history with filters (All/Active/Delivered/Cancelled), Track/Reorder/View Details | ✅ |
+| **Payment**: Pay Online → backend `create-order` → **Razorpay Checkout (checkout.js) opens** (test key, "Test Mode" banner), full payment sheet (offers, UPI QR, cards, netbanking, wallets) → dismiss → `PAYMENT_CANCELLED` handling → clean return with backend reconciliation | ✅ (success path not exercised: would require Razorpay test-credential interaction inside the hosted sheet; the success → `/payments/verify` → order-success chain is the same untouched code the mobile app uses) |
+| **Profile**: account data, stats, B2B Store toggle, all source settings rows (Wallet/Coupons/Spin & Win/Scratch Card/Tutorial/Support/etc.) | ✅ |
+| **Wallet**: unlocks via web biometric-gate path, balance + real transaction history | ✅ |
+| **Logout**: confirm dialog → tokens cleared → login screen | ✅ |
+| Console errors across all flows | ✅ zero app-caused |
 | Viewports 320/375/390/430/480 (+375 release) | ✅ no clipping/overflow (bottom-nav "Categories" label wraps ≤430px due to browser font metrics — same as baseline in-browser) |
 | Desktop 1440×900 (release + debug) | ✅ centered 390px shell, no desktop redesign, zero overflow at 1.0× scale |
 | Socket.IO | ✅ websocket upgrade (101) against production; app is websocket-only so browser CORS does not apply |
@@ -87,11 +94,13 @@ Entire feature set from the baseline compiles and runs as-is — no UI, route, t
 
 ## 7. Known remaining issues
 
-1. **OTP SMS reception** could not be exercised end-to-end (no test phone in this environment). The full request path (preflight → CORS → API validation response → client error rendering) is verified; `verify-otp`, refresh-once-on-401 and logout are untouched baseline code covered by `refresh_interceptor_test.dart`.
-2. **Localhost CORS**: the production API allowlists `*://*.bakaloo.in` (verified). Localhost dev origins are not allowlisted — local testing used `tool/dev_cors_proxy.js` (dev harness only). **No backend change needed for deployment** on any bakaloo.in origin.
-3. **Push notifications (FCM) and in-app review prompts are absent on web** (no browser integration in the baseline's Firebase setup); in-app notification history still works via polling. Razorpay Checkout runs in test/live mode exactly as configured by the backend's `create-order` key.
-4. **Wasm**: the build targets JS (default). A `--wasm` build would be blocked by transitive packages still using `dart:html` (`flutter_secure_storage_web`, `location_web`) — a Flutter-ecosystem limitation, unrelated to this port.
-5. **Deep URLs use hash strategy** (`/#/product/:id`) — Flutter web's default; refresh-safe on any static host. Path-style URLs would require host rewrites and were not introduced.
+1. **Session restore on web refresh — FIXED during verification.** A web cold start keeps the browser URL and therefore skipped `/splash`, where the mobile app runs its session restore — a refresh silently dropped a logged-in customer to guest state. Fix: the router detours a web cold start through `/splash` exactly once (stashing the URL), and `handleStartup` restores the session then returns to the exact same URL (`lib/routing/pending_startup_location.dart`, `app_router.dart`, `splash_provider.dart`). Verified: reload now keeps the session, saved address, wallet and cart.
+2. **Cart retention after a scheduled (COD) order**: the backend keeps cart lines after placing a scheduled order (they cleared for the online-verify path only). Backend-owned behavior; identical to mobile against this backend.
+3. **Localhost CORS**: the production API allowlists `*://*.bakaloo.in` (verified). Localhost dev origins are not allowlisted — local testing uses `tool/dev_cors_proxy.js` (dev harness only). **No backend change needed for deployment** on any bakaloo.in origin.
+4. **Push notifications (FCM) and in-app review prompts are absent on web** (no browser integration in the baseline's Firebase setup); in-app notification history works. Razorpay runs with the backend's configured key — verified in **Test Mode**; production keys activate automatically server-side.
+5. **Wasm**: the build targets JS (default). A `--wasm` build would be blocked by transitive packages still using `dart:html` (`flutter_secure_storage_web`, `location_web`) — a Flutter-ecosystem limitation, unrelated to this port.
+6. **Deep URLs use hash strategy** (`/#/product/:id`) — Flutter web's default; refresh-safe on any static host. Path-style URLs would require host rewrites and were not introduced.
+7. `build/web` **currently contains the local test bundle** (`.env` pointing at the local proxy, used for interactive testing). For deployment: restore the production env (`cp .env.example .env`) and rebuild — `flutter build web --release`. The production-env bundle was built and verified earlier.
 
 ## 8. Deployment readiness
 
