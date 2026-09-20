@@ -62,7 +62,10 @@ class SpinResult {
   /// color rather than taking a parameter no caller has a meaningful
   /// value for.
   SpinPrize? toPrize() {
-    if (!success || prizeId == null || prizeType == null || prizeLabel == null) {
+    if (!success ||
+        prizeId == null ||
+        prizeType == null ||
+        prizeLabel == null) {
       return null;
     }
     return SpinPrize(

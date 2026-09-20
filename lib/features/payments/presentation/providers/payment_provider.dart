@@ -423,7 +423,8 @@ class PaymentNotifier extends _$PaymentNotifier {
       return;
     }
 
-    _beginPendingConfirmation(orderId: orderId, razorpayOrderId: razorpayOrderId);
+    _beginPendingConfirmation(
+        orderId: orderId, razorpayOrderId: razorpayOrderId);
   }
 
   /// Keeps the checkout/cart screen locked — reusing the same "pending
@@ -485,7 +486,14 @@ class PaymentNotifier extends _$PaymentNotifier {
   /// say for certain, this leaves the order exactly as-is so the backend's
   /// own reconciliation (webhook / expiry-worker sweep) can resolve it
   /// later; the customer is notified whenever that happens.
-  static const List<int> _pollDelaysMs = <int>[0, 3000, 6000, 12000, 24000, 45000];
+  static const List<int> _pollDelaysMs = <int>[
+    0,
+    3000,
+    6000,
+    12000,
+    24000,
+    45000
+  ];
 
   Future<void> _pollPaymentStatus({
     required String orderId,
@@ -543,7 +551,9 @@ class PaymentNotifier extends _$PaymentNotifier {
   void recheckIfPending() {
     final orderId = state.activeOrderId;
     final razorpayOrderId = state.activeRazorpayOrderId;
-    if (!state.isPendingConfirmation || orderId == null || razorpayOrderId == null) {
+    if (!state.isPendingConfirmation ||
+        orderId == null ||
+        razorpayOrderId == null) {
       return;
     }
     unawaited(
@@ -587,9 +597,9 @@ class PaymentNotifier extends _$PaymentNotifier {
   }) async {
     try {
       final cancelResponse = await ref.read(dioClientProvider).post<dynamic>(
-            ApiConstants.orderCancel(orderId),
-            data: <String, dynamic>{'reason': reason},
-          );
+        ApiConstants.orderCancel(orderId),
+        data: <String, dynamic>{'reason': reason},
+      );
       if (_isPaymentConfirmedResponse(cancelResponse.data)) {
         unawaited(_onPaymentConfirmed(orderId: orderId));
         return;

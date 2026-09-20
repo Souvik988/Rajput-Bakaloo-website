@@ -23,7 +23,8 @@ class BusinessAccountRepositoryImpl implements BusinessAccountRepository {
       return Left(handleDioError(error));
     } catch (_) {
       return const Left(
-        UnknownFailure(message: 'Unable to load your business account right now.'),
+        UnknownFailure(
+            message: 'Unable to load your business account right now.'),
       );
     }
   }

@@ -35,17 +35,20 @@ final businessAccountRepositoryProvider =
 
 final getMyBusinessAccountUseCaseProvider =
     Provider<GetMyBusinessAccountUseCase>((Ref ref) {
-  return GetMyBusinessAccountUseCase(ref.watch(businessAccountRepositoryProvider));
+  return GetMyBusinessAccountUseCase(
+      ref.watch(businessAccountRepositoryProvider));
 });
 
 final applyBusinessAccountUseCaseProvider =
     Provider<ApplyBusinessAccountUseCase>((Ref ref) {
-  return ApplyBusinessAccountUseCase(ref.watch(businessAccountRepositoryProvider));
+  return ApplyBusinessAccountUseCase(
+      ref.watch(businessAccountRepositoryProvider));
 });
 
 final toggleBusinessAccountUseCaseProvider =
     Provider<ToggleBusinessAccountUseCase>((Ref ref) {
-  return ToggleBusinessAccountUseCase(ref.watch(businessAccountRepositoryProvider));
+  return ToggleBusinessAccountUseCase(
+      ref.watch(businessAccountRepositoryProvider));
 });
 
 /// The caller's own business account — null when they've never applied.
@@ -71,7 +74,8 @@ class BusinessAccountNotifier extends _$BusinessAccountNotifier {
     BusinessAccountApplyParams params,
   ) async {
     state = const AsyncLoading<void>();
-    final result = await ref.read(applyBusinessAccountUseCaseProvider).call(params);
+    final result =
+        await ref.read(applyBusinessAccountUseCaseProvider).call(params);
     return result.fold(
       (failure) {
         state = AsyncError<void>(failure, StackTrace.current);

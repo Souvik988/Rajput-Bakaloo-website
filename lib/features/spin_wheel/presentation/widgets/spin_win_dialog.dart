@@ -57,7 +57,8 @@ class _SpinWinDialogState extends ConsumerState<SpinWinDialog> {
     }
 
     setState(() => _isSpinning = true);
-    final result = await ref.read(spinWheelProvider.notifier).spin(currentPrizes);
+    final result =
+        await ref.read(spinWheelProvider.notifier).spin(currentPrizes);
     ref.invalidate(spinEligibilityProvider);
 
     if (!mounted) return;
@@ -120,7 +121,8 @@ class _SpinWinDialogState extends ConsumerState<SpinWinDialog> {
     final backgroundImageUrl = appearance?.backgroundImageUrl;
     final eligibility = eligibilityAsync.value;
     final noSpinsLeft = eligibility != null && !eligibility.hasSpinsAvailable;
-    final canSpin = (isLiveAsync.value ?? false) && !noSpinsLeft && !_isSpinning;
+    final canSpin =
+        (isLiveAsync.value ?? false) && !noSpinsLeft && !_isSpinning;
 
     final spinsLabel = eligibility == null
         ? '1 free spin today'
@@ -220,8 +222,8 @@ class _SpinWinDialogState extends ConsumerState<SpinWinDialog> {
                           borderRadius: BorderRadius.circular(16.r),
                           boxShadow: <BoxShadow>[
                             BoxShadow(
-                              color: AppColors.spinHubEnd
-                                  .withValues(alpha: 0.4),
+                              color:
+                                  AppColors.spinHubEnd.withValues(alpha: 0.4),
                               blurRadius: 16,
                               offset: Offset(0, 6.h),
                             ),
@@ -250,7 +252,8 @@ class _SpinWinDialogState extends ConsumerState<SpinWinDialog> {
                                         color: Colors.white,
                                       ),
                                     ),
-                                    if (!_isSpinning && !noSpinsLeft) ...<Widget>[
+                                    if (!_isSpinning &&
+                                        !noSpinsLeft) ...<Widget>[
                                       Gap(4.w),
                                       Icon(
                                         PhosphorIcons.caretRightBold,
@@ -308,18 +311,21 @@ class _SpinWinDialogState extends ConsumerState<SpinWinDialog> {
                               mainAxisSize: MainAxisSize.min,
                               children: <Widget>[
                                 Text(
-                                  appearance?.bannerTitle ?? 'Win up to ₹100 off',
+                                  appearance?.bannerTitle ??
+                                      'Win up to ₹100 off',
                                   style: AppTextStyles.labelLarge,
                                 ),
                                 Text(
-                                  appearance?.bannerSubtitle ?? 'on your next order',
+                                  appearance?.bannerSubtitle ??
+                                      'on your next order',
                                   style: AppTextStyles.bodySmall,
                                 ),
                               ],
                             ),
                           ),
                           Text(
-                            appearance?.bannerTagline ?? 'Good Deals\nEveryday!',
+                            appearance?.bannerTagline ??
+                                'Good Deals\nEveryday!',
                             textAlign: TextAlign.right,
                             style: AppTextStyles.bodySmall.copyWith(
                               fontStyle: FontStyle.italic,

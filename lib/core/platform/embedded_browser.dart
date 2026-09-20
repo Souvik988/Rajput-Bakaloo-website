@@ -9,5 +9,5 @@
 
 library;
 
-export 'embedded_browser_mobile.dart' if (dart.library.html) 'embedded_browser_web.dart';
-
+export 'embedded_browser_mobile.dart'
+    if (dart.library.html) 'embedded_browser_web.dart';

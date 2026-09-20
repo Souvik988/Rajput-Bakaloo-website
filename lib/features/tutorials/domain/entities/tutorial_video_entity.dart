@@ -25,7 +25,8 @@ class TutorialVideoEntity {
     );
   }
 
-  String get thumbnailUrl => 'https://img.youtube.com/vi/$videoId/mqdefault.jpg';
+  String get thumbnailUrl =>
+      'https://img.youtube.com/vi/$videoId/mqdefault.jpg';
 
   // A YouTube Short is filmed/exported vertical (9:16) — the admin-pasted
   // /shorts/ URL is the only signal we have for this, since video_id alone

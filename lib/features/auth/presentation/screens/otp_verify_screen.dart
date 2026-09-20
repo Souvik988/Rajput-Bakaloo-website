@@ -236,10 +236,7 @@ class _OtpVerifyScreenState extends ConsumerState<OtpVerifyScreen>
                     ),
                   ),
                 ],
-              )
-                  .animate()
-                  .fadeIn(duration: 260.ms)
-                  .slideY(begin: -0.04, end: 0),
+              ).animate().fadeIn(duration: 260.ms).slideY(begin: -0.04, end: 0),
             ),
 
             // ── Bottom code-entry sheet ──
@@ -255,173 +252,120 @@ class _OtpVerifyScreenState extends ConsumerState<OtpVerifyScreen>
                   bottom: MediaQuery.viewInsetsOf(context).bottom,
                 ),
                 child: Container(
-                width: double.infinity,
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.vertical(
-                    top: Radius.circular(28.r),
-                  ),
-                  boxShadow: <BoxShadow>[
-                    BoxShadow(
-                      color: Colors.black.withValues(alpha: 0.08),
-                      blurRadius: 24,
-                      offset: const Offset(0, -8),
+                  width: double.infinity,
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.vertical(
+                      top: Radius.circular(28.r),
                     ),
-                  ],
-                ),
-                child: SingleChildScrollView(
-                  keyboardDismissBehavior:
-                      ScrollViewKeyboardDismissBehavior.onDrag,
-                  padding: EdgeInsets.fromLTRB(24.w, 24.h, 24.w, 20.h),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisSize: MainAxisSize.min,
-                    children: <Widget>[
-                      Text(
-                        'Enter 6-digit code',
-                        style: TextStyle(
-                          fontFamily: 'Poppins',
-                          fontSize: 15.sp,
-                          fontWeight: FontWeight.w700,
-                          color: _headingColor,
-                        ),
+                    boxShadow: <BoxShadow>[
+                      BoxShadow(
+                        color: Colors.black.withValues(alpha: 0.08),
+                        blurRadius: 24,
+                        offset: const Offset(0, -8),
                       ),
-
-                      Gap(16.h),
-
-                      // ── OTP Pinput ──
-                      AnimatedBuilder(
-                        animation: _shakeController,
-                        builder: (BuildContext context, Widget? child) {
-                          final offset = math.sin(
-                                _shakeController.value * math.pi * 6,
-                              ) *
-                              10;
-                          return Transform.translate(
-                            offset: Offset(offset, 0),
-                            child: child,
-                          );
-                        },
-                        child: Pinput(
-                          controller: _otpController,
-                          length: 6,
-                          // Fix #2: Do NOT autofocus — prevents keyboard from
-                          // opening immediately and squeezing the OTP boxes.
-                          // User taps a box to bring up the keyboard naturally.
-                          autofocus: false,
-                          keyboardType: TextInputType.number,
-                          defaultPinTheme: defaultPinTheme,
-                          focusedPinTheme: focusedPinTheme,
-                          submittedPinTheme: defaultPinTheme,
-                          errorPinTheme: errorPinTheme,
-                          forceErrorState: _hasError,
-                          errorText: _errorMessage,
-                          cursor: Container(
-                            width: 2,
-                            height: 26.h,
-                            color: _brandPurple,
+                    ],
+                  ),
+                  child: SingleChildScrollView(
+                    keyboardDismissBehavior:
+                        ScrollViewKeyboardDismissBehavior.onDrag,
+                    padding: EdgeInsets.fromLTRB(24.w, 24.h, 24.w, 20.h),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisSize: MainAxisSize.min,
+                      children: <Widget>[
+                        Text(
+                          'Enter 6-digit code',
+                          style: TextStyle(
+                            fontFamily: 'Poppins',
+                            fontSize: 15.sp,
+                            fontWeight: FontWeight.w700,
+                            color: _headingColor,
                           ),
-                          errorTextStyle: TextStyle(
-                            fontFamily: 'Inter',
-                            fontSize: 12.sp,
-                            fontWeight: FontWeight.w600,
-                            color: AppColors.errorRed,
-                          ),
-                          inputFormatters: <TextInputFormatter>[
-                            FilteringTextInputFormatter.digitsOnly,
-                            LengthLimitingTextInputFormatter(6),
-                          ],
-                          onChanged: (String value) {
-                            if (_hasError || _errorMessage != null) {
-                              setState(() {
-                                _hasError = false;
-                                _errorMessage = null;
-                              });
-                            }
+                        ),
+
+                        Gap(16.h),
+
+                        // ── OTP Pinput ──
+                        AnimatedBuilder(
+                          animation: _shakeController,
+                          builder: (BuildContext context, Widget? child) {
+                            final offset = math.sin(
+                                  _shakeController.value * math.pi * 6,
+                                ) *
+                                10;
+                            return Transform.translate(
+                              offset: Offset(offset, 0),
+                              child: child,
+                            );
                           },
-                          onCompleted: _submitOtp,
-                        ),
-                      ),
-
-                      Gap(18.h),
-
-                      // ── Resend timer / button ──
-                      Container(
-                        padding: EdgeInsets.symmetric(
-                          horizontal: 14.w,
-                          vertical: 12.h,
-                        ),
-                        decoration: BoxDecoration(
-                          color: _pillBg,
-                          borderRadius: BorderRadius.circular(14.r),
-                          border: Border.all(color: _boxBorder),
-                        ),
-                        child: Row(
-                          children: <Widget>[
-                            PhosphorIcon(
-                              _secondsRemaining > 0
-                                  ? PhosphorIcons.arrowClockwise
-                                  : PhosphorIcons.arrowClockwise,
+                          child: Pinput(
+                            controller: _otpController,
+                            length: 6,
+                            // Fix #2: Do NOT autofocus — prevents keyboard from
+                            // opening immediately and squeezing the OTP boxes.
+                            // User taps a box to bring up the keyboard naturally.
+                            autofocus: false,
+                            keyboardType: TextInputType.number,
+                            defaultPinTheme: defaultPinTheme,
+                            focusedPinTheme: focusedPinTheme,
+                            submittedPinTheme: defaultPinTheme,
+                            errorPinTheme: errorPinTheme,
+                            forceErrorState: _hasError,
+                            errorText: _errorMessage,
+                            cursor: Container(
+                              width: 2,
+                              height: 26.h,
                               color: _brandPurple,
-                              size: 20.sp,
                             ),
-                            Gap(12.w),
-                            Expanded(
-                              child: _secondsRemaining > 0
-                                  ? Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: <Widget>[
-                                        Text(
-                                          'Resend code',
-                                          style: TextStyle(
-                                            fontFamily: 'Poppins',
-                                            fontSize: 14.sp,
-                                            fontWeight: FontWeight.w700,
-                                            color: _headingColor,
-                                          ),
-                                        ),
-                                        Gap(1.h),
-                                        Text.rich(
-                                          TextSpan(
-                                            text: 'You can resend the code in ',
-                                            style: TextStyle(
-                                              fontFamily: 'Inter',
-                                              fontSize: 12.sp,
-                                              fontWeight: FontWeight.w400,
-                                              color: AppColors.textSecondary,
-                                            ),
-                                            children: <InlineSpan>[
-                                              TextSpan(
-                                                text: _formattedCountdown,
-                                                style: TextStyle(
-                                                  fontFamily: 'Poppins',
-                                                  fontSize: 12.sp,
-                                                  fontWeight: FontWeight.w700,
-                                                  color: _brandPurple,
-                                                ),
-                                              ),
-                                            ],
-                                          ),
-                                        ),
-                                      ],
-                                    )
-                                  : GestureDetector(
-                                      onTap: isLoading
-                                          ? null
-                                          : () {
-                                              setState(() {
-                                                _hasError = false;
-                                                _errorMessage = null;
-                                              });
-                                              ref
-                                                  .read(
-                                                    authNotifierProvider
-                                                        .notifier,
-                                                  )
-                                                  .sendOtp(widget.phone);
-                                            },
-                                      child: Column(
+                            errorTextStyle: TextStyle(
+                              fontFamily: 'Inter',
+                              fontSize: 12.sp,
+                              fontWeight: FontWeight.w600,
+                              color: AppColors.errorRed,
+                            ),
+                            inputFormatters: <TextInputFormatter>[
+                              FilteringTextInputFormatter.digitsOnly,
+                              LengthLimitingTextInputFormatter(6),
+                            ],
+                            onChanged: (String value) {
+                              if (_hasError || _errorMessage != null) {
+                                setState(() {
+                                  _hasError = false;
+                                  _errorMessage = null;
+                                });
+                              }
+                            },
+                            onCompleted: _submitOtp,
+                          ),
+                        ),
+
+                        Gap(18.h),
+
+                        // ── Resend timer / button ──
+                        Container(
+                          padding: EdgeInsets.symmetric(
+                            horizontal: 14.w,
+                            vertical: 12.h,
+                          ),
+                          decoration: BoxDecoration(
+                            color: _pillBg,
+                            borderRadius: BorderRadius.circular(14.r),
+                            border: Border.all(color: _boxBorder),
+                          ),
+                          child: Row(
+                            children: <Widget>[
+                              PhosphorIcon(
+                                _secondsRemaining > 0
+                                    ? PhosphorIcons.arrowClockwise
+                                    : PhosphorIcons.arrowClockwise,
+                                color: _brandPurple,
+                                size: 20.sp,
+                              ),
+                              Gap(12.w),
+                              Expanded(
+                                child: _secondsRemaining > 0
+                                    ? Column(
                                         crossAxisAlignment:
                                             CrossAxisAlignment.start,
                                         children: <Widget>[
@@ -435,105 +379,33 @@ class _OtpVerifyScreenState extends ConsumerState<OtpVerifyScreen>
                                             ),
                                           ),
                                           Gap(1.h),
-                                          Text(
-                                            'Tap to send a new code',
-                                            style: TextStyle(
-                                              fontFamily: 'Inter',
-                                              fontSize: 12.sp,
-                                              fontWeight: FontWeight.w600,
-                                              color: _brandPurple,
+                                          Text.rich(
+                                            TextSpan(
+                                              text:
+                                                  'You can resend the code in ',
+                                              style: TextStyle(
+                                                fontFamily: 'Inter',
+                                                fontSize: 12.sp,
+                                                fontWeight: FontWeight.w400,
+                                                color: AppColors.textSecondary,
+                                              ),
+                                              children: <InlineSpan>[
+                                                TextSpan(
+                                                  text: _formattedCountdown,
+                                                  style: TextStyle(
+                                                    fontFamily: 'Poppins',
+                                                    fontSize: 12.sp,
+                                                    fontWeight: FontWeight.w700,
+                                                    color: _brandPurple,
+                                                  ),
+                                                ),
+                                              ],
                                             ),
                                           ),
                                         ],
-                                      ),
-                                    ),
-                            ),
-                          ],
-                        ),
-                      ),
-
-                      Gap(18.h),
-
-                      // ── Verify button ──
-                      SizedBox(
-                        width: double.infinity,
-                        child: DecoratedBox(
-                          decoration: BoxDecoration(
-                            gradient: _buttonGradient,
-                            borderRadius: BorderRadius.circular(16.r),
-                            boxShadow: <BoxShadow>[
-                              BoxShadow(
-                                color: _brandPurple.withValues(alpha: 0.35),
-                                blurRadius: 16,
-                                offset: const Offset(0, 6),
-                              ),
-                            ],
-                          ),
-                          child: ElevatedButton(
-                            onPressed: isLoading
-                                ? null
-                                : () => _submitOtp(_otpController.text),
-                            style: ElevatedButton.styleFrom(
-                              backgroundColor: Colors.transparent,
-                              shadowColor: Colors.transparent,
-                              foregroundColor: Colors.white,
-                              minimumSize: Size.fromHeight(56.h),
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(16.r),
-                              ),
-                            ),
-                            child: isLoading
-                                ? SizedBox(
-                                    width: 22.w,
-                                    height: 22.w,
-                                    child: const CircularProgressIndicator(
-                                      strokeWidth: 2.2,
-                                      color: Colors.white,
-                                    ),
-                                  )
-                                : Text(
-                                    'Verify OTP',
-                                    style: TextStyle(
-                                      fontFamily: 'Poppins',
-                                      fontSize: 16.sp,
-                                      fontWeight: FontWeight.w700,
-                                      color: Colors.white,
-                                    ),
-                                  ),
-                          ),
-                        ),
-                      ),
-
-                      Gap(16.h),
-
-                      // ── Footer help ──
-                      Center(
-                        child: Row(
-                          mainAxisSize: MainAxisSize.min,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: <Widget>[
-                            PhosphorIcon(
-                              PhosphorIcons.shieldCheck,
-                              color: _brandPurple,
-                              size: 15.sp,
-                            ),
-                            Gap(6.w),
-                            Flexible(
-                              child: Text.rich(
-                                TextSpan(
-                                  text:
-                                      "Didn't receive the code? Check your SMS or ",
-                                  style: TextStyle(
-                                    fontFamily: 'Inter',
-                                    fontSize: 12.sp,
-                                    color: AppColors.textSecondary,
-                                    height: 1.45,
-                                  ),
-                                  children: <InlineSpan>[
-                                    WidgetSpan(
-                                      alignment: PlaceholderAlignment.middle,
-                                      child: GestureDetector(
-                                        onTap: isLoading || _secondsRemaining > 0
+                                      )
+                                    : GestureDetector(
+                                        onTap: isLoading
                                             ? null
                                             : () {
                                                 setState(() {
@@ -547,31 +419,158 @@ class _OtpVerifyScreenState extends ConsumerState<OtpVerifyScreen>
                                                     )
                                                     .sendOtp(widget.phone);
                                               },
-                                        child: Text(
-                                          'try again.',
-                                          style: TextStyle(
-                                            fontFamily: 'Inter',
-                                            fontSize: 12.sp,
-                                            fontWeight: FontWeight.w700,
-                                            color: _brandPurple,
+                                        child: Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: <Widget>[
+                                            Text(
+                                              'Resend code',
+                                              style: TextStyle(
+                                                fontFamily: 'Poppins',
+                                                fontSize: 14.sp,
+                                                fontWeight: FontWeight.w700,
+                                                color: _headingColor,
+                                              ),
+                                            ),
+                                            Gap(1.h),
+                                            Text(
+                                              'Tap to send a new code',
+                                              style: TextStyle(
+                                                fontFamily: 'Inter',
+                                                fontSize: 12.sp,
+                                                fontWeight: FontWeight.w600,
+                                                color: _brandPurple,
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                              ),
+                            ],
+                          ),
+                        ),
+
+                        Gap(18.h),
+
+                        // ── Verify button ──
+                        SizedBox(
+                          width: double.infinity,
+                          child: DecoratedBox(
+                            decoration: BoxDecoration(
+                              gradient: _buttonGradient,
+                              borderRadius: BorderRadius.circular(16.r),
+                              boxShadow: <BoxShadow>[
+                                BoxShadow(
+                                  color: _brandPurple.withValues(alpha: 0.35),
+                                  blurRadius: 16,
+                                  offset: const Offset(0, 6),
+                                ),
+                              ],
+                            ),
+                            child: ElevatedButton(
+                              onPressed: isLoading
+                                  ? null
+                                  : () => _submitOtp(_otpController.text),
+                              style: ElevatedButton.styleFrom(
+                                backgroundColor: Colors.transparent,
+                                shadowColor: Colors.transparent,
+                                foregroundColor: Colors.white,
+                                minimumSize: Size.fromHeight(56.h),
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(16.r),
+                                ),
+                              ),
+                              child: isLoading
+                                  ? SizedBox(
+                                      width: 22.w,
+                                      height: 22.w,
+                                      child: const CircularProgressIndicator(
+                                        strokeWidth: 2.2,
+                                        color: Colors.white,
+                                      ),
+                                    )
+                                  : Text(
+                                      'Verify OTP',
+                                      style: TextStyle(
+                                        fontFamily: 'Poppins',
+                                        fontSize: 16.sp,
+                                        fontWeight: FontWeight.w700,
+                                        color: Colors.white,
+                                      ),
+                                    ),
+                            ),
+                          ),
+                        ),
+
+                        Gap(16.h),
+
+                        // ── Footer help ──
+                        Center(
+                          child: Row(
+                            mainAxisSize: MainAxisSize.min,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: <Widget>[
+                              PhosphorIcon(
+                                PhosphorIcons.shieldCheck,
+                                color: _brandPurple,
+                                size: 15.sp,
+                              ),
+                              Gap(6.w),
+                              Flexible(
+                                child: Text.rich(
+                                  TextSpan(
+                                    text:
+                                        "Didn't receive the code? Check your SMS or ",
+                                    style: TextStyle(
+                                      fontFamily: 'Inter',
+                                      fontSize: 12.sp,
+                                      color: AppColors.textSecondary,
+                                      height: 1.45,
+                                    ),
+                                    children: <InlineSpan>[
+                                      WidgetSpan(
+                                        alignment: PlaceholderAlignment.middle,
+                                        child: GestureDetector(
+                                          onTap: isLoading ||
+                                                  _secondsRemaining > 0
+                                              ? null
+                                              : () {
+                                                  setState(() {
+                                                    _hasError = false;
+                                                    _errorMessage = null;
+                                                  });
+                                                  ref
+                                                      .read(
+                                                        authNotifierProvider
+                                                            .notifier,
+                                                      )
+                                                      .sendOtp(widget.phone);
+                                                },
+                                          child: Text(
+                                            'try again.',
+                                            style: TextStyle(
+                                              fontFamily: 'Inter',
+                                              fontSize: 12.sp,
+                                              fontWeight: FontWeight.w700,
+                                              color: _brandPurple,
+                                            ),
                                           ),
                                         ),
                                       ),
-                                    ),
-                                  ],
+                                    ],
+                                  ),
+                                  textAlign: TextAlign.center,
                                 ),
-                                textAlign: TextAlign.center,
                               ),
-                            ),
-                          ],
+                            ],
+                          ),
                         ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
                 ),
-              ),
-            ), // closes AnimatedPadding
-            ),  // closes Align
+              ), // closes AnimatedPadding
+            ), // closes Align
           ],
         ),
       ),

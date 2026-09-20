@@ -39,7 +39,9 @@ Future<NavButtonEntity?> navButton(Ref ref) async {
 @riverpod
 Future<List<NavButtonEntity>> navButtonProfileMenu(Ref ref) async {
   try {
-    return await ref.read(navButtonRemoteDataSourceProvider).getProfileMenuButtons();
+    return await ref
+        .read(navButtonRemoteDataSourceProvider)
+        .getProfileMenuButtons();
   } catch (_) {
     return const <NavButtonEntity>[];
   }

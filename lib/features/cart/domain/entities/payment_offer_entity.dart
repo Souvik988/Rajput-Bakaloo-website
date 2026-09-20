@@ -40,8 +40,7 @@ abstract class PaymentOfferEntity with _$PaymentOfferEntity {
     double cashbackAmount,
     @JsonKey(fromJson: _paymentOfferNullableAmountFromJson)
     double? cashbackPercent,
-    @JsonKey(fromJson: _paymentOfferNullableAmountFromJson)
-    double? maxCashback,
+    @JsonKey(fromJson: _paymentOfferNullableAmountFromJson) double? maxCashback,
     @Default(0)
     @JsonKey(fromJson: _paymentOfferAmountFromJson)
     double minOrderAmount,

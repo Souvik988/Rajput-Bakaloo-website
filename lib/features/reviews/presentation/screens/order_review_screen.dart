@@ -66,7 +66,8 @@ class _OrderReviewScreenState extends ConsumerState<OrderReviewScreen> {
 
   Future<void> _submit(Set<String> alreadyReviewed) async {
     if (_ratedCount(alreadyReviewed) == 0) {
-      AppToast.show(context, '⚠️ Rate at least one product to submit.', type: ToastType.warning);
+      AppToast.show(context, '⚠️ Rate at least one product to submit.',
+          type: ToastType.warning);
       return;
     }
 
@@ -323,7 +324,9 @@ class _ProductReviewCard extends StatelessWidget {
                       duration: const Duration(milliseconds: 180),
                       curve: Curves.easeOutBack,
                       child: PhosphorIcon(
-                        isSelected ? PhosphorIcons.starFill : PhosphorIcons.star,
+                        isSelected
+                            ? PhosphorIcons.starFill
+                            : PhosphorIcons.star,
                         size: 26.sp,
                         color: isSelected
                             ? AppColors.ratingGold
@@ -535,9 +538,7 @@ class _ReviewSubmittedSheet extends StatelessWidget {
             ),
             Gap(16.h),
             Text(
-              reviewedCount > 1
-                  ? 'Reviews submitted!'
-                  : 'Review submitted!',
+              reviewedCount > 1 ? 'Reviews submitted!' : 'Review submitted!',
               style: AppTextStyles.h2,
             ),
             Gap(6.h),
@@ -594,7 +595,8 @@ class _ReviewSubmittedSheet extends StatelessWidget {
                 ),
                 child: Text(
                   'Done',
-                  style: AppTextStyles.buttonLarge.copyWith(color: Colors.white),
+                  style:
+                      AppTextStyles.buttonLarge.copyWith(color: Colors.white),
                 ),
               ),
             ),

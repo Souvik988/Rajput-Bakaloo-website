@@ -22,6 +22,7 @@ class MenuTile extends StatelessWidget {
   final VoidCallback? onTap;
   final Widget? trailing;
   final bool isDanger;
+
   /// Overrides the default PhosphorIcon(icon) rendering when set — used
   /// for a dashboard-uploaded custom icon image (nav_buttons' CUSTOM icon
   /// type) instead of a preset glyph. [icon] is still required as the
@@ -79,9 +80,7 @@ class MenuTile extends StatelessWidget {
                 PhosphorIcon(
                   PhosphorIcons.caretRight,
                   size: 16.sp,
-                  color: isDanger
-                      ? AppColors.errorRed
-                      : AppColors.textTertiary,
+                  color: isDanger ? AppColors.errorRed : AppColors.textTertiary,
                 ),
               ],
             ),

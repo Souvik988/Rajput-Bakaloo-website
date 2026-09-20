@@ -71,10 +71,9 @@ class PurchaseLimitsNotifier extends _$PurchaseLimitsNotifier {
       return;
     }
 
-    final result =
-        await ref.read(purchaseLimitsRepositoryProvider).getStatus(
-              missingIds,
-            );
+    final result = await ref.read(purchaseLimitsRepositoryProvider).getStatus(
+          missingIds,
+        );
 
     result.fold(
       (failure) {

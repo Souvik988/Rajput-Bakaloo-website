@@ -503,7 +503,8 @@ List<ProductEntity> _resolveProducts(
   // "some products in a category-linked section don't show up": the
   // backend correctly sent every product, but this widget only rendered
   // the first 6-12 of them.
-  final List<ProductEntity> resolvedFromManifest = _parseManifestProducts(entry);
+  final List<ProductEntity> resolvedFromManifest =
+      _parseManifestProducts(entry);
   if (resolvedFromManifest.isNotEmpty) {
     return entry.productLimit != null
         ? resolvedFromManifest.take(entry.productLimit!).toList(growable: false)
@@ -621,8 +622,7 @@ List<_PromoItem> _resolvePromoItems(WidgetRef ref, SectionManifestEntry entry) {
   //               "custom"            → use inline images[] from config
   // Legacy sections without banner_source default to "system" for
   // backward compatibility (existing behaviour before this change).
-  final String source =
-      _readString(entry.config['banner_source']) ?? 'system';
+  final String source = _readString(entry.config['banner_source']) ?? 'system';
 
   if (source == 'custom') {
     // ── Custom mode: use images[] from section config ──────────────────────

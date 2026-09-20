@@ -28,7 +28,14 @@ const List<StoreModel> appStores = <StoreModel>[
     backgroundColor: Color(0xFF88D4FE),
     chipActiveColor: Color(0xFF1A3461),
     textColor: Colors.black,
-    categories: ['Fruits & Veg', 'Dairy', 'Snacks', 'Beverages', 'Rice', 'Bread'],
+    categories: [
+      'Fruits & Veg',
+      'Dairy',
+      'Snacks',
+      'Beverages',
+      'Rice',
+      'Bread'
+    ],
   ),
   StoreModel(
     id: 'off_zone',
@@ -37,7 +44,13 @@ const List<StoreModel> appStores = <StoreModel>[
     backgroundColor: Color(0xFFFF6B35),
     chipActiveColor: Color(0xFFCC3A00),
     textColor: Colors.white,
-    categories: ['Flash Sale', 'Combos', 'Clearance', 'Buy 1 Get 1', 'Bulk Buy'],
+    categories: [
+      'Flash Sale',
+      'Combos',
+      'Clearance',
+      'Buy 1 Get 1',
+      'Bulk Buy'
+    ],
   ),
   StoreModel(
     id: 'super_mall',

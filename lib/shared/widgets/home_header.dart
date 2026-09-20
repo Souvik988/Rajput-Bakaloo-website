@@ -32,13 +32,16 @@ class HomeHeader extends ConsumerWidget {
   final VoidCallback onNotificationTap;
   final VoidCallback? onWalletTap;
   final TopBarTheme? topBarTheme;
+
   /// Color used by the curved bottom strip so it matches the search zone
   /// background beneath it. Defaults to white when not provided.
   final Color? searchZoneColor;
+
   /// Admin-set delivery-time badge (e.g. 45 → "⚡ 45 mins delivery"), shown
   /// only on the main Zepto store front in place of its static "6 mins"
   /// tagline. Other store fronts keep their own static taglines.
   final int? deliveryEtaMinutes;
+
   /// When something is already occupying the status-bar area above this
   /// header (e.g. [OrderTrackingTopBanner]), that widget passes 0 here so
   /// the header doesn't also pad for it — avoiding a doubled gap. Null
@@ -117,70 +120,71 @@ class HomeHeader extends ConsumerWidget {
                   child: Row(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: <Widget>[
-                    Expanded(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        mainAxisSize: MainAxisSize.min,
-                        children: <Widget>[
-                          Text(
-                            (deliveryEtaMinutes != null && store.id == 'zepto')
-                                ? '⚡ $deliveryEtaMinutes mins delivery'
-                                : store.subtitle,
-                            maxLines: 1,
-                            overflow: TextOverflow.ellipsis,
-                            style: TextStyle(
-                              fontFamily: 'Poppins',
-                              fontSize: 17.sp,
-                              fontWeight: FontWeight.w700,
-                              height: 1.05,
-                              letterSpacing: -0.5,
-                              color: Colors.black,
+                      Expanded(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisSize: MainAxisSize.min,
+                          children: <Widget>[
+                            Text(
+                              (deliveryEtaMinutes != null &&
+                                      store.id == 'zepto')
+                                  ? '⚡ $deliveryEtaMinutes mins delivery'
+                                  : store.subtitle,
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
+                              style: TextStyle(
+                                fontFamily: 'Poppins',
+                                fontSize: 17.sp,
+                                fontWeight: FontWeight.w700,
+                                height: 1.05,
+                                letterSpacing: -0.5,
+                                color: Colors.black,
+                              ),
                             ),
-                          ),
-                          Gap(4.h),
-                          GestureDetector(
-                            onTap: onAddressTap,
-                            behavior: HitTestBehavior.opaque,
-                            child: Row(
-                              mainAxisSize: MainAxisSize.min,
-                              children: <Widget>[
-                                Icon(
-                                  Icons.location_on_outlined,
-                                  color: Colors.black,
-                                  size: 17.sp,
-                                ),
-                                Gap(4.w),
-                                Flexible(
-                                  child: Text(
-                                    addressText,
-                                    maxLines: 1,
-                                    overflow: TextOverflow.ellipsis,
-                                    style: TextStyle(
-                                      fontFamily: 'Inter',
-                                      fontSize: 13.sp,
-                                      fontWeight: FontWeight.w500,
-                                      color: Colors.black,
+                            Gap(4.h),
+                            GestureDetector(
+                              onTap: onAddressTap,
+                              behavior: HitTestBehavior.opaque,
+                              child: Row(
+                                mainAxisSize: MainAxisSize.min,
+                                children: <Widget>[
+                                  Icon(
+                                    Icons.location_on_outlined,
+                                    color: Colors.black,
+                                    size: 17.sp,
+                                  ),
+                                  Gap(4.w),
+                                  Flexible(
+                                    child: Text(
+                                      addressText,
+                                      maxLines: 1,
+                                      overflow: TextOverflow.ellipsis,
+                                      style: TextStyle(
+                                        fontFamily: 'Inter',
+                                        fontSize: 13.sp,
+                                        fontWeight: FontWeight.w500,
+                                        color: Colors.black,
+                                      ),
                                     ),
                                   ),
-                                ),
-                                Gap(2.w),
-                                Icon(
-                                  Icons.keyboard_arrow_down_rounded,
-                                  color: Colors.black,
-                                  size: 18.sp,
-                                ),
-                              ],
+                                  Gap(2.w),
+                                  Icon(
+                                    Icons.keyboard_arrow_down_rounded,
+                                    color: Colors.black,
+                                    size: 18.sp,
+                                  ),
+                                ],
+                              ),
                             ),
-                          ),
-                        ],
+                          ],
+                        ),
                       ),
-                    ),
-                    Gap(10.w),
-                    _HeaderActions(
-                      onWalletTap: onWalletTap,
-                      onNotificationTap: onNotificationTap,
-                    ),
-                  ],
+                      Gap(10.w),
+                      _HeaderActions(
+                        onWalletTap: onWalletTap,
+                        onNotificationTap: onNotificationTap,
+                      ),
+                    ],
                   ),
                 ),
                 Gap(2.h),

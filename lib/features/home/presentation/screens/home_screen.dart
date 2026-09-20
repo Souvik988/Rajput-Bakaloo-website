@@ -17,6 +17,7 @@ import 'package:bakaloo_flutter_app/core/theme/section_manifest_provider.dart';
 import 'package:bakaloo_flutter_app/core/theme/tab_home_content_model.dart';
 import 'package:bakaloo_flutter_app/core/theme/app_colors.dart';
 import 'package:bakaloo_flutter_app/core/theme/app_text_styles.dart';
+import 'package:bakaloo_flutter_app/core/utils/location_service_resolver.dart';
 import 'package:bakaloo_flutter_app/features/addresses/presentation/providers/address_provider.dart';
 import 'package:bakaloo_flutter_app/features/auth/presentation/providers/auth_notifier.dart';
 import 'package:bakaloo_flutter_app/features/auth/presentation/providers/auth_state.dart';
@@ -277,8 +278,9 @@ class _HomeScreenState extends ConsumerState<HomeScreen>
     // on many Android versions this does NOT trigger didChangeAppLifecycleState,
     // so without this stream the prompt would only ever reappear after a full
     // background/foreground cycle.
-    _locationServiceStatusSub =
-        Geolocator.getServiceStatusStream().listen((status) {
+    // WEB PORT: locationServiceStatusStream() is null on web (no OS
+    // location switch to observe) — the subscription is simply skipped.
+    _locationServiceStatusSub = locationServiceStatusStream()?.listen((status) {
       if (status == ServiceStatus.enabled) {
         // Guard against re-opening anything for a customer who's already
         // done — Android re-reports this status for reasons that have
@@ -514,7 +516,9 @@ class _HomeScreenState extends ConsumerState<HomeScreen>
   }
 
   Future<void> _maybeShowLocationPrompt() async {
-    if (!mounted || _locationPromptShownThisSession || _locationPromptInFlight) {
+    if (!mounted ||
+        _locationPromptShownThisSession ||
+        _locationPromptInFlight) {
       return;
     }
     // Checked synchronously, before the flag below — HomeScreen can be
@@ -1079,8 +1083,8 @@ class _HomeScreenState extends ConsumerState<HomeScreen>
                                             onWalletTap: () =>
                                                 context.go(RouteNames.wallet),
                                             topBarTheme: topBarTheme,
-                                            searchZoneColor: searchZoneTheme
-                                                .backgroundColor,
+                                            searchZoneColor:
+                                                searchZoneTheme.backgroundColor,
                                             deliveryEtaMinutes:
                                                 deliveryEtaMinutes,
                                             topPaddingOverride:
@@ -1791,7 +1795,7 @@ class _ThreeColumnProductGrid<T> extends StatelessWidget {
     // Three columns with two 10-unit gaps and 32 units total horizontal padding
     // (16 each side) — matching _threeColumnCardWidth logic.
     const double columnGapTotal = 20.0; // 10 × 2 gaps
-    const double sidePadTotal = 32.0;   // 16 × 2 sides
+    const double sidePadTotal = 32.0; // 16 × 2 sides
     final double cardPx = (availableWidth - columnGapTotal - sidePadTotal) / 3;
     final double imageHeight = cardPx * 0.84;
     // Below-box: unit row(~28) + divider(1) + price(~22) + discount(~16) +
@@ -1833,8 +1837,7 @@ class _ThreeColumnProductGrid<T> extends StatelessWidget {
                       Expanded(
                         child: columnIndex < rows[rowIndex].length
                             ? RepaintBoundary(
-                                child:
-                                    itemBuilder(rows[rowIndex][columnIndex]),
+                                child: itemBuilder(rows[rowIndex][columnIndex]),
                               )
                             : const SizedBox.shrink(),
                       ),
@@ -1905,15 +1908,16 @@ class _StagedCategorySectionState
     // below the fold anyway — the scroll has just reached the threshold).
     if (!_activated) return const SizedBox.shrink();
 
-    final catProducts =
-        ref.watch(homeCategoryProductsProvider(widget.category.id)).asData?.value;
+    final catProducts = ref
+        .watch(homeCategoryProductsProvider(widget.category.id))
+        .asData
+        ?.value;
     if (catProducts == null || catProducts.isEmpty) {
       return const SizedBox.shrink();
     }
 
-    final renderable = catProducts
-        .where((product) => product.inStock)
-        .toList(growable: false);
+    final renderable =
+        catProducts.where((product) => product.inStock).toList(growable: false);
     if (renderable.length < 2) {
       return const SizedBox.shrink();
     }
@@ -1993,15 +1997,21 @@ class _HomeLoadingView extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
                       SkeletonLoader(
-                          width: 190.w, height: 24.h, radius: 12,
+                          width: 190.w,
+                          height: 24.h,
+                          radius: 12,
                           useOwnShimmer: false),
                       Gap(8.h),
                       SkeletonLoader(
-                          width: 168.w, height: 24.h, radius: 12,
+                          width: 168.w,
+                          height: 24.h,
+                          radius: 12,
                           useOwnShimmer: false),
                       Gap(12.h),
                       SkeletonLoader(
-                          width: 220.w, height: 14.h, radius: 10,
+                          width: 220.w,
+                          height: 14.h,
+                          radius: 10,
                           useOwnShimmer: false),
                     ],
                   ),
@@ -2014,23 +2024,22 @@ class _HomeLoadingView extends StatelessWidget {
             ),
             Gap(24.h),
             SkeletonLoader(
-                width: double.infinity, height: 192.h, radius: 30,
+                width: double.infinity,
+                height: 192.h,
+                radius: 30,
                 useOwnShimmer: false),
             Gap(12.h),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
                 SkeletonLoader(
-                    width: 24.w, height: 8.h, radius: 99,
-                    useOwnShimmer: false),
+                    width: 24.w, height: 8.h, radius: 99, useOwnShimmer: false),
                 Gap(6.w),
                 SkeletonLoader(
-                    width: 8.w, height: 8.h, radius: 99,
-                    useOwnShimmer: false),
+                    width: 8.w, height: 8.h, radius: 99, useOwnShimmer: false),
                 Gap(6.w),
                 SkeletonLoader(
-                    width: 8.w, height: 8.h, radius: 99,
-                    useOwnShimmer: false),
+                    width: 8.w, height: 8.h, radius: 99, useOwnShimmer: false),
               ],
             ),
             Gap(18.h),
@@ -2055,8 +2064,7 @@ class _HomeLoadingView extends StatelessWidget {
             ),
             Gap(28.h),
             SkeletonLoader(
-                width: 180.w, height: 18.h, radius: 12,
-                useOwnShimmer: false),
+                width: 180.w, height: 18.h, radius: 12, useOwnShimmer: false),
             Gap(14.h),
             SizedBox(
               height: 306.h,
@@ -2116,13 +2124,14 @@ class _HomeSectionsSkeleton extends StatelessWidget {
           children: <Widget>[
             // Banner skeleton
             SkeletonLoader(
-                width: double.infinity, height: 160.h, radius: 24,
+                width: double.infinity,
+                height: 160.h,
+                radius: 24,
                 useOwnShimmer: false),
             Gap(16.h),
             // Section header skeleton
             SkeletonLoader(
-                width: 160.w, height: 18.h, radius: 10,
-                useOwnShimmer: false),
+                width: 160.w, height: 18.h, radius: 10, useOwnShimmer: false),
             Gap(12.h),
             // Horizontal product rail skeleton
             SizedBox(
@@ -2147,8 +2156,7 @@ class _HomeSectionsSkeleton extends StatelessWidget {
             ),
             Gap(20.h),
             SkeletonLoader(
-                width: 140.w, height: 18.h, radius: 10,
-                useOwnShimmer: false),
+                width: 140.w, height: 18.h, radius: 10, useOwnShimmer: false),
             Gap(12.h),
             SizedBox(
               height: 200.h,

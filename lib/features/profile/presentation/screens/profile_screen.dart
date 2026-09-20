@@ -237,8 +237,7 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
                           // remote icons.
                           iconWidget: button.iconType ==
                                       NavButtonIconType.custom &&
-                                  (button.customIconActiveUrl ?? '')
-                                      .isNotEmpty
+                                  (button.customIconActiveUrl ?? '').isNotEmpty
                               ? ClipOval(
                                   child: CachedNetworkImage(
                                     imageUrl: button.customIconActiveUrl!,
@@ -246,8 +245,7 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
                                     height: 22.w,
                                     memCacheWidth: 100,
                                     fit: BoxFit.cover,
-                                    placeholder: (context, url) =>
-                                        PhosphorIcon(
+                                    placeholder: (context, url) => PhosphorIcon(
                                       PhosphorIcons.linkLight,
                                       size: 19.sp,
                                       color: AppColors.textPrimary,
@@ -444,7 +442,8 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
   /// 'spin_wheel' sentinel opens the existing dialog directly rather than
   /// as a route) — a PROFILE_MENU button is the same nav_buttons row
   /// shape, just rendered as a menu list entry instead of a 5th tab.
-  void _handleProfileMenuButtonTap(BuildContext context, NavButtonEntity button) {
+  void _handleProfileMenuButtonTap(
+      BuildContext context, NavButtonEntity button) {
     switch (button.destinationType) {
       case NavButtonDestinationType.appRoute:
         if (button.destinationValue == 'spin_wheel') {

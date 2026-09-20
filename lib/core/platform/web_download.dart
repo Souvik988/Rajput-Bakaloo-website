@@ -28,8 +28,9 @@ class WebDownload {
       ..href = url
       ..download = fileName;
     web.document.body?.appendChild(anchor);
-    anchor.click();
-    anchor.remove();
+    anchor
+      ..click()
+      ..remove();
     web.URL.revokeObjectURL(url);
   }
 }

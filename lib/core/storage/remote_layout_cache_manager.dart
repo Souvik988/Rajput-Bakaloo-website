@@ -38,8 +38,7 @@ class RemoteLayoutCacheManager {
   /// version matches [remoteLayoutCacheVersion].
   static Future<void> ensureCurrentVersion() async {
     try {
-      final dynamic storedRaw =
-          HiveService.settingsBox.get(_cacheVersionKey);
+      final dynamic storedRaw = HiveService.settingsBox.get(_cacheVersionKey);
       final int storedVersion =
           storedRaw is int ? storedRaw : int.tryParse('$storedRaw') ?? 0;
 
@@ -98,8 +97,7 @@ class RemoteLayoutCacheManager {
     try {
       if (!Hive.isBoxOpen(_sectionManifestBoxName)) {
         // Open it just to wipe, then close.
-        final box =
-            await Hive.openBox<dynamic>(_sectionManifestBoxName);
+        final box = await Hive.openBox<dynamic>(_sectionManifestBoxName);
         await box.clear();
         await box.close();
       } else {

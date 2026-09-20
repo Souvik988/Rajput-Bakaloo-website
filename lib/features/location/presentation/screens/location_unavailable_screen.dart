@@ -29,8 +29,7 @@ class LocationUnavailableScreen extends StatelessWidget {
             'assets/images/bakaloo-location-unavailable-illustration.png',
         icon: PhosphorIcons.gpsSlashBold,
         title: "We're not in your area yet",
-        subtitle:
-            "We're expanding fast. Try a different location\n"
+        subtitle: "We're expanding fast. Try a different location\n"
             'or enable location access to check availability.',
         primaryLabel: 'Change location',
         onPrimary: onChangeLocation ??

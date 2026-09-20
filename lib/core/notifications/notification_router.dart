@@ -125,12 +125,12 @@ class NotificationRouter {
     final query = qIdx == -1 ? '' : path.substring(qIdx);
 
     const remaps = <String, String>{
-      '/notifications': RouteNames.notifications,   // was /profile/notifications
-      '/wallet':        RouteNames.wallet,           // was /profile/wallet
-      '/wishlist':      RouteNames.wishlist,         // was /profile/wishlist
-      '/settings':      RouteNames.settings,         // was /profile/settings
-      '/reviews':       RouteNames.myReviews,        // was /profile/reviews
-      '/addresses':     RouteNames.addresses,        // was /profile/addresses
+      '/notifications': RouteNames.notifications, // was /profile/notifications
+      '/wallet': RouteNames.wallet, // was /profile/wallet
+      '/wishlist': RouteNames.wishlist, // was /profile/wishlist
+      '/settings': RouteNames.settings, // was /profile/settings
+      '/reviews': RouteNames.myReviews, // was /profile/reviews
+      '/addresses': RouteNames.addresses, // was /profile/addresses
     };
 
     final mapped = remaps[base];

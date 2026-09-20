@@ -13,14 +13,17 @@ class ScratchCardRemoteDataSource {
 
   Future<ScratchAppearance> getAppearance() async {
     final response = await _apiClient.getScratchCardAppearance();
-    final payload = _parsePayload(response.data, ApiConstants.scratchCardAppearance);
+    final payload =
+        _parsePayload(response.data, ApiConstants.scratchCardAppearance);
     final data = payload['data'];
     if (data is! Map) {
       throw DioException.badResponse(
         statusCode: 500,
-        requestOptions: RequestOptions(path: ApiConstants.scratchCardAppearance),
+        requestOptions:
+            RequestOptions(path: ApiConstants.scratchCardAppearance),
         response: Response<dynamic>(
-          requestOptions: RequestOptions(path: ApiConstants.scratchCardAppearance),
+          requestOptions:
+              RequestOptions(path: ApiConstants.scratchCardAppearance),
           statusCode: 500,
           data: payload,
         ),
@@ -31,14 +34,17 @@ class ScratchCardRemoteDataSource {
 
   Future<ScratchEligibility> getEligibility() async {
     final response = await _apiClient.getScratchCardEligibility();
-    final payload = _parsePayload(response.data, ApiConstants.scratchCardEligibility);
+    final payload =
+        _parsePayload(response.data, ApiConstants.scratchCardEligibility);
     final data = payload['data'];
     if (data is! Map) {
       throw DioException.badResponse(
         statusCode: 500,
-        requestOptions: RequestOptions(path: ApiConstants.scratchCardEligibility),
+        requestOptions:
+            RequestOptions(path: ApiConstants.scratchCardEligibility),
         response: Response<dynamic>(
-          requestOptions: RequestOptions(path: ApiConstants.scratchCardEligibility),
+          requestOptions:
+              RequestOptions(path: ApiConstants.scratchCardEligibility),
           statusCode: 500,
           data: payload,
         ),
@@ -49,7 +55,8 @@ class ScratchCardRemoteDataSource {
 
   Future<ScratchResult> scratch() async {
     final response = await _apiClient.scratchCard();
-    final payload = _parsePayload(response.data, ApiConstants.scratchCardScratch);
+    final payload =
+        _parsePayload(response.data, ApiConstants.scratchCardScratch);
     final data = payload['data'];
     if (data is! Map) {
       throw DioException.badResponse(

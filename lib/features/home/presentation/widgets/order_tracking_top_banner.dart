@@ -37,7 +37,8 @@ String? _notificationEventKeyFor(OrderStatus status) {
 /// status whose matching push/in-app notification is switched off in
 /// Settings → Order Notifications — [notificationFlags] missing a key (still
 /// loading, fetch failed) defaults to enabled, never to suppressed.
-String _bannerMessageFor(OrderStatus status, Map<String, bool> notificationFlags) {
+String _bannerMessageFor(
+    OrderStatus status, Map<String, bool> notificationFlags) {
   final eventKey = _notificationEventKeyFor(status);
   if (eventKey != null && notificationFlags[eventKey] == false) {
     return '';
@@ -69,7 +70,8 @@ typedef _RawOrderStatus = ({String message, String key});
 final _rawOrderStatusProvider = Provider.autoDispose<_RawOrderStatus>((ref) {
   final activeOrderAsync = ref.watch(activeOrderProvider);
   final notificationFlags =
-      ref.watch(orderNotificationFlagsProvider).asData?.value ?? const <String, bool>{};
+      ref.watch(orderNotificationFlagsProvider).asData?.value ??
+          const <String, bool>{};
 
   // `.value` keeps the last-resolved order while a refetch is in flight
   // (only null before the very first load ever completes), so a socket
@@ -86,7 +88,10 @@ final _rawOrderStatusProvider = Provider.autoDispose<_RawOrderStatus>((ref) {
     return (message: '', key: '');
   }
 
-  return (message: message, key: '${activeOrder.id}::${activeOrder.status.name}');
+  return (
+    message: message,
+    key: '${activeOrder.id}::${activeOrder.status.name}'
+  );
 });
 
 /// Owns "what order-status banner is visible right now", if any — a single
@@ -180,7 +185,9 @@ class _OrderTrackingTopBannerState
         // early enough that the banner still appears with no visible delay.
         Future.microtask(() {
           if (!mounted) return;
-          ref.read(orderTrackingBannerProvider.notifier).sync(next.message, next.key);
+          ref
+              .read(orderTrackingBannerProvider.notifier)
+              .sync(next.message, next.key);
         });
       },
       fireImmediately: true,

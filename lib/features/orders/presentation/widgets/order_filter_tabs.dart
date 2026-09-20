@@ -81,9 +81,7 @@ class _FilterChip extends StatelessWidget {
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(100.r),
             border: Border.all(
-              color: selected
-                  ? AppColors.orderViolet
-                  : AppColors.borderLight,
+              color: selected ? AppColors.orderViolet : AppColors.borderLight,
               width: 1.2,
             ),
           ),

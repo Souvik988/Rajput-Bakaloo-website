@@ -22,16 +22,13 @@ import 'package:bakaloo_flutter_app/features/products/domain/entities/product_en
 
 final memoizedDefaultProductPoolProvider = Provider<List<ProductEntity>>(
   (Ref ref) {
-    final tabHome =
-        ref.watch(selectedTabHomeContentProvider).asData?.value;
-    final featured =
-        ref.watch(homeFeaturedProductsProvider).asData?.value ??
-            const <ProductEntity>[];
+    final tabHome = ref.watch(selectedTabHomeContentProvider).asData?.value;
+    final featured = ref.watch(homeFeaturedProductsProvider).asData?.value ??
+        const <ProductEntity>[];
     final deals =
         ref.watch(homeDealsProvider).asData?.value ?? const <ProductEntity>[];
-    final trending =
-        ref.watch(homeTrendingProductsProvider).asData?.value ??
-            const <ProductEntity>[];
+    final trending = ref.watch(homeTrendingProductsProvider).asData?.value ??
+        const <ProductEntity>[];
 
     // Build category section product list once — not per-section.
     final List<ProductEntity> categorySectionProducts;

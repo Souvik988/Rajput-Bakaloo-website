@@ -179,9 +179,9 @@ class _AddEditAddressScreenState extends ConsumerState<AddEditAddressScreen> {
     // address is still specific to this exact point, just without a named
     // road, so it's the better fallback of the two.
     final address = _firstNonEmpty(<String?>[
-      reverse?.addressLine1,
-      reverse?.displayName,
-    ]) ??
+          reverse?.addressLine1,
+          reverse?.displayName,
+        ]) ??
         '';
 
     // Runs once, right as the screen opens, before the customer has had a
@@ -439,8 +439,7 @@ class _AddEditAddressScreenState extends ConsumerState<AddEditAddressScreen> {
           return;
         }
         if (!serviceEnabled) {
-          AppToast.show(
-              context, '📍 Turn on location services and try again.',
+          AppToast.show(context, '📍 Turn on location services and try again.',
               type: ToastType.warning);
           return;
         }
@@ -795,186 +794,190 @@ class _AddEditAddressScreenState extends ConsumerState<AddEditAddressScreen> {
         body: Stack(
           children: <Widget>[
             GestureDetector(
-          behavior: HitTestBehavior.translucent,
-          onTap: () => FocusScope.of(context).unfocus(),
-          child: SafeArea(
-          top: false,
-          child: SingleChildScrollView(
-            // resizeToAvoidBottomInset is off (see comment above), so this
-            // scroll view's viewport never actually shrinks when the
-            // keyboard opens — without the extra bottomInset here, there is
-            // no genuine scrollable room below a lower field for
-            // Scrollable.ensureVisible (in _FormField) to scroll into, and
-            // it silently does nothing. Reported: focusing Receiver's Phone
-            // Number left it hidden behind the keyboard with only the
-            // floating SAVE ADDRESS button visible above it.
-            padding: EdgeInsets.only(bottom: 120.h + bottomInset),
-            child: Form(
-              key: _formKey,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
-                  Container(
-                    color: Colors.white,
-                    child: Column(
-                      children: <Widget>[
-                        Padding(
-                          padding: EdgeInsets.fromLTRB(16.w, 18.h, 16.w, 0),
-                          child: _FullNameSection(
-                            firstNameController: _firstNameController,
-                            lastNameController: _lastNameController,
-                          ),
-                        ),
-                        _AddressHeader(
-                          buttonLabel: _hasPinnedLocation ? 'Change' : 'Pick',
-                          statusMessage: _pincodeMessage,
-                          statusColor: switch (_pincodeStatus) {
-                            _PincodeValidationStatus.valid =>
-                              AppColors.primaryGreen,
-                            _PincodeValidationStatus.invalid =>
-                              AppColors.errorRed,
-                            _PincodeValidationStatus.loading =>
-                              AppColors.textSecondary,
-                            _PincodeValidationStatus.idle =>
-                              AppColors.textSecondary,
-                          },
-                          onChangeTap: _openMapPicker,
-                        ),
-                        const Divider(height: 1, color: AppColors.divider),
-                      ],
-                    ),
-                  ),
-                  Padding(
-                    padding: EdgeInsets.fromLTRB(16.w, 18.h, 16.w, 0),
-                    child: Text(
-                      'Add Address',
-                      style: AppTextStyles.labelLarge.copyWith(
-                        fontFamily: 'Poppins',
-                        fontSize: 14.sp,
-                        fontWeight: FontWeight.w600,
-                      ),
-                    ),
-                  ),
-                  Padding(
-                    padding: EdgeInsets.fromLTRB(16.w, 16.h, 16.w, 0),
+              behavior: HitTestBehavior.translucent,
+              onTap: () => FocusScope.of(context).unfocus(),
+              child: SafeArea(
+                top: false,
+                child: SingleChildScrollView(
+                  // resizeToAvoidBottomInset is off (see comment above), so this
+                  // scroll view's viewport never actually shrinks when the
+                  // keyboard opens — without the extra bottomInset here, there is
+                  // no genuine scrollable room below a lower field for
+                  // Scrollable.ensureVisible (in _FormField) to scroll into, and
+                  // it silently does nothing. Reported: focusing Receiver's Phone
+                  // Number left it hidden behind the keyboard with only the
+                  // floating SAVE ADDRESS button visible above it.
+                  padding: EdgeInsets.only(bottom: 120.h + bottomInset),
+                  child: Form(
+                    key: _formKey,
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: <Widget>[
-                        _FormField(
-                          controller: _houseNoController,
-                          label: 'House No. & Floor *',
-                          textInputAction: TextInputAction.next,
-                          validator: (String? value) {
-                            if ((value ?? '').trim().isEmpty) {
-                              return 'House no. and floor are required.';
-                            }
-                            return null;
-                          },
+                        Container(
+                          color: Colors.white,
+                          child: Column(
+                            children: <Widget>[
+                              Padding(
+                                padding:
+                                    EdgeInsets.fromLTRB(16.w, 18.h, 16.w, 0),
+                                child: _FullNameSection(
+                                  firstNameController: _firstNameController,
+                                  lastNameController: _lastNameController,
+                                ),
+                              ),
+                              _AddressHeader(
+                                buttonLabel:
+                                    _hasPinnedLocation ? 'Change' : 'Pick',
+                                statusMessage: _pincodeMessage,
+                                statusColor: switch (_pincodeStatus) {
+                                  _PincodeValidationStatus.valid =>
+                                    AppColors.primaryGreen,
+                                  _PincodeValidationStatus.invalid =>
+                                    AppColors.errorRed,
+                                  _PincodeValidationStatus.loading =>
+                                    AppColors.textSecondary,
+                                  _PincodeValidationStatus.idle =>
+                                    AppColors.textSecondary,
+                                },
+                                onChangeTap: _openMapPicker,
+                              ),
+                              const Divider(
+                                  height: 1, color: AppColors.divider),
+                            ],
+                          ),
                         ),
-                        Gap(12.h),
-                        _FormField(
-                          controller: _buildingController,
-                          label: 'Building & Block No. (Optional)',
-                          textInputAction: TextInputAction.next,
+                        Padding(
+                          padding: EdgeInsets.fromLTRB(16.w, 18.h, 16.w, 0),
+                          child: Text(
+                            'Add Address',
+                            style: AppTextStyles.labelLarge.copyWith(
+                              fontFamily: 'Poppins',
+                              fontSize: 14.sp,
+                              fontWeight: FontWeight.w600,
+                            ),
+                          ),
                         ),
-                        Gap(12.h),
-                        _FormField(
-                          controller: _addressController,
-                          label: 'Address *',
-                          textInputAction: TextInputAction.next,
-                          validator: (String? value) {
-                            if ((value ?? '').trim().isEmpty) {
-                              return 'Address is required.';
-                            }
-                            return null;
-                          },
-                        ),
-                        Gap(12.h),
-                        _FormField(
-                          controller: _landmarkController,
-                          label: 'Landmark & Area Name (Optional)',
-                          textInputAction: TextInputAction.next,
-                        ),
-                        Gap(12.h),
-                        Row(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: <Widget>[
-                            Expanded(
-                              child: _FormField(
-                                controller: _cityController,
-                                label: 'City *',
+                        Padding(
+                          padding: EdgeInsets.fromLTRB(16.w, 16.h, 16.w, 0),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: <Widget>[
+                              _FormField(
+                                controller: _houseNoController,
+                                label: 'House No. & Floor *',
                                 textInputAction: TextInputAction.next,
                                 validator: (String? value) {
                                   if ((value ?? '').trim().isEmpty) {
-                                    return 'City is required.';
+                                    return 'House no. and floor are required.';
                                   }
                                   return null;
                                 },
                               ),
-                            ),
-                            Gap(12.w),
-                            Expanded(
-                              child: _FormField(
-                                controller: _pincodeController,
-                                label: 'PIN Code *',
-                                keyboardType: TextInputType.number,
+                              Gap(12.h),
+                              _FormField(
+                                controller: _buildingController,
+                                label: 'Building & Block No. (Optional)',
                                 textInputAction: TextInputAction.next,
-                                maxLength: 6,
+                              ),
+                              Gap(12.h),
+                              _FormField(
+                                controller: _addressController,
+                                label: 'Address *',
+                                textInputAction: TextInputAction.next,
                                 validator: (String? value) {
-                                  final trimmed = (value ?? '').trim();
-                                  if (trimmed.isEmpty) {
-                                    return 'PIN code is required.';
+                                  if ((value ?? '').trim().isEmpty) {
+                                    return 'Address is required.';
                                   }
-                                  return Validators.validatePincode(trimmed);
+                                  return null;
                                 },
                               ),
-                            ),
-                          ],
-                        ),
-                        Gap(12.h),
-                        _FormField(
-                          controller: _stateController,
-                          label: 'State *',
-                          textInputAction: TextInputAction.done,
-                          validator: (String? value) {
-                            if ((value ?? '').trim().isEmpty) {
-                              return 'State is required.';
-                            }
-                            return null;
-                          },
-                        ),
-                        Gap(20.h),
-                        Text(
-                          'Add Address Label',
-                          style: AppTextStyles.labelLarge.copyWith(
-                            fontFamily: 'Poppins',
-                            fontSize: 14.sp,
-                            fontWeight: FontWeight.w600,
+                              Gap(12.h),
+                              _FormField(
+                                controller: _landmarkController,
+                                label: 'Landmark & Area Name (Optional)',
+                                textInputAction: TextInputAction.next,
+                              ),
+                              Gap(12.h),
+                              Row(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: <Widget>[
+                                  Expanded(
+                                    child: _FormField(
+                                      controller: _cityController,
+                                      label: 'City *',
+                                      textInputAction: TextInputAction.next,
+                                      validator: (String? value) {
+                                        if ((value ?? '').trim().isEmpty) {
+                                          return 'City is required.';
+                                        }
+                                        return null;
+                                      },
+                                    ),
+                                  ),
+                                  Gap(12.w),
+                                  Expanded(
+                                    child: _FormField(
+                                      controller: _pincodeController,
+                                      label: 'PIN Code *',
+                                      keyboardType: TextInputType.number,
+                                      textInputAction: TextInputAction.next,
+                                      maxLength: 6,
+                                      validator: (String? value) {
+                                        final trimmed = (value ?? '').trim();
+                                        if (trimmed.isEmpty) {
+                                          return 'PIN code is required.';
+                                        }
+                                        return Validators.validatePincode(
+                                            trimmed);
+                                      },
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              Gap(12.h),
+                              _FormField(
+                                controller: _stateController,
+                                label: 'State *',
+                                textInputAction: TextInputAction.done,
+                                validator: (String? value) {
+                                  if ((value ?? '').trim().isEmpty) {
+                                    return 'State is required.';
+                                  }
+                                  return null;
+                                },
+                              ),
+                              Gap(20.h),
+                              Text(
+                                'Add Address Label',
+                                style: AppTextStyles.labelLarge.copyWith(
+                                  fontFamily: 'Poppins',
+                                  fontSize: 14.sp,
+                                  fontWeight: FontWeight.w600,
+                                ),
+                              ),
+                              Gap(12.h),
+                              _LabelChipSelector(
+                                labels: _labels,
+                                selectedLabel: _selectedLabel,
+                                onSelected: (String label) {
+                                  setState(() {
+                                    _selectedLabel = label;
+                                  });
+                                },
+                              ),
+                              Gap(22.h),
+                              _ReceiverSection(
+                                phoneController: _receiverPhoneController,
+                                onContactTap: _prefillPhoneFromAccount,
+                              ),
+                            ],
                           ),
-                        ),
-                        Gap(12.h),
-                        _LabelChipSelector(
-                          labels: _labels,
-                          selectedLabel: _selectedLabel,
-                          onSelected: (String label) {
-                            setState(() {
-                              _selectedLabel = label;
-                            });
-                          },
-                        ),
-                        Gap(22.h),
-                        _ReceiverSection(
-                          phoneController: _receiverPhoneController,
-                          onContactTap: _prefillPhoneFromAccount,
                         ),
                       ],
                     ),
                   ),
-                ],
+                ),
               ),
-            ),
-          ),
-        ),
             ),
             // Floats directly above the software keyboard, sliding smoothly
             // back down to the screen edge when it closes — bottomNavigationBar
@@ -993,7 +996,10 @@ class _AddEditAddressScreenState extends ConsumerState<AddEditAddressScreen> {
                   16.w,
                   12.h,
                   16.w,
-                  12.h + (bottomInset == 0 ? MediaQuery.of(context).padding.bottom : 0),
+                  12.h +
+                      (bottomInset == 0
+                          ? MediaQuery.of(context).padding.bottom
+                          : 0),
                 ),
                 decoration: const BoxDecoration(
                   color: Colors.white,
@@ -1008,7 +1014,8 @@ class _AddEditAddressScreenState extends ConsumerState<AddEditAddressScreen> {
                       disabledBackgroundColor: const Color(0xFFE8E8E8),
                       disabledForegroundColor: AppColors.textTertiary,
                       shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(AppDimensions.radiusMd),
+                        borderRadius:
+                            BorderRadius.circular(AppDimensions.radiusMd),
                       ),
                     ),
                     child: _isSaving

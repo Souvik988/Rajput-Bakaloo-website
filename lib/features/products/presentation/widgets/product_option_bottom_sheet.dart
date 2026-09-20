@@ -487,8 +487,9 @@ class _CartActionButton extends ConsumerWidget {
           // at 1 — land straight on it instead, same as every other ADD
           // surface (product card, search, product detail).
           final wholesaleActive = ref.read(isWholesalePricingActiveProvider);
-          final startQty =
-              wholesaleActive && option.hasBulkMinimum ? option.bulkMinQuantity! : 1;
+          final startQty = wholesaleActive && option.hasBulkMinimum
+              ? option.bulkMinQuantity!
+              : 1;
           final result = await ref.read(cartProvider.notifier).addItem(
                 option.id,
                 startQty,
@@ -543,10 +544,12 @@ class _QuantityStepper extends ConsumerWidget {
     // Bulk quantity floor/ceiling only ever apply while the viewer is
     // actually buying wholesale — same gating as every other ADD surface.
     final wholesaleActive = ref.watch(isWholesalePricingActiveProvider);
-    final bulkMinimum =
-        wholesaleActive && option.hasBulkMinimum ? option.bulkMinQuantity : null;
-    final bulkMaximum =
-        wholesaleActive && option.hasBulkMaximum ? option.bulkMaxQuantity : null;
+    final bulkMinimum = wholesaleActive && option.hasBulkMinimum
+        ? option.bulkMinQuantity
+        : null;
+    final bulkMaximum = wholesaleActive && option.hasBulkMaximum
+        ? option.bulkMaxQuantity
+        : null;
     final effectiveMax = bulkMaximum ?? option.maxOrderQty ?? 50;
 
     return Container(

@@ -131,7 +131,8 @@ class _OrdersScreenState extends ConsumerState<OrdersScreen> {
           ..invalidate(activeOrderProvider)
           ..invalidate(orderDetailProvider(order.id));
         _pagingController.refresh();
-        AppToast.show(context, '✅ Order cancelled successfully', type: ToastType.success);
+        AppToast.show(context, '✅ Order cancelled successfully',
+            type: ToastType.success);
       },
     );
   }
@@ -163,7 +164,8 @@ class _OrdersScreenState extends ConsumerState<OrdersScreen> {
         ref.invalidate(cartProvider);
         final warnings =
             data.warnings.isEmpty ? '' : '\n${data.warnings.join('\n')}';
-        AppToast.show(context, 'Items added to cart$warnings', type: ToastType.success);
+        AppToast.show(context, 'Items added to cart$warnings',
+            type: ToastType.success);
         // Take the user straight to the cart so the reorder has a visible
         // result instead of silently adding items in the background.
         context.push(RouteNames.cart);

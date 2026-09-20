@@ -282,8 +282,7 @@ class _StoreScreenShellState extends ConsumerState<StoreScreenShell>
                                 );
                                 return HomeHeader(
                                   addressText: addressText,
-                                  onAddressTap: () =>
-                                      showAddressSheet(context),
+                                  onAddressTap: () => showAddressSheet(context),
                                   onNotificationTap: () =>
                                       context.go(RouteNames.notifications),
                                   onWalletTap: () =>

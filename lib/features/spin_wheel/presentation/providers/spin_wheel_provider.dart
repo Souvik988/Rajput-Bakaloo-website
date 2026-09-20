@@ -136,7 +136,8 @@ class SpinWheelNotifier extends Notifier<SpinWheelState> {
         final index = currentPrizes.indexWhere((p) => p.id == result.prizeId);
         state = SpinWheelState(
           status: SpinWheelStatus.result,
-          resolved: ResolvedSpin(prizeIndex: index == -1 ? 0 : index, result: result),
+          resolved:
+              ResolvedSpin(prizeIndex: index == -1 ? 0 : index, result: result),
         );
         return result;
       },

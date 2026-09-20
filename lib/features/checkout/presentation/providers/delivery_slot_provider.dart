@@ -18,6 +18,7 @@ Future<List<DeliverySlotDayEntity>> deliverySlots(Ref ref) async {
   if (data == null) return [];
   final rawDays = data['days'] as List<dynamic>? ?? [];
   return rawDays
-      .map((d) => DeliverySlotDayEntity.fromJson(Map<String, dynamic>.from(d as Map)))
+      .map((d) =>
+          DeliverySlotDayEntity.fromJson(Map<String, dynamic>.from(d as Map)))
       .toList();
 }

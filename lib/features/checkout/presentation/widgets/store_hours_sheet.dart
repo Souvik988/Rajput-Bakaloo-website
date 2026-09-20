@@ -60,7 +60,8 @@ class StoreHoursSheet extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final statusAsync = ref.watch(storeStatusProvider);
-    final days = statusAsync.asData?.value.next7Days ?? const <StoreDayAvailability>[];
+    final days =
+        statusAsync.asData?.value.next7Days ?? const <StoreDayAvailability>[];
 
     return Container(
       constraints: BoxConstraints(maxHeight: 0.8.sh),
@@ -124,7 +125,8 @@ class StoreHoursSheet extends ConsumerWidget {
               padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 24.h),
               child: Text(
                 'Store hours aren\'t set up yet — the store is open for delivery.',
-                style: TextStyle(fontSize: 13.sp, color: _kGrey, fontFamily: 'Inter'),
+                style: TextStyle(
+                    fontSize: 13.sp, color: _kGrey, fontFamily: 'Inter'),
               ),
             )
           else
@@ -138,7 +140,8 @@ class StoreHoursSheet extends ConsumerWidget {
                   final day = days[index];
                   final hoursText = day.open != null && day.close != null
                       ? '${_formatTime(day.open)} – ${_formatTime(day.close)}'
-                      : (day.reason ?? (day.isOpen ? 'Open all day' : 'Closed'));
+                      : (day.reason ??
+                          (day.isOpen ? 'Open all day' : 'Closed'));
                   return _DayRow(
                     label: _dayLabel(index, day.weekday),
                     isOpen: day.isOpen,

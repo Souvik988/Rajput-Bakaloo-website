@@ -112,31 +112,46 @@ void main() {
   group('ProductOptionItem.inStock', () {
     test('true when available and stock > 0', () {
       final opt = ProductOptionItem.fromJson({
-        'id': '1', 'name': 'T', 'unit': 'g', 'price': 10,
-        'isAvailable': true, 'stockQuantity': 5,
+        'id': '1',
+        'name': 'T',
+        'unit': 'g',
+        'price': 10,
+        'isAvailable': true,
+        'stockQuantity': 5,
       });
       expect(opt.inStock, isTrue);
     });
 
     test('false when not available', () {
       final opt = ProductOptionItem.fromJson({
-        'id': '1', 'name': 'T', 'unit': 'g', 'price': 10,
-        'isAvailable': false, 'stockQuantity': 5,
+        'id': '1',
+        'name': 'T',
+        'unit': 'g',
+        'price': 10,
+        'isAvailable': false,
+        'stockQuantity': 5,
       });
       expect(opt.inStock, isFalse);
     });
 
     test('false when stock is 0', () {
       final opt = ProductOptionItem.fromJson({
-        'id': '1', 'name': 'T', 'unit': 'g', 'price': 10,
-        'isAvailable': true, 'stockQuantity': 0,
+        'id': '1',
+        'name': 'T',
+        'unit': 'g',
+        'price': 10,
+        'isAvailable': true,
+        'stockQuantity': 0,
       });
       expect(opt.inStock, isFalse);
     });
 
     test('true when stockQuantity is null (unknown stock)', () {
       final opt = ProductOptionItem.fromJson({
-        'id': '1', 'name': 'T', 'unit': 'g', 'price': 10,
+        'id': '1',
+        'name': 'T',
+        'unit': 'g',
+        'price': 10,
         'isAvailable': true,
       });
       expect(opt.inStock, isTrue);

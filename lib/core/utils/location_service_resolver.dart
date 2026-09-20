@@ -116,6 +116,20 @@ Future<void> openLocationPermissionSettings() {
   return Geolocator.openAppSettings();
 }
 
+/// Live stream of the device-wide Location Services switch being toggled
+/// while the app is in the foreground.
+///
+/// WEB PORT: geolocator's web implementation throws for this stream (a
+/// browser has no OS location-service switch to observe), so callers get
+/// null there and skip the subscription instead of crashing on home-screen
+/// startup. Mobile behavior is unchanged.
+Stream<ServiceStatus>? locationServiceStatusStream() {
+  if (kIsWeb) {
+    return null;
+  }
+  return Geolocator.getServiceStatusStream();
+}
+
 /// Completes the first time this app returns to the foreground after being
 /// backgrounded — the reliable signal that a customer sent to Settings
 /// (either for location services or app permission) has come back, so

@@ -92,7 +92,8 @@ class ScratchRevealState extends State<ScratchReveal> {
   }
 
   void _dab(Offset point) {
-    _scratchedUnion.addOval(Rect.fromCircle(center: point, radius: widget.brushRadius));
+    _scratchedUnion
+        .addOval(Rect.fromCircle(center: point, radius: widget.brushRadius));
     final checkpoints = _checkpoints;
     if (checkpoints == null) return;
     for (var i = 0; i < checkpoints.length; i++) {

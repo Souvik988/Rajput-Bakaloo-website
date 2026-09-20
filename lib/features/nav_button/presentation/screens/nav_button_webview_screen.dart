@@ -51,19 +51,16 @@ class _NavButtonWebviewScreenState
     var target = widget.url;
     if (widget.passIdentity) {
       try {
-        final token = await ref
-            .read(navButtonRemoteDataSourceProvider)
-            .getWebviewToken();
+        final token =
+            await ref.read(navButtonRemoteDataSourceProvider).getWebviewToken();
         if (token != null && token.isNotEmpty) {
           final uri = Uri.parse(widget.url);
-          target = uri
-              .replace(
-                queryParameters: <String, String>{
-                  ...uri.queryParameters,
-                  'bakaloo_token': token,
-                },
-              )
-              .toString();
+          target = uri.replace(
+            queryParameters: <String, String>{
+              ...uri.queryParameters,
+              'bakaloo_token': token,
+            },
+          ).toString();
         }
       } catch (_) {
         // Identity handoff is best-effort — the destination still loads,

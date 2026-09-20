@@ -192,7 +192,8 @@ class AddressListScreen extends ConsumerWidget {
     }
 
     if (!result.isSuccess) {
-      AppToast.show(context, result.failure?.message ?? 'Unable to delete address.');
+      AppToast.show(
+          context, result.failure?.message ?? 'Unable to delete address.');
       return;
     }
 
@@ -211,7 +212,8 @@ class AddressListScreen extends ConsumerWidget {
       return;
     }
 
-    AppToast.show(context, result.failure?.message ?? 'Unable to update address.');
+    AppToast.show(
+        context, result.failure?.message ?? 'Unable to update address.');
   }
 
   void _shareAddress(AddressEntity address) {

@@ -37,8 +37,7 @@ class ProductStoreInfo {
       shopName: shopName,
       isAvailableAtSelectedLocation:
           json['isAvailableAtSelectedLocation'] == true,
-      availabilityReason:
-          (json['availabilityReason'] as String?) ?? 'UNKNOWN',
+      availabilityReason: (json['availabilityReason'] as String?) ?? 'UNKNOWN',
       selectedPincode: json['selectedPincode'] as String?,
       stockStatus: (json['stockStatus'] as String?) ?? 'unknown',
     );

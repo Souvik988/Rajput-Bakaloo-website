@@ -52,84 +52,84 @@ class AnimatedBannerSection extends StatelessWidget {
           ? null
           : () => handleLinkTap(context, linkUrl!.trim()),
       child: RepaintBoundary(
-      child: DecoratedBox(
-        decoration: BoxDecoration(
-          color: containerColor,
-        ),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: <Widget>[
-            SizedBox(
-              width: double.infinity,
-              height: height.h,
-              child: Stack(
-                fit: StackFit.expand,
-                children: <Widget>[
-                  DecoratedBox(
-                    decoration: BoxDecoration(
-                      gradient: LinearGradient(
-                        begin: Alignment.topCenter,
-                        end: Alignment.bottomCenter,
-                        colors: <Color>[
-                          backgroundGradient.first,
-                          backgroundGradient.last,
-                        ],
-                      ),
-                    ),
-                  ),
-                  const DecoratedBox(
-                    decoration: BoxDecoration(
-                      gradient: LinearGradient(
-                        begin: Alignment.topCenter,
-                        end: Alignment.bottomCenter,
-                        colors: <Color>[
-                          Color(0x26FFFFFF),
-                          Color(0x10FFFFFF),
-                          Color(0x00FFFFFF),
-                        ],
-                        stops: <double>[0, 0.28, 0.62],
-                      ),
-                    ),
-                  ),
-                  _BannerAnimation(
-                    assetPath: assetPath,
-                    imageUrl: imageUrl,
-                    lottieUrl: lottieUrl,
-                  ),
-                ],
-              ),
-            ),
-            if (feeStripVisible) ...<Widget>[
-              SizedBox(height: 4.h),
+        child: DecoratedBox(
+          decoration: BoxDecoration(
+            color: containerColor,
+          ),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: <Widget>[
               SizedBox(
                 width: double.infinity,
-                height: feeStripHeight,
-                child: Padding(
-                  padding: EdgeInsets.symmetric(
-                    horizontal: feeStripHorizontalInset,
-                  ),
-                  child: ClipRect(
-                    child: Transform.translate(
-                      offset: Offset(0, feeStripImageYOffset),
-                      child: feeStripImageUrl != null
-                          ? AppImage(
-                              imageUrl: feeStripImageUrl,
-                              memCacheWidth: 1200,
-                              memCacheHeight: 192,
-                              fit: BoxFit.fill,
-                              filterQuality: FilterQuality.high,
-                              placeholder: const SizedBox.expand(),
-                              errorWidget: const SizedBox.expand(),
-                            )
-                          : const SizedBox.expand(),
+                height: height.h,
+                child: Stack(
+                  fit: StackFit.expand,
+                  children: <Widget>[
+                    DecoratedBox(
+                      decoration: BoxDecoration(
+                        gradient: LinearGradient(
+                          begin: Alignment.topCenter,
+                          end: Alignment.bottomCenter,
+                          colors: <Color>[
+                            backgroundGradient.first,
+                            backgroundGradient.last,
+                          ],
+                        ),
+                      ),
+                    ),
+                    const DecoratedBox(
+                      decoration: BoxDecoration(
+                        gradient: LinearGradient(
+                          begin: Alignment.topCenter,
+                          end: Alignment.bottomCenter,
+                          colors: <Color>[
+                            Color(0x26FFFFFF),
+                            Color(0x10FFFFFF),
+                            Color(0x00FFFFFF),
+                          ],
+                          stops: <double>[0, 0.28, 0.62],
+                        ),
+                      ),
+                    ),
+                    _BannerAnimation(
+                      assetPath: assetPath,
+                      imageUrl: imageUrl,
+                      lottieUrl: lottieUrl,
+                    ),
+                  ],
+                ),
+              ),
+              if (feeStripVisible) ...<Widget>[
+                SizedBox(height: 4.h),
+                SizedBox(
+                  width: double.infinity,
+                  height: feeStripHeight,
+                  child: Padding(
+                    padding: EdgeInsets.symmetric(
+                      horizontal: feeStripHorizontalInset,
+                    ),
+                    child: ClipRect(
+                      child: Transform.translate(
+                        offset: Offset(0, feeStripImageYOffset),
+                        child: feeStripImageUrl != null
+                            ? AppImage(
+                                imageUrl: feeStripImageUrl,
+                                memCacheWidth: 1200,
+                                memCacheHeight: 192,
+                                fit: BoxFit.fill,
+                                filterQuality: FilterQuality.high,
+                                placeholder: const SizedBox.expand(),
+                                errorWidget: const SizedBox.expand(),
+                              )
+                            : const SizedBox.expand(),
+                      ),
                     ),
                   ),
                 ),
-              ),
+              ],
             ],
-          ],
+          ),
         ),
-      ),
       ),
     );
   }

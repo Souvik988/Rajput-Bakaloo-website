@@ -62,7 +62,8 @@ class CartRemoteDataSource {
     );
   }
 
-  Future<CartModel> removeItem(String productId, {String? shopProductId}) async {
+  Future<CartModel> removeItem(String productId,
+      {String? shopProductId}) async {
     final response = await _apiClient.removeCartItem(
       productId,
       shopProductId: shopProductId,

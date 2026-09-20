@@ -50,9 +50,10 @@ class LedgerRemoteDataSource {
     return LedgerAccountEntity(
       id: (json['id'] ?? '').toString(),
       status: (json['status'] ?? 'CLOSED').toString(),
-      currentBalance: _readDouble(json, <String>['current_balance', 'currentBalance']),
-      monthlyCreditLimit:
-          _readDouble(json, <String>['monthly_credit_limit', 'monthlyCreditLimit']),
+      currentBalance:
+          _readDouble(json, <String>['current_balance', 'currentBalance']),
+      monthlyCreditLimit: _readDouble(
+          json, <String>['monthly_credit_limit', 'monthlyCreditLimit']),
       hardLimit: _readDouble(json, <String>['hard_limit', 'hardLimit']),
       billingDay: _readInt(json, <String>['billing_day', 'billingDay']),
     );

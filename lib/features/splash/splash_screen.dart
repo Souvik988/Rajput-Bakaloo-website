@@ -43,8 +43,10 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
                 memCacheWidth: 1080,
                 memCacheHeight: 1920,
                 fit: BoxFit.cover,
-                placeholder: Image.asset(_defaultSplashAsset, fit: BoxFit.cover),
-                errorWidget: Image.asset(_defaultSplashAsset, fit: BoxFit.cover),
+                placeholder:
+                    Image.asset(_defaultSplashAsset, fit: BoxFit.cover),
+                errorWidget:
+                    Image.asset(_defaultSplashAsset, fit: BoxFit.cover),
               ),
       ),
     );

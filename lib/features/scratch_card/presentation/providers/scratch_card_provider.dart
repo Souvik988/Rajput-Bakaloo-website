@@ -13,25 +13,29 @@ import 'package:bakaloo_flutter_app/features/scratch_card/domain/usecases/scratc
 
 part 'scratch_card_provider.g.dart';
 
-final scratchCardRemoteDataSourceProvider = Provider<ScratchCardRemoteDataSource>((
+final scratchCardRemoteDataSourceProvider =
+    Provider<ScratchCardRemoteDataSource>((
   Ref ref,
 ) {
   return ScratchCardRemoteDataSource(ref.watch(apiClientProvider));
 });
 
-final scratchCardRepositoryProvider = Provider<ScratchCardRepository>((Ref ref) {
+final scratchCardRepositoryProvider =
+    Provider<ScratchCardRepository>((Ref ref) {
   return ScratchCardRepositoryImpl(
     remoteDataSource: ref.watch(scratchCardRemoteDataSourceProvider),
   );
 });
 
-final getScratchAppearanceUseCaseProvider = Provider<GetScratchAppearanceUseCase>((
+final getScratchAppearanceUseCaseProvider =
+    Provider<GetScratchAppearanceUseCase>((
   Ref ref,
 ) {
   return GetScratchAppearanceUseCase(ref.watch(scratchCardRepositoryProvider));
 });
 
-final getScratchEligibilityUseCaseProvider = Provider<GetScratchEligibilityUseCase>((
+final getScratchEligibilityUseCaseProvider =
+    Provider<GetScratchEligibilityUseCase>((
   Ref ref,
 ) {
   return GetScratchEligibilityUseCase(ref.watch(scratchCardRepositoryProvider));

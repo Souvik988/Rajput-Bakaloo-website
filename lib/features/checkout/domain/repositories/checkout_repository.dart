@@ -26,8 +26,10 @@ class PlaceOrderParams {
   final String? scheduledSlotStart;
   final String? scheduledSlotEnd;
   final String? scheduledSlotLabel;
+
   /// Explicit opt-in only — never implied by `deliveryMode == 'ASAP'` alone.
   final bool quickDeliverySelected;
+
   /// Explicit opt-in only — applies wallet balance against the total on top
   /// of [paymentMethod] rather than replacing it. Ignored by the backend
   /// when paymentMethod is the legacy 'WALLET'.
@@ -45,10 +47,13 @@ class PlaceOrderParams {
         'deliveryNotes': deliveryNotes!.trim(),
       'deliveryMode': deliveryMode,
       if (deliveryMode == 'SCHEDULED') ...{
-        if (scheduledDeliveryAt != null) 'scheduledDeliveryAt': scheduledDeliveryAt,
-        if (scheduledSlotStart != null) 'scheduledSlotStart': scheduledSlotStart,
+        if (scheduledDeliveryAt != null)
+          'scheduledDeliveryAt': scheduledDeliveryAt,
+        if (scheduledSlotStart != null)
+          'scheduledSlotStart': scheduledSlotStart,
         if (scheduledSlotEnd != null) 'scheduledSlotEnd': scheduledSlotEnd,
-        if (scheduledSlotLabel != null) 'scheduledSlotLabel': scheduledSlotLabel,
+        if (scheduledSlotLabel != null)
+          'scheduledSlotLabel': scheduledSlotLabel,
       },
       if (deliveryMode == 'ASAP' && quickDeliverySelected)
         'quickDeliverySelected': true,

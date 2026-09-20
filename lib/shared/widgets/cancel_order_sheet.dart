@@ -104,8 +104,8 @@ class _CancelOrderSheetState extends State<CancelOrderSheet> {
           left: AppDimensions.spacing24,
           right: AppDimensions.spacing24,
           top: AppDimensions.spacing8,
-          bottom: AppDimensions.spacing24 +
-              MediaQuery.viewInsetsOf(context).bottom,
+          bottom:
+              AppDimensions.spacing24 + MediaQuery.viewInsetsOf(context).bottom,
         ),
         child: AnimatedSwitcher(
           duration: const Duration(milliseconds: 200),
@@ -134,8 +134,8 @@ class _CancelOrderSheetState extends State<CancelOrderSheet> {
         ),
         Text(
           "Tell us why you're cancelling ${widget.orderNumber}",
-          style: AppTextStyles.bodyMedium
-              .copyWith(color: AppColors.textSecondary),
+          style:
+              AppTextStyles.bodyMedium.copyWith(color: AppColors.textSecondary),
         ),
         const Gap(AppDimensions.spacing16),
         ..._kCancelReasons.map(
@@ -288,9 +288,7 @@ class _ReasonRow extends StatelessWidget {
           vertical: AppDimensions.spacing12,
         ),
         decoration: BoxDecoration(
-          color: selected
-              ? AppColors.primaryGreenLight
-              : AppColors.bgCard,
+          color: selected ? AppColors.primaryGreenLight : AppColors.bgCard,
           borderRadius: BorderRadius.circular(AppDimensions.radiusMd),
           border: Border.all(
             color: selected ? AppColors.primaryGreen : AppColors.borderLight,
@@ -342,14 +340,13 @@ class _ReviewRow extends StatelessWidget {
       children: <Widget>[
         Text(
           label,
-          style: AppTextStyles.bodySmall
-              .copyWith(color: AppColors.textSecondary),
+          style:
+              AppTextStyles.bodySmall.copyWith(color: AppColors.textSecondary),
         ),
         const Gap(AppDimensions.spacing4),
         Text(
           value,
-          style: AppTextStyles.labelLarge
-              .copyWith(fontWeight: FontWeight.w700),
+          style: AppTextStyles.labelLarge.copyWith(fontWeight: FontWeight.w700),
         ),
       ],
     );

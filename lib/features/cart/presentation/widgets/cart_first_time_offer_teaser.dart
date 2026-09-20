@@ -41,9 +41,7 @@ class CartFirstTimeOfferTeaser extends StatelessWidget {
     if (cursor < teaser.message.length) {
       spans.add(TextSpan(text: teaser.message.substring(cursor)));
     }
-    return spans.isEmpty
-        ? <InlineSpan>[TextSpan(text: teaser.message)]
-        : spans;
+    return spans.isEmpty ? <InlineSpan>[TextSpan(text: teaser.message)] : spans;
   }
 
   @override

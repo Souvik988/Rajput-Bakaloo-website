@@ -17,7 +17,8 @@ import 'package:bakaloo_flutter_app/core/di/providers.dart';
 /// callers should default to `true` when a status isn't present in the map,
 /// so a network hiccup here never silently hides a status update the
 /// customer should see.
-final orderNotificationFlagsProvider = FutureProvider<Map<String, bool>>((ref) async {
+final orderNotificationFlagsProvider =
+    FutureProvider<Map<String, bool>>((ref) async {
   final dio = ref.watch(dioClientProvider);
   try {
     final response = await dio.get<dynamic>('/notifications/event-flags');

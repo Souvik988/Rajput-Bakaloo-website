@@ -432,7 +432,8 @@ class _OrderTrackingScreenState extends ConsumerState<OrderTrackingScreen> {
       _mapMessage = null;
     });
 
-    final route = await ref.read(olaMapsServiceProvider).getRoute(origin, destination);
+    final route =
+        await ref.read(olaMapsServiceProvider).getRoute(origin, destination);
     if (!mounted) {
       return;
     }

@@ -71,7 +71,8 @@ class CouponModel {
         'cashbackAmount',
         fallbackKey: 'cashback_amount',
       ),
-      freeDelivery: json['freeDelivery'] == true || json['free_delivery'] == true,
+      freeDelivery:
+          json['freeDelivery'] == true || json['free_delivery'] == true,
       applicableCategoryIds: _readStringList(
         json,
         'applicableCategoryIds',

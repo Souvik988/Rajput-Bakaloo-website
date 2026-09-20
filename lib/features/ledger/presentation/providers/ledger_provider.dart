@@ -20,7 +20,8 @@ class LedgerActionResult {
   bool get isSuccess => failure == null;
 }
 
-final ledgerRemoteDataSourceProvider = Provider<LedgerRemoteDataSource>((Ref ref) {
+final ledgerRemoteDataSourceProvider =
+    Provider<LedgerRemoteDataSource>((Ref ref) {
   return LedgerRemoteDataSource(ref.watch(apiClientProvider));
 });
 
@@ -30,7 +31,8 @@ final ledgerRepositoryProvider = Provider<LedgerRepository>((Ref ref) {
   );
 });
 
-final getMyLedgerAccountUseCaseProvider = Provider<GetMyLedgerAccountUseCase>((Ref ref) {
+final getMyLedgerAccountUseCaseProvider =
+    Provider<GetMyLedgerAccountUseCase>((Ref ref) {
   return GetMyLedgerAccountUseCase(ref.watch(ledgerRepositoryProvider));
 });
 

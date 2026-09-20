@@ -78,9 +78,7 @@ class WishlistScreen extends ConsumerWidget {
           // extra per-card network call. Cheap no-op once already known.
           WidgetsBinding.instance.addPostFrameCallback((_) {
             ref.read(purchaseLimitsNotifierProvider.notifier).ensureLoaded(
-                  wishlistData.items
-                      .map((item) => item.product.id)
-                      .toList(),
+                  wishlistData.items.map((item) => item.product.id).toList(),
                 );
           });
 

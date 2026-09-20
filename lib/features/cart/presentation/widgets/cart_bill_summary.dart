@@ -38,7 +38,8 @@ class CartBillSummary extends StatelessWidget {
   Widget build(BuildContext context) {
     final delivery = summary.deliveryFee;
     final free = summary.freeDelivery;
-    final distanceKnown = summary.distance.known && summary.distance.label.isNotEmpty;
+    final distanceKnown =
+        summary.distance.known && summary.distance.label.isNotEmpty;
 
     return RepaintBoundary(
       child: Padding(
@@ -83,10 +84,10 @@ class CartBillSummary extends StatelessWidget {
               // ── Item total ──────────────────────────────────────
               _BillRow(
                 label: 'Item total',
-                originalAmount: summary.itemTotal.original !=
-                        summary.itemTotal.discounted
-                    ? summary.itemTotal.original
-                    : null,
+                originalAmount:
+                    summary.itemTotal.original != summary.itemTotal.discounted
+                        ? summary.itemTotal.original
+                        : null,
                 amount: summary.itemTotal.discounted,
               ),
               Gap(14.h),
@@ -116,7 +117,8 @@ class CartBillSummary extends StatelessWidget {
               // both. Purely informational: only ever shown once the
               // reward is actually locked in, not as a "still trying to
               // unlock" progress hint (that lives in the Smart Bottom Bar).
-              if ((summary.firstTimeOffer?.cashbackAmount ?? 0) > 0) ...<Widget>[
+              if ((summary.firstTimeOffer?.cashbackAmount ?? 0) >
+                  0) ...<Widget>[
                 _CashbackEarnedRow(
                   amount: summary.firstTimeOffer!.cashbackAmount,
                   label: summary.firstTimeOffer!.name,
@@ -252,7 +254,8 @@ class CartBillSummary extends StatelessWidget {
               // dedicated rows above, so skip those codes here to avoid
               // double-counting.
               for (final FeeLine fee in summary.fees.where(
-                (FeeLine f) => !_dedicatedFeeCodes.contains(f.code) &&
+                (FeeLine f) =>
+                    !_dedicatedFeeCodes.contains(f.code) &&
                     f.amount > 0 &&
                     !f.waived,
               )) ...<Widget>[
@@ -462,9 +465,8 @@ class _BillRow extends StatelessWidget {
               style: TextStyle(
                 fontSize: 14.sp,
                 fontWeight: FontWeight.w700,
-                color: isFree
-                    ? const Color(0xFF0AC26B)
-                    : const Color(0xFF222222),
+                color:
+                    isFree ? const Color(0xFF0AC26B) : const Color(0xFF222222),
                 fontFamily: 'Inter',
               ),
             ),

@@ -43,7 +43,9 @@ void main() {
   }
 
   group('effectiveAttributesForDetail', () {
-    test('merges generic attributes with nutrition instead of dropping nutrition', () {
+    test(
+        'merges generic attributes with nutrition instead of dropping nutrition',
+        () {
       final product = makeProduct(
         attributes: [
           {'label': 'Brand', 'value': 'Amul'},
@@ -58,7 +60,8 @@ void main() {
       expect(_hasAttr(result, 'Protein', '0.3g'), isTrue);
     });
 
-    test('merges generic attributes with ingredients and storage instructions', () {
+    test('merges generic attributes with ingredients and storage instructions',
+        () {
       final product = makeProduct(
         attributes: [
           {'label': 'Weight', 'value': '250g'},
@@ -71,10 +74,13 @@ void main() {
 
       expect(_hasAttr(result, 'Weight', '250g'), isTrue);
       expect(_hasAttr(result, 'Ingredients', 'Milk, Sugar'), isTrue);
-      expect(_hasAttr(result, 'Storage Instructions', 'Keep refrigerated'), isTrue);
+      expect(_hasAttr(result, 'Storage Instructions', 'Keep refrigerated'),
+          isTrue);
     });
 
-    test('never includes description as a synthetic attribute — it has its own dedicated section', () {
+    test(
+        'never includes description as a synthetic attribute — it has its own dedicated section',
+        () {
       final product = makeProduct(description: 'A great product to buy.');
 
       final result = effectiveAttributesForDetail(product);

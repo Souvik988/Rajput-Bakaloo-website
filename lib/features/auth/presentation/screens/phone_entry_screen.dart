@@ -34,10 +34,10 @@ class _PhoneEntryScreenState extends ConsumerState<PhoneEntryScreen> {
   final TextEditingController _phoneController = TextEditingController();
   bool _hasInteracted = false;
 
-  late final TapGestureRecognizer _termsTapRecognizer =
-      TapGestureRecognizer()..onTap = () => _openLegalPage('/terms');
-  late final TapGestureRecognizer _privacyTapRecognizer =
-      TapGestureRecognizer()..onTap = () => _openLegalPage('/privacy');
+  late final TapGestureRecognizer _termsTapRecognizer = TapGestureRecognizer()
+    ..onTap = () => _openLegalPage('/terms');
+  late final TapGestureRecognizer _privacyTapRecognizer = TapGestureRecognizer()
+    ..onTap = () => _openLegalPage('/privacy');
 
   @override
   void dispose() {
@@ -171,194 +171,193 @@ class _PhoneEntryScreenState extends ConsumerState<PhoneEntryScreen> {
                   ),
                   boxShadow: <BoxShadow>[
                     BoxShadow(
-                              color: Colors.black.withValues(alpha: 0.08),
-                              blurRadius: 24,
-                              offset: const Offset(0, -8),
-                            ),
-                          ],
-                        ),
-                        child: SingleChildScrollView(
-                          keyboardDismissBehavior:
-                              ScrollViewKeyboardDismissBehavior.onDrag,
-                          padding: EdgeInsets.fromLTRB(
-                            24.w,
-                            26.h,
-                            24.w,
-                            18.h + MediaQuery.paddingOf(context).bottom,
-                          ),
-                          child: Form(
-                            key: _formKey,
-                            child: Column(
-                              mainAxisSize: MainAxisSize.min,
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: <Widget>[
-                                // ── Welcome heading ──
-                                Text.rich(
-                                  TextSpan(
-                                    text: 'Welcome to ',
-                                    style: TextStyle(
-                                      fontFamily: 'Poppins',
-                                      fontSize: 28.sp,
-                                      fontWeight: FontWeight.w700,
-                                      color: AppColors.textPrimary,
-                                      height: 1.2,
-                                    ),
-                                    children: <InlineSpan>[
-                                      const TextSpan(
-                                        text: 'Bakaloo',
-                                        style: TextStyle(
-                                          color: _brandPurple,
-                                          fontWeight: FontWeight.w800,
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                )
-                                    .animate()
-                                    .fadeIn(duration: 280.ms)
-                                    .slideY(begin: 0.1, end: 0),
-
-                                Gap(6.h),
-
-                                // ── Subtitle ──
-                                Text(
-                                  'Groceries at your doorstep, in minutes.',
-                                  style: TextStyle(
-                                    fontFamily: 'Inter',
-                                    fontSize: 14.sp,
-                                    fontWeight: FontWeight.w400,
-                                    color: AppColors.textSecondary,
-                                    height: 1.4,
-                                  ),
-                                ).animate().fadeIn(delay: 60.ms, duration: 280.ms),
-
-                                Gap(22.h),
-
-                                // ── Phone input box ──
-                                _PhoneInputBox(
-                                  controller: _phoneController,
-                                  brandPurple: _brandPurple,
-                                  hasError: phoneError != null,
-                                  onChanged: (_) {
-                                    if (!_hasInteracted) {
-                                      setState(() => _hasInteracted = true);
-                                      return;
-                                    }
-                                    setState(() {});
-                                  },
-                                  onSubmitted: (_) => _submitPhone(),
-                                )
-                                    .animate()
-                                    .fadeIn(delay: 120.ms, duration: 280.ms)
-                                    .slideY(begin: 0.08, end: 0),
-
-                                // ── Inline validation error ──
-                                if (phoneError != null) ...<Widget>[
-                                  Gap(8.h),
-                                  Padding(
-                                    padding: EdgeInsets.only(left: 4.w),
-                                    child: Text(
-                                      phoneError,
-                                      style: TextStyle(
-                                        fontFamily: 'Inter',
-                                        fontSize: 12.sp,
-                                        fontWeight: FontWeight.w600,
-                                        color: AppColors.errorRed,
-                                      ),
-                                    ),
-                                  ),
-                                ],
-
-                                Gap(16.h),
-
-                                // ── Continue button ──
-                                SizedBox(
-                                  width: double.infinity,
-                                  child: ElevatedButton(
-                                    onPressed: isLoading ? null : _submitPhone,
-                                    style: ElevatedButton.styleFrom(
-                                      backgroundColor: _brandPurple,
-                                      disabledBackgroundColor:
-                                          _brandPurple.withValues(alpha: 0.5),
-                                      foregroundColor: Colors.white,
-                                      elevation: 0,
-                                      minimumSize: Size.fromHeight(56.h),
-                                      shape: RoundedRectangleBorder(
-                                        borderRadius: BorderRadius.circular(
-                                          16.r,
-                                        ),
-                                      ),
-                                    ),
-                                    child: isLoading
-                                        ? SizedBox(
-                                            width: 22.w,
-                                            height: 22.w,
-                                            child:
-                                                const CircularProgressIndicator(
-                                              strokeWidth: 2.2,
-                                              color: Colors.white,
-                                            ),
-                                          )
-                                        : Text(
-                                            'Continue',
-                                            style: TextStyle(
-                                              fontFamily: 'Poppins',
-                                              fontSize: 16.sp,
-                                              fontWeight: FontWeight.w600,
-                                              color: Colors.white,
-                                            ),
-                                          ),
-                                  ),
-                                )
-                                    .animate()
-                                    .fadeIn(delay: 180.ms, duration: 280.ms)
-                                    .slideY(begin: 0.08, end: 0),
-
-                                Gap(14.h),
-
-                                // ── Terms footer ──
-                                Center(
-                                  child: Text.rich(
-                                    TextSpan(
-                                      text: 'By continuing, you agree to our ',
-                                      style: TextStyle(
-                                        fontFamily: 'Inter',
-                                        fontSize: 12.sp,
-                                        color: AppColors.textTertiary,
-                                        height: 1.5,
-                                      ),
-                                      children: <InlineSpan>[
-                                        TextSpan(
-                                          text: 'Terms & Conditions',
-                                          style: const TextStyle(
-                                            color: _brandPurple,
-                                            fontWeight: FontWeight.w700,
-                                          ),
-                                          recognizer: _termsTapRecognizer,
-                                        ),
-                                        const TextSpan(text: ' and '),
-                                        TextSpan(
-                                          text: 'Privacy Policy',
-                                          style: const TextStyle(
-                                            color: _brandPurple,
-                                            fontWeight: FontWeight.w700,
-                                          ),
-                                          recognizer: _privacyTapRecognizer,
-                                        ),
-                                        const TextSpan(text: '.'),
-                                      ],
-                                    ),
-                                    textAlign: TextAlign.center,
-                                  ),
-                                ).animate().fadeIn(delay: 240.ms, duration: 240.ms),
-                              ],
-                            ),
-                          ),
-                        ),
-                      ),
+                      color: Colors.black.withValues(alpha: 0.08),
+                      blurRadius: 24,
+                      offset: const Offset(0, -8),
                     ),
                   ],
                 ),
+                child: SingleChildScrollView(
+                  keyboardDismissBehavior:
+                      ScrollViewKeyboardDismissBehavior.onDrag,
+                  padding: EdgeInsets.fromLTRB(
+                    24.w,
+                    26.h,
+                    24.w,
+                    18.h + MediaQuery.paddingOf(context).bottom,
+                  ),
+                  child: Form(
+                    key: _formKey,
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: <Widget>[
+                        // ── Welcome heading ──
+                        Text.rich(
+                          TextSpan(
+                            text: 'Welcome to ',
+                            style: TextStyle(
+                              fontFamily: 'Poppins',
+                              fontSize: 28.sp,
+                              fontWeight: FontWeight.w700,
+                              color: AppColors.textPrimary,
+                              height: 1.2,
+                            ),
+                            children: <InlineSpan>[
+                              const TextSpan(
+                                text: 'Bakaloo',
+                                style: TextStyle(
+                                  color: _brandPurple,
+                                  fontWeight: FontWeight.w800,
+                                ),
+                              ),
+                            ],
+                          ),
+                        )
+                            .animate()
+                            .fadeIn(duration: 280.ms)
+                            .slideY(begin: 0.1, end: 0),
+
+                        Gap(6.h),
+
+                        // ── Subtitle ──
+                        Text(
+                          'Groceries at your doorstep, in minutes.',
+                          style: TextStyle(
+                            fontFamily: 'Inter',
+                            fontSize: 14.sp,
+                            fontWeight: FontWeight.w400,
+                            color: AppColors.textSecondary,
+                            height: 1.4,
+                          ),
+                        ).animate().fadeIn(delay: 60.ms, duration: 280.ms),
+
+                        Gap(22.h),
+
+                        // ── Phone input box ──
+                        _PhoneInputBox(
+                          controller: _phoneController,
+                          brandPurple: _brandPurple,
+                          hasError: phoneError != null,
+                          onChanged: (_) {
+                            if (!_hasInteracted) {
+                              setState(() => _hasInteracted = true);
+                              return;
+                            }
+                            setState(() {});
+                          },
+                          onSubmitted: (_) => _submitPhone(),
+                        )
+                            .animate()
+                            .fadeIn(delay: 120.ms, duration: 280.ms)
+                            .slideY(begin: 0.08, end: 0),
+
+                        // ── Inline validation error ──
+                        if (phoneError != null) ...<Widget>[
+                          Gap(8.h),
+                          Padding(
+                            padding: EdgeInsets.only(left: 4.w),
+                            child: Text(
+                              phoneError,
+                              style: TextStyle(
+                                fontFamily: 'Inter',
+                                fontSize: 12.sp,
+                                fontWeight: FontWeight.w600,
+                                color: AppColors.errorRed,
+                              ),
+                            ),
+                          ),
+                        ],
+
+                        Gap(16.h),
+
+                        // ── Continue button ──
+                        SizedBox(
+                          width: double.infinity,
+                          child: ElevatedButton(
+                            onPressed: isLoading ? null : _submitPhone,
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor: _brandPurple,
+                              disabledBackgroundColor:
+                                  _brandPurple.withValues(alpha: 0.5),
+                              foregroundColor: Colors.white,
+                              elevation: 0,
+                              minimumSize: Size.fromHeight(56.h),
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(
+                                  16.r,
+                                ),
+                              ),
+                            ),
+                            child: isLoading
+                                ? SizedBox(
+                                    width: 22.w,
+                                    height: 22.w,
+                                    child: const CircularProgressIndicator(
+                                      strokeWidth: 2.2,
+                                      color: Colors.white,
+                                    ),
+                                  )
+                                : Text(
+                                    'Continue',
+                                    style: TextStyle(
+                                      fontFamily: 'Poppins',
+                                      fontSize: 16.sp,
+                                      fontWeight: FontWeight.w600,
+                                      color: Colors.white,
+                                    ),
+                                  ),
+                          ),
+                        )
+                            .animate()
+                            .fadeIn(delay: 180.ms, duration: 280.ms)
+                            .slideY(begin: 0.08, end: 0),
+
+                        Gap(14.h),
+
+                        // ── Terms footer ──
+                        Center(
+                          child: Text.rich(
+                            TextSpan(
+                              text: 'By continuing, you agree to our ',
+                              style: TextStyle(
+                                fontFamily: 'Inter',
+                                fontSize: 12.sp,
+                                color: AppColors.textTertiary,
+                                height: 1.5,
+                              ),
+                              children: <InlineSpan>[
+                                TextSpan(
+                                  text: 'Terms & Conditions',
+                                  style: const TextStyle(
+                                    color: _brandPurple,
+                                    fontWeight: FontWeight.w700,
+                                  ),
+                                  recognizer: _termsTapRecognizer,
+                                ),
+                                const TextSpan(text: ' and '),
+                                TextSpan(
+                                  text: 'Privacy Policy',
+                                  style: const TextStyle(
+                                    color: _brandPurple,
+                                    fontWeight: FontWeight.w700,
+                                  ),
+                                  recognizer: _privacyTapRecognizer,
+                                ),
+                                const TextSpan(text: '.'),
+                              ],
+                            ),
+                            textAlign: TextAlign.center,
+                          ),
+                        ).animate().fadeIn(delay: 240.ms, duration: 240.ms),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -403,9 +402,7 @@ class _PhoneInputBox extends StatelessWidget {
         color: Colors.white,
         borderRadius: BorderRadius.circular(16.r),
         border: Border.all(
-          color: hasError
-              ? AppColors.errorRed
-              : const Color(0xFFE4DFF2),
+          color: hasError ? AppColors.errorRed : const Color(0xFFE4DFF2),
           width: 1.4,
         ),
       ),

@@ -88,7 +88,8 @@ class ProductOptionItem {
   bool get hasBulkMinimum =>
       bulkOrderEligible != false && (bulkMinQuantity ?? 1) > 1;
 
-  bool get hasBulkMaximum => bulkOrderEligible != false && bulkMaxQuantity != null;
+  bool get hasBulkMaximum =>
+      bulkOrderEligible != false && bulkMaxQuantity != null;
 
   double get effectivePrice {
     if (salePrice != null && salePrice! > 0 && salePrice! < price) {
@@ -154,9 +155,12 @@ class ProductOptionItem {
       displayDeliveryMinutes: _toNullableInt(
         pick('displayDeliveryMinutes', 'display_delivery_minutes'),
       ),
-      bulkMinQuantity: _toNullableInt(pick('bulkMinQuantity', 'bulk_min_quantity')),
-      bulkMaxQuantity: _toNullableInt(pick('bulkMaxQuantity', 'bulk_max_quantity')),
-      bulkOrderEligible: _toNullableBool(pick('bulkOrderEligible', 'bulk_order_eligible')),
+      bulkMinQuantity:
+          _toNullableInt(pick('bulkMinQuantity', 'bulk_min_quantity')),
+      bulkMaxQuantity:
+          _toNullableInt(pick('bulkMaxQuantity', 'bulk_max_quantity')),
+      bulkOrderEligible:
+          _toNullableBool(pick('bulkOrderEligible', 'bulk_order_eligible')),
     );
   }
 }

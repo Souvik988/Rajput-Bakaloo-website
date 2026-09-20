@@ -448,9 +448,7 @@ class _HideBalanceButton extends StatelessWidget {
                   ),
                 )
               : PhosphorIcon(
-                  unlocked
-                      ? PhosphorIcons.eye
-                      : PhosphorIcons.eyeSlash,
+                  unlocked ? PhosphorIcons.eye : PhosphorIcons.eyeSlash,
                   size: 16.sp,
                   color: AppColors.orderViolet,
                 ),
@@ -646,8 +644,7 @@ class _TransactionFilterChips extends StatelessWidget {
             selectedColor: AppColors.orderVioletSurface,
             backgroundColor: AppColors.bgCard,
             side: BorderSide(
-              color:
-                  isSelected ? AppColors.orderViolet : AppColors.borderLight,
+              color: isSelected ? AppColors.orderViolet : AppColors.borderLight,
             ),
           ),
         );

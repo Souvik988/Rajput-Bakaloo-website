@@ -19,14 +19,17 @@ class CartDeliveryHeader extends StatelessWidget {
   final int itemCount;
   final SelectedDeliverySlot? selectedSlot;
   final VoidCallback? onScheduleTap;
+
   /// Opens the schedule sheet straight into ASAP/quick-delivery mode —
   /// a dedicated shortcut so the customer doesn't have to open "Schedule"
   /// and then realize ASAP was the tab they wanted all along.
   final VoidCallback? onExpressTap;
+
   /// Set only when the store is closed and the customer is still on ASAP —
   /// replaces the "Delivering in X mins" line with the next real available
   /// window instead of continuing to promise an estimate that can't be met.
   final String? nextAvailableLabel;
+
   /// Opens the "view store hours" sheet. Only rendered when provided.
   final VoidCallback? onViewHoursTap;
 
@@ -108,8 +111,9 @@ class CartDeliveryHeader extends StatelessWidget {
                     SizedBox(height: 2.h),
                     Text(
                       isScheduled
-                          ? slot.displayLabel(estimateMinutes).replaceFirst(
-                              'Scheduled for ', '')
+                          ? slot
+                              .displayLabel(estimateMinutes)
+                              .replaceFirst('Scheduled for ', '')
                           : isClosed
                               ? nextAvailableLabel!
                               : itemLabel,

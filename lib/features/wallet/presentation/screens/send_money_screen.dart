@@ -108,7 +108,8 @@ class _SendMoneyScreenState extends ConsumerState<SendMoneyScreen> {
 
     final amount = double.tryParse(_amountController.text.trim());
     if (amount == null || amount <= 0) {
-      AppToast.show(context, '⚠️ Enter a valid amount', type: ToastType.warning);
+      AppToast.show(context, '⚠️ Enter a valid amount',
+          type: ToastType.warning);
       return;
     }
 
@@ -192,9 +193,7 @@ class _SendMoneyScreenState extends ConsumerState<SendMoneyScreen> {
             LengthLimitingTextInputFormatter(10),
           ],
           onChanged: (value) {
-            ref
-                .read(recipientSearchProvider.notifier)
-                .onQueryChanged(value);
+            ref.read(recipientSearchProvider.notifier).onQueryChanged(value);
           },
           decoration: InputDecoration(
             hintText: 'Enter mobile number',

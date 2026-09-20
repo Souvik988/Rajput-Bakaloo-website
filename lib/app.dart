@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import 'package:bakaloo_flutter_app/core/notifications/fcm_service.dart';
+import 'package:bakaloo_flutter_app/core/platform/screen_scaler.dart';
 import 'package:bakaloo_flutter_app/core/theme/app_theme.dart';
 import 'package:bakaloo_flutter_app/routing/app_router.dart';
 import 'package:bakaloo_flutter_app/shared/providers/theme_provider.dart';
@@ -42,10 +42,11 @@ class App extends ConsumerWidget {
     final router = ref.watch(appRouterProvider);
     final themeMode = ref.watch(themeModeProvider);
 
-    return ScreenUtilInit(
+    // WEB PORT: AppScreenScaler == ScreenUtilInit on mobile; on web it
+    // feeds ScreenUtil the shell-constrained size instead of the raw view
+    // (see core/platform/screen_scaler.dart).
+    return AppScreenScaler(
       designSize: _resolveDesignSize(context),
-      minTextAdapt: true,
-      splitScreenMode: true,
       builder: (BuildContext context, Widget? child) {
         return MaterialApp.router(
           theme: AppTheme.lightTheme,

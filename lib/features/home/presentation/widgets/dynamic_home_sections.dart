@@ -71,4 +71,3 @@ class _DynamicSectionSlot extends ConsumerWidget {
     );
   }
 }
-

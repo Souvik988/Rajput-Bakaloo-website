@@ -16,8 +16,8 @@ import 'package:bakaloo_flutter_app/features/products/domain/entities/product_en
 /// lists use identity equality, so a `List` key created a brand-new (uncached)
 /// `autoDispose` provider on every widget build; the fetch never settled and
 /// hand-picked products silently failed to load. A `String` key caches stably.
-final manualProductsByIdsProvider = FutureProvider.autoDispose
-    .family<List<ProductEntity>, String>(
+final manualProductsByIdsProvider =
+    FutureProvider.autoDispose.family<List<ProductEntity>, String>(
   (ref, idsCsv) async {
     final ids = idsCsv
         .split(',')

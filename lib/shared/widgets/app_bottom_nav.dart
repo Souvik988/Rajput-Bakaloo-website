@@ -530,17 +530,21 @@ class _CartPillHostState extends ConsumerState<_CartPillHost> {
       final free = billSummary?.freeDelivery;
       final nextTier = billSummary?.cartMilestone.next;
       final unlockedTier = billSummary?.cartMilestone.unlocked;
-      final rewardLadder = billSummary?.cartMilestone.ladder ?? const <CartMilestoneLadderStep>[];
+      final rewardLadder = billSummary?.cartMilestone.ladder ??
+          const <CartMilestoneLadderStep>[];
 
-      final freeDeliveryAmount =
-          (free != null && free.enabled && !free.unlocked && free.amountToUnlock > 0)
-              ? free.amountToUnlock
-              : null;
+      final freeDeliveryAmount = (free != null &&
+              free.enabled &&
+              !free.unlocked &&
+              free.amountToUnlock > 0)
+          ? free.amountToUnlock
+          : null;
 
       // Show whichever goal is closer — the more motivating "almost there"
       // message — rather than always defaulting to free delivery.
       final showMilestone = nextTier != null &&
-          (freeDeliveryAmount == null || nextTier.amountToUnlock <= freeDeliveryAmount);
+          (freeDeliveryAmount == null ||
+              nextTier.amountToUnlock <= freeDeliveryAmount);
 
       if (showMilestone) {
         final threshold = nextTier.minCartAmount;
@@ -565,13 +569,16 @@ class _CartPillHostState extends ConsumerState<_CartPillHost> {
           cartCount: cartCount,
           amountToUnlock: freeDeliveryAmount,
           progress: progress,
-          message: 'Add ₹${freeDeliveryAmount.toStringAsFixed(0)} more to unlock FREE DELIVERY',
+          message:
+              'Add ₹${freeDeliveryAmount.toStringAsFixed(0)} more to unlock FREE DELIVERY',
           ladder: rewardLadder,
         );
       } else if (unlockedTier != null) {
         state = _SmartBarState.unlocked(
           cartCount: cartCount,
-          message: unlockedTier.message.isNotEmpty ? unlockedTier.message : '${unlockedTier.name} unlocked',
+          message: unlockedTier.message.isNotEmpty
+              ? unlockedTier.message
+              : '${unlockedTier.name} unlocked',
           ladder: rewardLadder,
         );
       } else if (free != null && free.unlocked) {
@@ -657,7 +664,6 @@ class _CartPillHostState extends ConsumerState<_CartPillHost> {
       },
     );
   }
-
 }
 
 class _SmartBottomBar extends StatelessWidget {
@@ -870,7 +876,8 @@ class _LadderSegment extends StatelessWidget {
         builder: (context, value, _) {
           return Stack(
             children: <Widget>[
-              Container(height: 5.h, color: Colors.white.withValues(alpha: 0.25)),
+              Container(
+                  height: 5.h, color: Colors.white.withValues(alpha: 0.25)),
               FractionallySizedBox(
                 widthFactor: value,
                 child: Container(
@@ -879,7 +886,9 @@ class _LadderSegment extends StatelessWidget {
                     color: Colors.white,
                     borderRadius: BorderRadius.circular(4.r),
                     boxShadow: <BoxShadow>[
-                      BoxShadow(color: Colors.white.withValues(alpha: 0.6), blurRadius: 4),
+                      BoxShadow(
+                          color: Colors.white.withValues(alpha: 0.6),
+                          blurRadius: 4),
                     ],
                   ),
                 ),
@@ -1082,8 +1091,8 @@ class _PresetNavIcon extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final Color accent = _parseAccentColor(button.accentColor) ??
-        AppColors.orderViolet;
+    final Color accent =
+        _parseAccentColor(button.accentColor) ?? AppColors.orderViolet;
     return Container(
       width: 34.w,
       height: 34.w,
@@ -1130,8 +1139,7 @@ class _CustomNavIcon extends StatelessWidget {
       fit: BoxFit.contain,
       fadeInDuration: const Duration(milliseconds: 150),
       placeholder: (context, url) => SizedBox(width: 36.w, height: 36.h),
-      errorWidget: (context, url, error) =>
-          SizedBox(width: 36.w, height: 36.h),
+      errorWidget: (context, url, error) => SizedBox(width: 36.w, height: 36.h),
     );
   }
 }

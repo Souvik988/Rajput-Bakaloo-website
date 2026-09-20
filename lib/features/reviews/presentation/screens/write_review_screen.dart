@@ -59,7 +59,8 @@ class _WriteReviewScreenState extends ConsumerState<WriteReviewScreen> {
 
   Future<void> _submit() async {
     if (_rating <= 0) {
-      AppToast.show(context, '⚠️ Please select a rating', type: ToastType.warning);
+      AppToast.show(context, '⚠️ Please select a rating',
+          type: ToastType.warning);
       return;
     }
 
@@ -88,7 +89,9 @@ class _WriteReviewScreenState extends ConsumerState<WriteReviewScreen> {
         setState(() {
           _submitting = false;
         });
-        AppToast.show(context, '⚠️ Review is not available for this product yet.', type: ToastType.warning);
+        AppToast.show(
+            context, '⚠️ Review is not available for this product yet.',
+            type: ToastType.warning);
         return;
       }
 
@@ -115,7 +118,9 @@ class _WriteReviewScreenState extends ConsumerState<WriteReviewScreen> {
       return;
     }
 
-    AppToast.show(context, widget.isEdit ? '✅ Review updated.' : '✅ Review submitted.', type: ToastType.success);
+    AppToast.show(
+        context, widget.isEdit ? '✅ Review updated.' : '✅ Review submitted.',
+        type: ToastType.success);
     Navigator.of(context).pop(true);
   }
 
@@ -212,7 +217,9 @@ class _WriteReviewScreenState extends ConsumerState<WriteReviewScreen> {
                       duration: const Duration(milliseconds: 180),
                       curve: Curves.easeOutBack,
                       child: PhosphorIcon(
-                        isSelected ? PhosphorIcons.starFill : PhosphorIcons.star,
+                        isSelected
+                            ? PhosphorIcons.starFill
+                            : PhosphorIcons.star,
                         size: 34.sp,
                         color: isSelected
                             ? AppColors.ratingGold

@@ -107,6 +107,7 @@ class SpinPrize {
   final SpinPrizeType type;
   final IconData icon;
   final Color segmentColor;
+
   /// Percentage points, flat rupees, etc. — meaning depends on [type]. Null
   /// for `buyOneGetOne`, `extraSavings` and `betterLuck`.
   final double? value;

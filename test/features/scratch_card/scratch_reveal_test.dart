@@ -51,7 +51,9 @@ void main() {
     }
   }
 
-  testWidgets('foil and clip are both present, not yet revealed, before any scratching (positive)', (tester) async {
+  testWidgets(
+      'foil and clip are both present, not yet revealed, before any scratching (positive)',
+      (tester) async {
     final key = GlobalKey<ScratchRevealState>();
     await tester.pumpWidget(
       MaterialApp(
@@ -74,9 +76,12 @@ void main() {
     expect(key.currentState!.isFullyRevealed, isFalse);
   });
 
-  testWidgets('onScratchStart fires on the first drag regardless of enabled (positive)', (tester) async {
+  testWidgets(
+      'onScratchStart fires on the first drag regardless of enabled (positive)',
+      (tester) async {
     var started = false;
-    await pumpScratcher(tester, enabled: false, onScratchStart: () => started = true);
+    await pumpScratcher(tester,
+        enabled: false, onScratchStart: () => started = true);
     // PanGestureRecognizer needs actual movement (beyond touch slop) before
     // it declares itself the winner and fires onPanStart — a bare
     // startGesture with no move never triggers it.
@@ -85,14 +90,19 @@ void main() {
     expect(started, isTrue);
   });
 
-  testWidgets('while disabled, scratching leaves no mark and never reaches threshold (negative)', (tester) async {
+  testWidgets(
+      'while disabled, scratching leaves no mark and never reaches threshold (negative)',
+      (tester) async {
     var thresholdHit = false;
-    await pumpScratcher(tester, enabled: false, onThresholdReached: () => thresholdHit = true);
+    await pumpScratcher(tester,
+        enabled: false, onThresholdReached: () => thresholdHit = true);
     await scratchWholeArea(tester);
     expect(thresholdHit, isFalse);
   });
 
-  testWidgets('scratching most of the area while enabled reaches the threshold exactly once (positive)', (tester) async {
+  testWidgets(
+      'scratching most of the area while enabled reaches the threshold exactly once (positive)',
+      (tester) async {
     var thresholdHitCount = 0;
     await pumpScratcher(
       tester,
@@ -103,15 +113,20 @@ void main() {
     expect(thresholdHitCount, 1);
   });
 
-  testWidgets('a few small dabs well under the threshold do not trigger it (negative)', (tester) async {
+  testWidgets(
+      'a few small dabs well under the threshold do not trigger it (negative)',
+      (tester) async {
     var thresholdHit = false;
-    await pumpScratcher(tester, enabled: true, onThresholdReached: () => thresholdHit = true);
+    await pumpScratcher(tester,
+        enabled: true, onThresholdReached: () => thresholdHit = true);
     await tester.dragFrom(const Offset(20, 20), const Offset(15, 0));
     await tester.pump();
     expect(thresholdHit, isFalse);
   });
 
-  testWidgets('reveal() flips isFullyRevealed and needs no further scratching (positive)', (tester) async {
+  testWidgets(
+      'reveal() flips isFullyRevealed and needs no further scratching (positive)',
+      (tester) async {
     final key = GlobalKey<ScratchRevealState>();
     await tester.pumpWidget(
       MaterialApp(
@@ -136,7 +151,8 @@ void main() {
     expect(key.currentState!.isFullyRevealed, isTrue);
   });
 
-  testWidgets('once revealed, further scratching is a no-op (negative)', (tester) async {
+  testWidgets('once revealed, further scratching is a no-op (negative)',
+      (tester) async {
     final key = GlobalKey<ScratchRevealState>();
     var thresholdHitCount = 0;
     await tester.pumpWidget(

@@ -46,7 +46,8 @@ class DeliverySlotDayEntity {
       date: json['date'] as String,
       label: json['label'] as String,
       slots: rawSlots
-          .map((s) => DeliverySlotEntity.fromJson(Map<String, dynamic>.from(s as Map)))
+          .map((s) =>
+              DeliverySlotEntity.fromJson(Map<String, dynamic>.from(s as Map)))
           .toList(),
     );
   }
@@ -68,6 +69,7 @@ class SelectedDeliverySlot {
   final String mode;
   final DeliverySlotEntity? slot;
   final String? dayLabel;
+
   /// Whether the customer explicitly opted into the paid "Quick Delivery"
   /// upgrade — only meaningful when [isAsap] is true. Never implied by
   /// picking ASAP alone; the admin-configured surcharge (if enabled) is

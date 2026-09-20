@@ -30,9 +30,8 @@ class StartupDiagnostics {
     }
 
     try {
-      const buildMode = kDebugMode
-          ? 'debug'
-          : (kProfileMode ? 'profile' : 'release');
+      const buildMode =
+          kDebugMode ? 'debug' : (kProfileMode ? 'profile' : 'release');
 
       String appVersion = 'unknown';
       try {
@@ -55,7 +54,8 @@ class StartupDiagnostics {
       try {
         final storage = SecureStorageService();
         hasAccessToken = (await storage.getAccessToken())?.isNotEmpty ?? false;
-        hasRefreshToken = (await storage.getRefreshToken())?.isNotEmpty ?? false;
+        hasRefreshToken =
+            (await storage.getRefreshToken())?.isNotEmpty ?? false;
       } catch (_) {
         // ignore
       }
@@ -93,8 +93,7 @@ class StartupDiagnostics {
   }
 
   static String _describeConnectivity(List<ConnectivityResult> results) {
-    if (results.isEmpty ||
-        results.every((r) => r == ConnectivityResult.none)) {
+    if (results.isEmpty || results.every((r) => r == ConnectivityResult.none)) {
       return 'offline';
     }
     return results

@@ -13,7 +13,8 @@ class DeliveryPromoBar extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final cartTotal = ref.watch(cartTotalProvider);
-    final remaining = (_freeDeliveryThreshold - cartTotal).clamp(0.0, _freeDeliveryThreshold);
+    final remaining =
+        (_freeDeliveryThreshold - cartTotal).clamp(0.0, _freeDeliveryThreshold);
     final show = remaining > 0;
 
     return AnimatedContainer(

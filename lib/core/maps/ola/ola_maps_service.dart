@@ -118,7 +118,9 @@ class OlaMapsService {
     final name = (result['name'] as String?)?.trim() ?? '';
     final title = name.isNotEmpty
         ? name
-        : (formatted.isNotEmpty ? formatted.split(',').first.trim() : 'Selected place');
+        : (formatted.isNotEmpty
+            ? formatted.split(',').first.trim()
+            : 'Selected place');
 
     return OlaPlaceSuggestion(
       title: title,
@@ -151,7 +153,9 @@ class OlaMapsService {
           .map((point) {
             final lat = _toDouble(point['lat']);
             final lng = _toDouble(point['lng']);
-            return lat != null && lng != null ? GeoPoint(lat: lat, lng: lng) : null;
+            return lat != null && lng != null
+                ? GeoPoint(lat: lat, lng: lng)
+                : null;
           })
           .whereType<GeoPoint>()
           .toList(growable: false);

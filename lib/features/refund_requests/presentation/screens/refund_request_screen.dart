@@ -153,12 +153,14 @@ class _RefundRequestScreenState extends ConsumerState<RefundRequestScreen> {
         children: <Widget>[
           Text(
             'What went wrong?',
-            style: AppTextStyles.labelLarge.copyWith(fontWeight: FontWeight.w700),
+            style:
+                AppTextStyles.labelLarge.copyWith(fontWeight: FontWeight.w700),
           ),
           Gap(4.h),
           Text(
             'Select the item(s) that had a problem, or mark the whole order.',
-            style: AppTextStyles.bodySmall.copyWith(color: AppColors.textSecondary),
+            style: AppTextStyles.bodySmall
+                .copyWith(color: AppColors.textSecondary),
           ),
           Gap(12.h),
           _AllItemsTile(value: _allItems, onChanged: _toggleAllItems),
@@ -168,7 +170,8 @@ class _RefundRequestScreenState extends ConsumerState<RefundRequestScreen> {
               padding: EdgeInsets.only(bottom: 8.h),
               child: _RefundItemTile(
                 item: item,
-                selected: _allItems || _selectedProductIds.contains(item.productId),
+                selected:
+                    _allItems || _selectedProductIds.contains(item.productId),
                 enabled: !_allItems,
                 onChanged: (value) => _toggleItem(item.productId, value),
               ),
@@ -177,7 +180,8 @@ class _RefundRequestScreenState extends ConsumerState<RefundRequestScreen> {
           Gap(16.h),
           Text(
             'Describe the issue',
-            style: AppTextStyles.labelLarge.copyWith(fontWeight: FontWeight.w700),
+            style:
+                AppTextStyles.labelLarge.copyWith(fontWeight: FontWeight.w700),
           ),
           Gap(8.h),
           TextField(
@@ -187,7 +191,8 @@ class _RefundRequestScreenState extends ConsumerState<RefundRequestScreen> {
             style: AppTextStyles.bodyMedium,
             onChanged: (_) => setState(() {}),
             decoration: const InputDecoration(
-              hintText: 'Tell us what happened — e.g. item damaged, missing, or wrong item delivered.',
+              hintText:
+                  'Tell us what happened — e.g. item damaged, missing, or wrong item delivered.',
               alignLabelWithHint: true,
             ),
           ),
@@ -311,11 +316,13 @@ class _RefundItemTile extends StatelessWidget {
                       item.name,
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
-                      style: AppTextStyles.labelLarge.copyWith(fontWeight: FontWeight.w700),
+                      style: AppTextStyles.labelLarge
+                          .copyWith(fontWeight: FontWeight.w700),
                     ),
                     Text(
                       'Qty ${item.quantity} • ₹${item.total.toStringAsFixed(0)}',
-                      style: AppTextStyles.bodySmall.copyWith(color: AppColors.textSecondary),
+                      style: AppTextStyles.bodySmall
+                          .copyWith(color: AppColors.textSecondary),
                     ),
                   ],
                 ),
@@ -378,7 +385,8 @@ class _RefundRequestSubmittedSheet extends StatelessWidget {
             Text(
               "Our team will review your request and connect with you within 24 hours.",
               textAlign: TextAlign.center,
-              style: AppTextStyles.bodyMedium.copyWith(color: AppColors.textSecondary),
+              style: AppTextStyles.bodyMedium
+                  .copyWith(color: AppColors.textSecondary),
             ),
             Gap(18.h),
             SizedBox(
@@ -391,7 +399,8 @@ class _RefundRequestSubmittedSheet extends StatelessWidget {
                 ),
                 child: Text(
                   'Done',
-                  style: AppTextStyles.buttonLarge.copyWith(color: Colors.white),
+                  style:
+                      AppTextStyles.buttonLarge.copyWith(color: Colors.white),
                 ),
               ),
             ),

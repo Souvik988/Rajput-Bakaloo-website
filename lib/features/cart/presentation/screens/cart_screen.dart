@@ -93,8 +93,8 @@ class _CartScreenState extends ConsumerState<CartScreen> {
     // ever came from reverse geocoding can reach checkout with
     // addressLine2 still empty. This is the one place that actually needs
     // to block on it.
-    final hasCompleteAddress = hasAddress &&
-        (selectedAddress.addressLine2 ?? '').trim().isNotEmpty;
+    final hasCompleteAddress =
+        hasAddress && (selectedAddress.addressLine2 ?? '').trim().isNotEmpty;
     final billSummaryAsync = ref.watch(billSummaryProvider);
     final billSummary = switch (billSummaryAsync) {
       AsyncData(:final value) => value,
@@ -173,9 +173,8 @@ class _CartScreenState extends ConsumerState<CartScreen> {
         ? (walletBalance < toPay ? walletBalance : toPay)
         : 0.0;
 
-    final remainderToPay = toPay - walletApplied < 0
-        ? 0.0
-        : toPay - walletApplied;
+    final remainderToPay =
+        toPay - walletApplied < 0 ? 0.0 : toPay - walletApplied;
 
     return Scaffold(
       backgroundColor: const Color(0xFFF5F5F5),
@@ -245,11 +244,8 @@ class _CartScreenState extends ConsumerState<CartScreen> {
               // (payment buttons flashing wrong, and "To Pay" fluctuating).
               paymentMethodsKnown: summaryKnown,
               onlineEnabled:
-                  lastKnownSummary?.paymentMethods.razorpay.enabled ??
-                      true,
-              codEnabled:
-                  lastKnownSummary?.paymentMethods.cod.enabled ??
-                      true,
+                  lastKnownSummary?.paymentMethods.razorpay.enabled ?? true,
+              codEnabled: lastKnownSummary?.paymentMethods.cod.enabled ?? true,
               showWalletToggle: showWalletStripe,
               walletBalance: walletBalance,
               walletApplied: walletApplied,
@@ -259,9 +255,8 @@ class _CartScreenState extends ConsumerState<CartScreen> {
                   ref.read(checkoutProvider.notifier).setUseWallet(value),
               onAddMoney: () => _goToTopup(
                 context,
-                suggestedAmount: toPay - walletBalance > 0
-                    ? toPay - walletBalance
-                    : null,
+                suggestedAmount:
+                    toPay - walletBalance > 0 ? toPay - walletBalance : null,
               ),
               onPayFullWallet: () => _handlePayFullWallet(
                 context,
@@ -278,8 +273,9 @@ class _CartScreenState extends ConsumerState<CartScreen> {
               // slot for a customer with an approved, B2B-enabled business
               // account. Null (falls back to ordinary COD) for every other
               // customer.
-              onPlaceOrderOnCredit:
-                  isPlaceOrderAvailable ? () => _handlePlaceOrderOnCredit(context) : null,
+              onPlaceOrderOnCredit: isPlaceOrderAvailable
+                  ? () => _handlePlaceOrderOnCredit(context)
+                  : null,
             ),
     );
   }
@@ -929,7 +925,8 @@ class _CartScreenState extends ConsumerState<CartScreen> {
   /// more they need — and refreshes the balance on return. The customer may
   /// have topped up even if they didn't pop with `true`, so always refresh
   /// rather than trusting the pop result.
-  Future<void> _goToTopup(BuildContext context, {double? suggestedAmount}) async {
+  Future<void> _goToTopup(BuildContext context,
+      {double? suggestedAmount}) async {
     await context.push<bool>(
       RouteNames.topup,
       extra: suggestedAmount,

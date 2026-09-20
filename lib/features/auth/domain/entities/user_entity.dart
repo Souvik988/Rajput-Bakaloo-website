@@ -15,9 +15,11 @@ abstract class UserEntity with _$UserEntity {
     String? avatarUrl,
     int? loyaltyPoints,
     String? referralCode,
+
     /// 'PENDING' | 'APPROVED' | 'REJECTED' | 'SUSPENDED' — null when the
     /// user has never applied for a business (B2B/wholesale) account.
     String? b2bStatus,
+
     /// Whether the customer has switched B2B pricing on. Only meaningful
     /// (and only ever true) when [b2bStatus] is 'APPROVED'.
     bool? b2bEnabled,

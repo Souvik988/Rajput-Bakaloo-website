@@ -157,6 +157,7 @@ class CategoryTabsTheme {
   final bool visible;
   final Color textColor;
   final Color indicatorColor;
+
   /// Optional independent background for the category-tabs container row.
   /// When null, the parent [SearchZoneTheme.backgroundColor] is used (legacy behavior).
   final Color? backgroundColor;
@@ -177,7 +178,8 @@ class CategoryTabsTheme {
       backgroundColor: json['backgroundColor'] != null
           ? _parseColor(
               _parseNullableString(json['backgroundColor']),
-              defaults.textColor, // dummy fallback — null is returned when key absent
+              defaults
+                  .textColor, // dummy fallback — null is returned when key absent
             )
           : null,
     );
@@ -347,9 +349,7 @@ class MosaicTileAction {
     if (type == 'tab' || type == 'app_page') {
       return value != null && value!.isNotEmpty;
     }
-    if (type == 'product' ||
-        type == 'category' ||
-        type == 'external_url') {
+    if (type == 'product' || type == 'category' || type == 'external_url') {
       return value != null && value!.isNotEmpty;
     }
     return false;

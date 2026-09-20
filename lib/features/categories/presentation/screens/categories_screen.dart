@@ -90,7 +90,8 @@ class _CategoriesScreenState extends ConsumerState<CategoriesScreen> {
     final sorted = <CategoryEntity>[
       // BUNDLE categories are promo-only groupings surfaced via a banner
       // deep-link — never shown in normal category browsing.
-      ...categories.where((category) => category.isActive && !category.isBundle),
+      ...categories
+          .where((category) => category.isActive && !category.isBundle),
     ]..sort((a, b) {
         final sortOrder = a.sortOrder.compareTo(b.sortOrder);
         if (sortOrder != 0) {
@@ -198,8 +199,7 @@ class _CategoriesScreenState extends ConsumerState<CategoriesScreen> {
             padding: EdgeInsets.fromLTRB(14.w, 16.h, 14.w, 24.h),
             child: LayoutBuilder(
               builder: (context, constraints) {
-                final double columnWidth =
-                    (constraints.maxWidth - 12.w) / 2;
+                final double columnWidth = (constraints.maxWidth - 12.w) / 2;
                 return GridView.builder(
                   physics: const NeverScrollableScrollPhysics(),
                   itemCount: 6,
@@ -423,7 +423,8 @@ class _CategoryRailItem extends StatelessWidget {
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(16.r),
                   border: Border.all(
-                    color: isSelected ? AppColors.orderVioletBorder
+                    color: isSelected
+                        ? AppColors.orderVioletBorder
                         : Colors.transparent,
                   ),
                 ),
@@ -512,8 +513,7 @@ class _Monogram extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final letter =
-        name.trim().isNotEmpty ? name.trim()[0].toUpperCase() : '?';
+    final letter = name.trim().isNotEmpty ? name.trim()[0].toUpperCase() : '?';
     return Center(
       child: Text(
         letter,
@@ -578,11 +578,8 @@ class _CategoryProductPaneState extends ConsumerState<_CategoryProductPane> {
     if (!_scrollController.hasClients) return;
     final max = _scrollController.position.maxScrollExtent;
     if (_scrollController.offset >= max - 300) {
-      final viewState =
-          ref.read(productListProvider(_params)).asData?.value;
-      if (viewState != null &&
-          viewState.hasMore &&
-          !viewState.isLoadingMore) {
+      final viewState = ref.read(productListProvider(_params)).asData?.value;
+      if (viewState != null && viewState.hasMore && !viewState.isLoadingMore) {
         ref.read(productListProvider(_params).notifier).loadMore();
       }
     }
@@ -760,8 +757,7 @@ class _CategoryProductPaneState extends ConsumerState<_CategoryProductPane> {
                           accentColor: _accent,
                           onTap: () => context.push('/product/${product.id}'),
                           onOptionsTap: product.hasMultipleOptions
-                              ? () =>
-                                  showProductOptionsSheet(context, product)
+                              ? () => showProductOptionsSheet(context, product)
                               : null,
                         ),
                         builder: (context, value, child) {

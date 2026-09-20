@@ -145,8 +145,7 @@ class RemoteAnimationLoader {
 
   static Future<Uint8List> _downloadBytes(String url) async {
     final Uri? uri = Uri.tryParse(url);
-    final bool expectsBase64Proxy =
-        uri != null &&
+    final bool expectsBase64Proxy = uri != null &&
         uri.path.contains('/uploads/proxy') &&
         uri.queryParameters['encoding'] == 'base64';
 
@@ -165,7 +164,9 @@ class RemoteAnimationLoader {
       }
 
       final dynamic payload = response.data;
-      if (payload is! Map || payload['success'] != true || payload['data'] is! Map) {
+      if (payload is! Map ||
+          payload['success'] != true ||
+          payload['data'] is! Map) {
         throw Exception('Invalid animation proxy payload: $url');
       }
 

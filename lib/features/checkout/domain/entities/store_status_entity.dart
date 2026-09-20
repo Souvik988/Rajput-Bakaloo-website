@@ -15,6 +15,7 @@ class StoreStatusEntity {
   final String source; // 'MANUAL_OVERRIDE' | 'WEEKLY_SCHEDULE' | 'DEFAULT'
   final String? reason;
   final List<StoreDayAvailability> next7Days;
+
   /// Admin-uploaded "we are closed" banner (Store Hours settings) shown at
   /// the top of the home screen while [isOpen] is false. Null when the
   /// admin has never uploaded one.
@@ -29,7 +30,8 @@ class StoreStatusEntity {
       next7Days: rawDays == null
           ? const []
           : rawDays
-              .map((d) => StoreDayAvailability.fromJson(d as Map<String, dynamic>))
+              .map((d) =>
+                  StoreDayAvailability.fromJson(d as Map<String, dynamic>))
               .toList(),
       closedBannerImageUrl: json['closedBannerImageUrl'] as String?,
     );

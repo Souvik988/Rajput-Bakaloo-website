@@ -41,7 +41,8 @@ class RefundRequestRepositoryImpl implements RefundRequestRepository {
       return Left(handleDioError(error));
     } catch (_) {
       return const Left(
-        UnknownFailure(message: 'Unable to load refund request status right now.'),
+        UnknownFailure(
+            message: 'Unable to load refund request status right now.'),
       );
     }
   }

@@ -124,23 +124,26 @@ class RazorpayService {
     );
 
     // payment.error carries { error: { code, description, ... } }.
-    rzp.callMethod(
-      'on'.toJS,
-      'payment.error'.toJS,
-      ((JSObject response) {
-        final data = _mapFromJs(response);
-        final error = data['error'];
-        final message = error is Map
-            ? (error['description'] as String? ?? 'Payment failed')
-            : 'Payment failed';
-        onFailure?.call(
-          PaymentFailureResponse(Razorpay.INVALID_OPTIONS, message,
-            error is Map ? Map<dynamic, dynamic>.from(error) : null),
-        );
-      }).toJS,
-    );
-
-    rzp.callMethod('open'.toJS);
+    rzp
+      ..callMethod(
+        'on'.toJS,
+        'payment.error'.toJS,
+        ((JSObject response) {
+          final data = _mapFromJs(response);
+          final error = data['error'];
+          final message = error is Map
+              ? (error['description'] as String? ?? 'Payment failed')
+              : 'Payment failed';
+          onFailure?.call(
+            PaymentFailureResponse(
+              Razorpay.INVALID_OPTIONS,
+              message,
+              error is Map ? Map<dynamic, dynamic>.from(error) : null,
+            ),
+          );
+        }).toJS,
+      )
+      ..callMethod('open'.toJS);
   }
 
   Future<void> _ensureCheckoutJsLoaded() {
@@ -158,19 +161,19 @@ class RazorpayService {
 
     final script = web.HTMLScriptElement()
       ..src = 'https://checkout.razorpay.com/v1/checkout.js'
-      ..async = true;
-    script.onload = ((web.Event _) {
-      if (!completer.isCompleted) {
-        completer.complete();
-      }
-    }).toJS;
-    script.onerror = ((web.Event _) {
-      if (!completer.isCompleted) {
-        completer.completeError(
-          StateError('checkout.js failed to load'),
-        );
-      }
-    }).toJS;
+      ..async = true
+      ..onload = ((web.Event _) {
+        if (!completer.isCompleted) {
+          completer.complete();
+        }
+      }).toJS
+      ..onerror = ((web.Event _) {
+        if (!completer.isCompleted) {
+          completer.completeError(
+            StateError('checkout.js failed to load'),
+          );
+        }
+      }).toJS;
     web.document.head?.appendChild(script);
 
     return completer.future;

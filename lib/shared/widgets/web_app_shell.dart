@@ -19,7 +19,9 @@ class WebAppShell extends StatelessWidget {
 
   final Widget child;
 
-  static const double _shellWidth = 480;
+  // The app's exact design width — rendering the shell at 1.0× scale keeps
+  // every fixed-height widget (category tabs, nav bar) inside its budget.
+  static const double _shellWidth = 390;
 
   @override
   Widget build(BuildContext context) {

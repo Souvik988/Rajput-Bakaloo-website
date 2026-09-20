@@ -59,7 +59,10 @@ class ScratchResult {
   /// client-side prize-list cache. [segmentColor] is irrelevant here (the
   /// result dialog never paints a wedge).
   SpinPrize? toPrize() {
-    if (!success || prizeId == null || prizeType == null || prizeLabel == null) {
+    if (!success ||
+        prizeId == null ||
+        prizeType == null ||
+        prizeLabel == null) {
       return null;
     }
     return SpinPrize(

@@ -80,6 +80,7 @@ class CartBottomBar extends StatelessWidget {
   final bool showWalletToggle;
   final double walletBalance;
   final double walletApplied;
+
   /// The order's real payable total, before any wallet offset — used only
   /// to decide whether the wallet stripe's expanded action is "Pay via
   /// Wallet" (balance covers this in full) or "Add Money" (it doesn't).
@@ -149,7 +150,8 @@ class CartBottomBar extends StatelessWidget {
     );
   }
 
-  Widget _buildPinkCta({required String label, required VoidCallback? onPressed}) {
+  Widget _buildPinkCta(
+      {required String label, required VoidCallback? onPressed}) {
     return SizedBox(
       width: double.infinity,
       height: 52.h,
@@ -519,8 +521,7 @@ class _WalletToggleStripe extends StatelessWidget {
                       ? TextSpan(
                           children: <InlineSpan>[
                             TextSpan(
-                              text:
-                                  '₹${walletBalance.toStringAsFixed(0)} ',
+                              text: '₹${walletBalance.toStringAsFixed(0)} ',
                               style: const TextStyle(
                                 color: _purple,
                                 fontWeight: FontWeight.w700,
@@ -541,8 +542,7 @@ class _WalletToggleStripe extends StatelessWidget {
                           ? TextSpan(
                               children: <InlineSpan>[
                                 TextSpan(
-                                  text:
-                                      '₹${walletApplied.toStringAsFixed(0)} ',
+                                  text: '₹${walletApplied.toStringAsFixed(0)} ',
                                   style: const TextStyle(
                                     color: _purple,
                                     fontWeight: FontWeight.w700,
@@ -550,8 +550,7 @@ class _WalletToggleStripe extends StatelessWidget {
                                 ),
                                 const TextSpan(text: 'applied  |  '),
                                 TextSpan(
-                                  text:
-                                      '₹${walletBalance.toStringAsFixed(0)} ',
+                                  text: '₹${walletBalance.toStringAsFixed(0)} ',
                                   style: const TextStyle(
                                     color: _purple,
                                     fontWeight: FontWeight.w700,

@@ -25,7 +25,8 @@ class ScratchCardRepositoryImpl implements ScratchCardRepository {
       return Left(handleDioError(error));
     } catch (_) {
       return const Left(
-        UnknownFailure(message: 'Unable to load scratch card appearance right now.'),
+        UnknownFailure(
+            message: 'Unable to load scratch card appearance right now.'),
       );
     }
   }
@@ -39,7 +40,8 @@ class ScratchCardRepositoryImpl implements ScratchCardRepository {
       return Left(handleDioError(error));
     } catch (_) {
       return const Left(
-        UnknownFailure(message: 'Unable to check your scratch cards right now.'),
+        UnknownFailure(
+            message: 'Unable to check your scratch cards right now.'),
       );
     }
   }
@@ -53,7 +55,8 @@ class ScratchCardRepositoryImpl implements ScratchCardRepository {
       return Left(handleDioError(error));
     } catch (_) {
       return const Left(
-        UnknownFailure(message: 'Unable to scratch right now — please try again.'),
+        UnknownFailure(
+            message: 'Unable to scratch right now — please try again.'),
       );
     }
   }

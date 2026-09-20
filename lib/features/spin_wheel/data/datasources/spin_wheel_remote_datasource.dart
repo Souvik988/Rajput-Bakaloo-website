@@ -37,7 +37,8 @@ class SpinWheelRemoteDataSource {
         statusCode: 500,
         requestOptions: RequestOptions(path: ApiConstants.spinWheelAppearance),
         response: Response<dynamic>(
-          requestOptions: RequestOptions(path: ApiConstants.spinWheelAppearance),
+          requestOptions:
+              RequestOptions(path: ApiConstants.spinWheelAppearance),
           statusCode: 500,
           data: payload,
         ),
@@ -58,7 +59,8 @@ class SpinWheelRemoteDataSource {
         statusCode: 500,
         requestOptions: RequestOptions(path: ApiConstants.spinWheelEligibility),
         response: Response<dynamic>(
-          requestOptions: RequestOptions(path: ApiConstants.spinWheelEligibility),
+          requestOptions:
+              RequestOptions(path: ApiConstants.spinWheelEligibility),
           statusCode: 500,
           data: payload,
         ),

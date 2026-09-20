@@ -395,8 +395,9 @@ class _HeroSeasonalDealTile extends StatelessWidget {
       _firstRenderableImage(product),
       profile: CustomerImageProfile.seasonalHeroArtwork,
     );
-    final String? singleImageUrl =
-        optimizedImage.url?.trim().isNotEmpty == true ? optimizedImage.url : null;
+    final String? singleImageUrl = optimizedImage.url?.trim().isNotEmpty == true
+        ? optimizedImage.url
+        : null;
 
     return Material(
       color: Colors.transparent,

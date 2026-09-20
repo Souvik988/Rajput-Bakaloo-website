@@ -127,10 +127,12 @@ class _ToastOverlayState extends State<_ToastOverlay>
     _slideAnimation = Tween<Offset>(
       begin: const Offset(0, -1.5),
       end: Offset.zero,
-    ).animate(CurvedAnimation(
-      parent: _controller,
-      curve: Curves.easeOutCubic,
-    ),);
+    ).animate(
+      CurvedAnimation(
+        parent: _controller,
+        curve: Curves.easeOutCubic,
+      ),
+    );
 
     _fadeAnimation = CurvedAnimation(
       parent: _controller,

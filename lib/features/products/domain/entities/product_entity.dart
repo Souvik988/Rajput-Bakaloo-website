@@ -96,7 +96,8 @@ abstract class ProductEntity with _$ProductEntity {
 
   bool get hasBadges => customBadges.isNotEmpty;
 
-  bool get hasDeliveryTime => displayDeliveryMinutes != null && displayDeliveryMinutes! > 0;
+  bool get hasDeliveryTime =>
+      displayDeliveryMinutes != null && displayDeliveryMinutes! > 0;
 
   /// True when this listing has a real per-listing bulk minimum worth
   /// jumping the quantity stepper to (a minimum of 1 is equivalent to no
@@ -108,7 +109,8 @@ abstract class ProductEntity with _$ProductEntity {
 
   /// True when this listing has a real per-listing bulk ceiling — see
   /// [hasBulkMinimum] for why `bulkOrderEligible == false` overrides it.
-  bool get hasBulkMaximum => bulkOrderEligible != false && bulkMaxQuantity != null;
+  bool get hasBulkMaximum =>
+      bulkOrderEligible != false && bulkMaxQuantity != null;
 
   bool get hasRating => avgRating > 0 && ratingCount > 0;
 
@@ -141,7 +143,8 @@ abstract class ProductEntity with _$ProductEntity {
   }
 
   String get formattedDeliveryTime {
-    if (displayDeliveryMinutes == null || displayDeliveryMinutes! <= 0) return '';
+    if (displayDeliveryMinutes == null || displayDeliveryMinutes! <= 0)
+      return '';
     return '${displayDeliveryMinutes!} mins';
   }
 }

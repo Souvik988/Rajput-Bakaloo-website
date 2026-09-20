@@ -76,8 +76,7 @@ class _CustomBannerSectionState extends State<CustomBannerSection> {
       (ImageInfo image, bool _) {
         final double width = image.image.width.toDouble();
         final double height = image.image.height.toDouble();
-        final double nextAspectRatio =
-            height > 0 ? width / height : (16 / 9);
+        final double nextAspectRatio = height > 0 ? width / height : (16 / 9);
         if (mounted) {
           setState(() {
             _resolvedAspectRatio = nextAspectRatio;

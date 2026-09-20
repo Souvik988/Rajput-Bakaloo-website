@@ -74,7 +74,11 @@ class _TopupScreenState extends ConsumerState<TopupScreen> {
           return;
         }
         final message = response.message?.trim();
-        AppToast.show(context, message == null || message.isEmpty ? 'Payment cancelled or failed.' : message);
+        AppToast.show(
+            context,
+            message == null || message.isEmpty
+                ? 'Payment cancelled or failed.'
+                : message);
       }
       ..onExternalWallet = (_) {};
   }
@@ -82,7 +86,8 @@ class _TopupScreenState extends ConsumerState<TopupScreen> {
   Future<void> _startTopup() async {
     final amount = double.tryParse(_amountController.text.trim());
     if (amount == null || amount <= 0) {
-      AppToast.show(context, '⚠️ Enter a valid amount', type: ToastType.warning);
+      AppToast.show(context, '⚠️ Enter a valid amount',
+          type: ToastType.warning);
       return;
     }
 
@@ -173,7 +178,8 @@ class _TopupScreenState extends ConsumerState<TopupScreen> {
       return;
     }
 
-    AppToast.show(context, '✅ Wallet top-up successful.', type: ToastType.success);
+    AppToast.show(context, '✅ Wallet top-up successful.',
+        type: ToastType.success);
     context.pop(true);
   }
 

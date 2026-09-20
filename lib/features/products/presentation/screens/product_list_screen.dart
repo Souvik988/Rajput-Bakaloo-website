@@ -84,8 +84,7 @@ class _ProductListScreenState extends ConsumerState<ProductListScreen> {
           if (viewState.items.isEmpty) {
             return const EmptyState(
               title: 'No products yet',
-              message:
-                  'Products will appear here when inventory is available.',
+              message: 'Products will appear here when inventory is available.',
             );
           }
 
@@ -137,12 +136,10 @@ class _ProductListScreenState extends ConsumerState<ProductListScreen> {
                       final product = viewState.items[index];
                       final isNew = viewState.newItemCount > 0 &&
                           index >=
-                              viewState.items.length -
-                                  viewState.newItemCount;
+                              viewState.items.length - viewState.newItemCount;
                       final staggerIndex = isNew
                           ? index -
-                              (viewState.items.length -
-                                  viewState.newItemCount)
+                              (viewState.items.length - viewState.newItemCount)
                           : 0;
 
                       return RepaintBoundary(
@@ -153,8 +150,7 @@ class _ProductListScreenState extends ConsumerState<ProductListScreen> {
                           child: ProductCard(
                             product: product,
                             style: ProductCardStyle.grid,
-                            onTap: () =>
-                                context.push('/product/${product.id}'),
+                            onTap: () => context.push('/product/${product.id}'),
                             onOptionsTap: product.hasMultipleOptions
                                 ? () => showProductOptionsSheet(
                                       context,
@@ -307,5 +303,3 @@ class _AnimatedCardState extends State<_AnimatedCard>
     );
   }
 }
-
-

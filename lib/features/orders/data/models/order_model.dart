@@ -158,21 +158,38 @@ class OrderModel {
       ),
       timeline: normalizedTimeline,
       deliveryMode: _readString(
-        json, <String>['deliveryMode', 'delivery_mode'], fallback: 'ASAP',),
+        json,
+        <String>['deliveryMode', 'delivery_mode'],
+        fallback: 'ASAP',
+      ),
       scheduledSlotLabel: _readNullableString(
-        json, <String>['scheduledSlotLabel', 'scheduled_slot_label'],),
+        json,
+        <String>['scheduledSlotLabel', 'scheduled_slot_label'],
+      ),
       scheduledSlotStart: _readDateTime(
-        json, <String>['scheduledSlotStart', 'scheduled_slot_start'],),
+        json,
+        <String>['scheduledSlotStart', 'scheduled_slot_start'],
+      ),
       scheduledSlotEnd: _readDateTime(
-        json, <String>['scheduledSlotEnd', 'scheduled_slot_end'],),
+        json,
+        <String>['scheduledSlotEnd', 'scheduled_slot_end'],
+      ),
       deliveryOtp: _readNullableString(
-        json, <String>['deliveryOtp', 'delivery_otp'],),
+        json,
+        <String>['deliveryOtp', 'delivery_otp'],
+      ),
       b2bApprovalStatus: _readNullableString(
-        json, <String>['b2bApprovalStatus', 'b2b_approval_status'],),
+        json,
+        <String>['b2bApprovalStatus', 'b2b_approval_status'],
+      ),
       b2bAmountSettled: _readDouble(
-        json, <String>['b2bAmountSettled', 'b2b_amount_settled'],),
+        json,
+        <String>['b2bAmountSettled', 'b2b_amount_settled'],
+      ),
       b2bPaymentDueDate: _readDateTime(
-        json, <String>['b2bPaymentDueDate', 'b2b_payment_due_date'],),
+        json,
+        <String>['b2bPaymentDueDate', 'b2b_payment_due_date'],
+      ),
       b2bSettlements: _readSettlements(json),
     );
   }
@@ -259,7 +276,8 @@ class OrderModel {
     return raw
         .whereType<Map>()
         .map(
-          (item) => B2BSettlementModel.fromJson(Map<String, dynamic>.from(item)),
+          (item) =>
+              B2BSettlementModel.fromJson(Map<String, dynamic>.from(item)),
         )
         .toList(growable: false);
   }

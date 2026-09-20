@@ -239,8 +239,7 @@ class BakalooStateButton extends StatelessWidget {
               ? null
               : BoxDecoration(
                   borderRadius: BorderRadius.circular(14.r),
-                  border:
-                      Border.all(color: AppColors.orderViolet, width: 1.4),
+                  border: Border.all(color: AppColors.orderViolet, width: 1.4),
                 ),
           child: Text(
             label,

@@ -33,8 +33,7 @@ class AppAvailabilityGate extends ConsumerWidget {
                   'assets/images/bakaloo-offline-state-illustration.png',
               icon: PhosphorIcons.wifiSlashBold,
               title: "You're offline",
-              subtitle:
-                  'Please check your internet connection\nand try again.',
+              subtitle: 'Please check your internet connection\nand try again.',
               primaryLabel: 'Retry',
               onPrimary: () =>
                   ref.read(appAvailabilityProvider.notifier).retry(),
@@ -50,8 +49,7 @@ class AppAvailabilityGate extends ConsumerWidget {
         else if (status == AppAvailabilityStatus.serviceUnavailable)
           Positioned.fill(
             child: _ServiceUnavailableBlocker(
-              onRetry: () =>
-                  ref.read(appAvailabilityProvider.notifier).retry(),
+              onRetry: () => ref.read(appAvailabilityProvider.notifier).retry(),
             ),
           ),
       ],

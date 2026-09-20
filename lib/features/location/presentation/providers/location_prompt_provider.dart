@@ -60,7 +60,8 @@ enum LocationAutoDetectResult {
 // as a defense-in-depth fallback for the rarer case where validatePincode
 // (checked below, pincode-list only) says available but the actual
 // create/update call still gets blocked by the radius-based check.
-const _kNotServiceableMessage = 'Delivery is not available at this address yet.';
+const _kNotServiceableMessage =
+    'Delivery is not available at this address yet.';
 
 /// Requests permission, gets a position, reverse-geocodes it, and saves it
 /// as the user's default address. Used both by the sheet's own "Enable"
@@ -257,8 +258,7 @@ Future<LocationAutoDetectResult> _geocodeAndSave(
   // locationPromptShouldShowProvider) — a customer with a genuinely
   // complete address is never routed through this sheet in the first
   // place, so this never risks overwriting real, already-entered details.
-  final existingAddresses =
-      ref.read(addressProvider).asData?.value ?? const [];
+  final existingAddresses = ref.read(addressProvider).asData?.value ?? const [];
   final existingDefaultId = existingAddresses.isEmpty
       ? null
       : existingAddresses
@@ -285,7 +285,8 @@ Future<LocationAutoDetectResult> _geocodeAndSave(
       recordNonFatalError(
         StateError(result.failure?.message ?? 'unknown'),
         StackTrace.current,
-        reason: '_geocodeAndSave: ${existingDefaultId != null ? 'update' : 'create'}Address failed',
+        reason:
+            '_geocodeAndSave: ${existingDefaultId != null ? 'update' : 'create'}Address failed',
         fatal: false,
       ),
     );

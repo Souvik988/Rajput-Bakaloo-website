@@ -54,10 +54,11 @@ class BillSummaryNotifier extends _$BillSummaryNotifier {
     // into this request.
     final selectedAddress = ref.watch(cartSelectedAddressProvider);
 
-    final result = await ref.read(cartEnhancementsDataSourceProvider).getCartSummary(
-          quickDeliverySelected: quickDeliverySelected,
-          addressId: selectedAddress?.id,
-        );
+    final result =
+        await ref.read(cartEnhancementsDataSourceProvider).getCartSummary(
+              quickDeliverySelected: quickDeliverySelected,
+              addressId: selectedAddress?.id,
+            );
 
     return result.fold(
       (failure) => throw StateError(failure.message),
@@ -93,8 +94,9 @@ class BillSummaryNotifier extends _$BillSummaryNotifier {
         }
 
         final discount = appliedCoupon.discountAmount;
-        final basePayable =
-            summary.totalPayable > 0 ? summary.totalPayable : summary.toPay.finalAmount;
+        final basePayable = summary.totalPayable > 0
+            ? summary.totalPayable
+            : summary.toPay.finalAmount;
 
         // BUG FIX: GST is computed server-side on the PRE-TAX total, i.e.
         // AFTER the auto-applied discount but BEFORE tip — see
@@ -120,7 +122,8 @@ class BillSummaryNotifier extends _$BillSummaryNotifier {
             ? gstAmount / preTaxTotalOld
             : 0.0;
         var preTaxTotalNew =
-            (preTaxTotalOld + summary.couponDiscount - discount).clamp(0.0, double.infinity);
+            (preTaxTotalOld + summary.couponDiscount - discount)
+                .clamp(0.0, double.infinity);
 
         var deliveryFee = summary.deliveryFee;
         if (hasFreeDelivery && !deliveryFee.isFree) {
@@ -131,7 +134,8 @@ class BillSummaryNotifier extends _$BillSummaryNotifier {
           // when delivery wasn't already free.
           preTaxTotalNew =
               (preTaxTotalNew - deliveryFee.amount).clamp(0.0, double.infinity);
-          deliveryFee = deliveryFee.copyWith(amount: 0, isFree: true, freeIn: 0);
+          deliveryFee =
+              deliveryFee.copyWith(amount: 0, isFree: true, freeIn: 0);
         }
 
         final gstAmountNew = preTaxTotalNew * gstRate;
@@ -155,7 +159,10 @@ class BillSummaryNotifier extends _$BillSummaryNotifier {
         // checkout no longer actually applied it, i.e. exactly the
         // "sometimes right, sometimes wrong" totals customers reported.
         var savings = summary.savings;
-        const autoDiscountTypes = <String>{'first_time_offer', 'cart_milestone'};
+        const autoDiscountTypes = <String>{
+          'first_time_offer',
+          'cart_milestone'
+        };
         final autoDiscountLines = savings.items
             .where((item) => autoDiscountTypes.contains(item.type))
             .toList();
@@ -165,8 +172,8 @@ class BillSummaryNotifier extends _$BillSummaryNotifier {
             (sum, item) => sum + item.amount,
           );
           savings = savings.copyWith(
-            total:
-                (savings.total - autoDiscountAmount).clamp(0.0, double.infinity),
+            total: (savings.total - autoDiscountAmount)
+                .clamp(0.0, double.infinity),
             items: savings.items
                 .where((item) => !autoDiscountTypes.contains(item.type))
                 .toList(),

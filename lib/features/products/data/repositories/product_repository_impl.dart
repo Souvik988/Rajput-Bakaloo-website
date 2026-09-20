@@ -282,5 +282,4 @@ class ProductRepositoryImpl implements ProductRepository {
       );
     }
   }
-
 }

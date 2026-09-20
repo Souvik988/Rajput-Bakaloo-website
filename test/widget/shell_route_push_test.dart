@@ -46,8 +46,7 @@ GoRouter _buildRouter({required bool withParentNavigatorKey}) {
             routes: <RouteBase>[
               GoRoute(
                 path: '/home',
-                builder: (context, state) =>
-                    const Scaffold(body: Text('Home')),
+                builder: (context, state) => const Scaffold(body: Text('Home')),
               ),
             ],
           ),

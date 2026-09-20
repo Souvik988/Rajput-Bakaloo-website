@@ -57,7 +57,8 @@ class _ErrorState extends StatelessWidget {
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: <Widget>[
-            Text(message, style: AppTextStyles.bodyMedium, textAlign: TextAlign.center),
+            Text(message,
+                style: AppTextStyles.bodyMedium, textAlign: TextAlign.center),
             Gap(12.h),
             FilledButton(onPressed: onRetry, child: const Text('Retry')),
           ],
@@ -131,29 +132,36 @@ class _ApplyFormState extends ConsumerState<_ApplyForm> {
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
-              PhosphorIcon(PhosphorIcons.briefcase, size: 22.sp, color: AppColors.orderViolet),
+              PhosphorIcon(PhosphorIcons.briefcase,
+                  size: 22.sp, color: AppColors.orderViolet),
               Gap(10.w),
               Expanded(
                 child: Text(
                   'Apply for a business account to unlock wholesale pricing on eligible products.',
-                  style: AppTextStyles.bodySmall.copyWith(color: AppColors.orderViolet),
+                  style: AppTextStyles.bodySmall
+                      .copyWith(color: AppColors.orderViolet),
                 ),
               ),
             ],
           ),
         ),
         Gap(20.h),
-        Text('Company name', style: AppTextStyles.labelLarge.copyWith(fontWeight: FontWeight.w700)),
+        Text('Company name',
+            style:
+                AppTextStyles.labelLarge.copyWith(fontWeight: FontWeight.w700)),
         Gap(8.h),
         TextField(
           controller: _companyController,
           maxLength: 255,
           style: AppTextStyles.bodyMedium,
           onChanged: (_) => setState(() {}),
-          decoration: const InputDecoration(hintText: 'e.g. Sharma Traders Pvt Ltd'),
+          decoration:
+              const InputDecoration(hintText: 'e.g. Sharma Traders Pvt Ltd'),
         ),
         Gap(16.h),
-        Text('GST number', style: AppTextStyles.labelLarge.copyWith(fontWeight: FontWeight.w700)),
+        Text('GST number',
+            style:
+                AppTextStyles.labelLarge.copyWith(fontWeight: FontWeight.w700)),
         Gap(8.h),
         TextField(
           controller: _gstController,
@@ -226,8 +234,13 @@ class _StatusCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final (Color accent, Color surface, IconData icon, String title, String subtitle) =
-        switch (account.status) {
+    final (
+      Color accent,
+      Color surface,
+      IconData icon,
+      String title,
+      String subtitle
+    ) = switch (account.status) {
       'PENDING' => (
           AppColors.orderViolet,
           AppColors.orderVioletSurface,
@@ -280,20 +293,26 @@ class _StatusCard extends StatelessWidget {
                   children: <Widget>[
                     Text(
                       title,
-                      style: AppTextStyles.labelLarge.copyWith(fontWeight: FontWeight.w700, color: accent),
+                      style: AppTextStyles.labelLarge
+                          .copyWith(fontWeight: FontWeight.w700, color: accent),
                     ),
                     Gap(4.h),
-                    Text(subtitle, style: AppTextStyles.bodySmall.copyWith(color: AppColors.textSecondary)),
+                    Text(subtitle,
+                        style: AppTextStyles.bodySmall
+                            .copyWith(color: AppColors.textSecondary)),
                   ],
                 ),
               ),
             ],
           ),
           Gap(10.h),
-          Text(account.companyName, style: AppTextStyles.bodyMedium.copyWith(fontWeight: FontWeight.w600)),
+          Text(account.companyName,
+              style: AppTextStyles.bodyMedium
+                  .copyWith(fontWeight: FontWeight.w600)),
           Text(
             account.gstNumber,
-            style: AppTextStyles.bodySmall.copyWith(color: AppColors.textSecondary, fontFamily: 'monospace'),
+            style: AppTextStyles.bodySmall.copyWith(
+                color: AppColors.textSecondary, fontFamily: 'monospace'),
           ),
         ],
       ),
@@ -305,7 +324,8 @@ class _WholesaleToggleCard extends ConsumerStatefulWidget {
   const _WholesaleToggleCard();
 
   @override
-  ConsumerState<_WholesaleToggleCard> createState() => _WholesaleToggleCardState();
+  ConsumerState<_WholesaleToggleCard> createState() =>
+      _WholesaleToggleCardState();
 }
 
 class _WholesaleToggleCardState extends ConsumerState<_WholesaleToggleCard> {
@@ -346,13 +366,16 @@ class _WholesaleToggleCardState extends ConsumerState<_WholesaleToggleCard> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
-                Text('Wholesale pricing', style: AppTextStyles.labelLarge.copyWith(fontWeight: FontWeight.w700)),
+                Text('Wholesale pricing',
+                    style: AppTextStyles.labelLarge
+                        .copyWith(fontWeight: FontWeight.w700)),
                 Gap(2.h),
                 Text(
                   enabled
                       ? 'Prices across the app reflect your wholesale rates.'
                       : "You're currently browsing at regular (retail) prices.",
-                  style: AppTextStyles.bodySmall.copyWith(color: AppColors.textSecondary),
+                  style: AppTextStyles.bodySmall
+                      .copyWith(color: AppColors.textSecondary),
                 ),
               ],
             ),

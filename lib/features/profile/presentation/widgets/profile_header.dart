@@ -29,6 +29,7 @@ class ProfileHeader extends ConsumerStatefulWidget {
   final String? name;
   final String phone;
   final String? avatarUrl;
+
   /// The resolved profile-placement banner image, or null for the
   /// default purple gradient.
   final String? backgroundImageUrl;
@@ -183,7 +184,6 @@ class _ProfileHeaderState extends ConsumerState<ProfileHeader> {
     }
     return trimmed;
   }
-
 }
 
 /// A real circular button — a frosted dark disc with a white caret —

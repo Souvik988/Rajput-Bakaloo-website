@@ -40,7 +40,8 @@ final createRefundRequestUseCaseProvider =
 
 final getRefundRequestByOrderUseCaseProvider =
     Provider<GetRefundRequestByOrderUseCase>((Ref ref) {
-  return GetRefundRequestByOrderUseCase(ref.watch(refundRequestRepositoryProvider));
+  return GetRefundRequestByOrderUseCase(
+      ref.watch(refundRequestRepositoryProvider));
 });
 
 final cancelRefundRequestUseCaseProvider =

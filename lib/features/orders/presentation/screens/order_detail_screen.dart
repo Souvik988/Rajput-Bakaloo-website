@@ -5,7 +5,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
 import 'package:go_router/go_router.dart';
 import 'package:lottie/lottie.dart';
-import 'package:open_file/open_file.dart' show OpenResult, ResultType;
+import 'package:open_file/open_file.dart' show ResultType;
 import 'package:phosphoricons_flutter/phosphoricons_flutter.dart';
 
 import 'package:bakaloo_flutter_app/core/platform/local_invoice.dart';
@@ -97,7 +97,8 @@ class _OrderDetailScreenState extends ConsumerState<OrderDetailScreen> {
         ref
           ..invalidate(activeOrderProvider)
           ..invalidate(orderDetailProvider(order.id));
-        AppToast.show(context, '✅ Order cancelled successfully', type: ToastType.success);
+        AppToast.show(context, '✅ Order cancelled successfully',
+            type: ToastType.success);
       },
     );
   }
@@ -129,7 +130,8 @@ class _OrderDetailScreenState extends ConsumerState<OrderDetailScreen> {
         ref.invalidate(cartProvider);
         final warnings =
             data.warnings.isEmpty ? '' : '\n${data.warnings.join('\n')}';
-        AppToast.show(context, 'Items added to cart$warnings', type: ToastType.success);
+        AppToast.show(context, 'Items added to cart$warnings',
+            type: ToastType.success);
         // Navigate to the cart so the reorder produces a visible result.
         context.push(RouteNames.cart);
       },
@@ -160,9 +162,8 @@ class _OrderDetailScreenState extends ConsumerState<OrderDetailScreen> {
       return;
     }
 
-    final result = await ref
-        .read(refundRequestProvider.notifier)
-        .cancelRequest(requestId);
+    final result =
+        await ref.read(refundRequestProvider.notifier).cancelRequest(requestId);
     if (!mounted) {
       return;
     }
@@ -206,7 +207,10 @@ class _OrderDetailScreenState extends ConsumerState<OrderDetailScreen> {
         final message = openResult.type == ResultType.done
             ? 'Invoice downloaded: ${file.fileName}'
             : openResult.message;
-        AppToast.show(context, message, type: message.startsWith('Invoice') ? ToastType.success : ToastType.error);
+        AppToast.show(context, message,
+            type: message.startsWith('Invoice')
+                ? ToastType.success
+                : ToastType.error);
       },
     );
   }
@@ -308,7 +312,8 @@ class _OrderDetailScreenState extends ConsumerState<OrderDetailScreen> {
                   title: 'Refund Request',
                   child: _RefundRequestStatusCard(
                     request: refundRequest,
-                    onCancel: () => _cancelRefundRequest(order, refundRequest.id),
+                    onCancel: () =>
+                        _cancelRefundRequest(order, refundRequest.id),
                   ),
                 ),
               ],
@@ -394,7 +399,8 @@ class _StatusHero extends StatelessWidget {
                     color: Colors.white.withValues(alpha: 0.95),
                   ),
                 ),
-                if (order.estimatedDelivery != null && order.deliveryMode != 'SCHEDULED') ...<Widget>[
+                if (order.estimatedDelivery != null &&
+                    order.deliveryMode != 'SCHEDULED') ...<Widget>[
                   Gap(8.h),
                   Text(
                     'ETA: ${order.estimatedDelivery!.toIndianDateTime}',
@@ -408,7 +414,9 @@ class _StatusHero extends StatelessWidget {
                   Gap(8.h),
                   Container(
                     padding: EdgeInsets.symmetric(
-                        horizontal: 8.w, vertical: 4.h,),
+                      horizontal: 8.w,
+                      vertical: 4.h,
+                    ),
                     decoration: BoxDecoration(
                       color: Colors.white.withValues(alpha: 0.18),
                       borderRadius: BorderRadius.circular(6.r),
@@ -1025,7 +1033,9 @@ class _B2BCreditInfo extends StatelessWidget {
                 PhosphorIcon(
                   PhosphorIcons.calendarDots,
                   size: 16.sp,
-                  color: isOverdue ? AppColors.errorRed : AppColors.orderStatusAmber,
+                  color: isOverdue
+                      ? AppColors.errorRed
+                      : AppColors.orderStatusAmber,
                 ),
                 Gap(8.w),
                 Expanded(
@@ -1034,7 +1044,9 @@ class _B2BCreditInfo extends StatelessWidget {
                         ? 'Payment was due ${dueDate.toIndianDate}'
                         : 'Payment due by ${dueDate.toIndianDate}',
                     style: AppTextStyles.bodySmall.copyWith(
-                      color: isOverdue ? AppColors.errorRed : AppColors.orderStatusAmber,
+                      color: isOverdue
+                          ? AppColors.errorRed
+                          : AppColors.orderStatusAmber,
                       fontWeight: FontWeight.w600,
                     ),
                   ),
@@ -1084,7 +1096,8 @@ class _B2BCreditInfo extends StatelessWidget {
                   ),
                   Text(
                     settlement.amount.toInrCurrency,
-                    style: AppTextStyles.labelLarge.copyWith(fontWeight: FontWeight.w700),
+                    style: AppTextStyles.labelLarge
+                        .copyWith(fontWeight: FontWeight.w700),
                   ),
                 ],
               ),
@@ -1213,8 +1226,13 @@ class _RefundRequestStatusCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final (Color accent, Color surface, IconData icon, String title, String subtitle) =
-        switch (request.status) {
+    final (
+      Color accent,
+      Color surface,
+      IconData icon,
+      String title,
+      String subtitle
+    ) = switch (request.status) {
       'PENDING' => (
           AppColors.orderViolet,
           AppColors.orderVioletSurface,
@@ -1277,7 +1295,8 @@ class _RefundRequestStatusCard extends StatelessWidget {
                     Gap(4.h),
                     Text(
                       subtitle,
-                      style: AppTextStyles.bodySmall.copyWith(color: AppColors.textSecondary),
+                      style: AppTextStyles.bodySmall
+                          .copyWith(color: AppColors.textSecondary),
                     ),
                   ],
                 ),

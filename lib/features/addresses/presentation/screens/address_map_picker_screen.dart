@@ -28,10 +28,12 @@ class AddressMapPickerScreen extends ConsumerStatefulWidget {
   final GeoPoint? initialPoint;
 
   @override
-  ConsumerState<AddressMapPickerScreen> createState() => _AddressMapPickerScreenState();
+  ConsumerState<AddressMapPickerScreen> createState() =>
+      _AddressMapPickerScreenState();
 }
 
-class _AddressMapPickerScreenState extends ConsumerState<AddressMapPickerScreen> {
+class _AddressMapPickerScreenState
+    extends ConsumerState<AddressMapPickerScreen> {
   static const GeoPoint _fallbackPoint = GeoPoint(lat: 22.5726, lng: 88.3639);
 
   MapLibreMapController? _controller;
@@ -403,7 +405,8 @@ class _AddressMapPickerScreenState extends ConsumerState<AddressMapPickerScreen>
         return;
       }
 
-      final currentPoint = GeoPoint(lat: position.latitude, lng: position.longitude);
+      final currentPoint =
+          GeoPoint(lat: position.latitude, lng: position.longitude);
 
       setState(() {
         _currentLocationPoint = currentPoint;
@@ -537,7 +540,8 @@ class _AddressMapPickerScreenState extends ConsumerState<AddressMapPickerScreen>
     }
 
     try {
-      final reverse = await ref.read(olaMapsServiceProvider).reverseGeocode(point);
+      final reverse =
+          await ref.read(olaMapsServiceProvider).reverseGeocode(point);
 
       if (!mounted || requestId != _resolveRequestId) {
         return;

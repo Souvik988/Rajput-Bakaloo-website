@@ -53,7 +53,8 @@ class BusinessAccountRemoteDataSource {
   BusinessAccountEntity _fromJson(Map<String, dynamic> json) {
     return BusinessAccountEntity(
       id: (json['id'] ?? '').toString(),
-      companyName: (json['company_name'] ?? json['companyName'] ?? '').toString(),
+      companyName:
+          (json['company_name'] ?? json['companyName'] ?? '').toString(),
       gstNumber: (json['gst_number'] ?? json['gstNumber'] ?? '').toString(),
       status: (json['status'] ?? 'PENDING').toString(),
       b2bEnabled: (json['b2b_enabled'] ?? json['b2bEnabled']) == true,
@@ -61,8 +62,9 @@ class BusinessAccountRemoteDataSource {
         json,
         <String>['rejection_reason', 'rejectionReason'],
       ),
-      submittedAt: _readDateTime(json, <String>['submitted_at', 'submittedAt']) ??
-          DateTime.now(),
+      submittedAt:
+          _readDateTime(json, <String>['submitted_at', 'submittedAt']) ??
+              DateTime.now(),
       reviewedAt: _readDateTime(json, <String>['reviewed_at', 'reviewedAt']),
     );
   }

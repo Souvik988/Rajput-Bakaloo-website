@@ -25,7 +25,10 @@ class StoreClosedBanner extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final status = ref.watch(storeStatusProvider).asData?.value;
     final imageUrl = status?.closedBannerImageUrl;
-    if (status == null || status.isOpen || imageUrl == null || imageUrl.isEmpty) {
+    if (status == null ||
+        status.isOpen ||
+        imageUrl == null ||
+        imageUrl.isEmpty) {
       return const SizedBox.shrink();
     }
 

@@ -23,7 +23,8 @@ class LedgerRepositoryImpl implements LedgerRepository {
       return Left(handleDioError(error));
     } catch (_) {
       return const Left(
-        UnknownFailure(message: 'Unable to load your ledger account right now.'),
+        UnknownFailure(
+            message: 'Unable to load your ledger account right now.'),
       );
     }
   }
@@ -37,7 +38,8 @@ class LedgerRepositoryImpl implements LedgerRepository {
       return Left(handleDioError(error));
     } catch (_) {
       return const Left(
-        UnknownFailure(message: 'Unable to pay from your ledger account right now.'),
+        UnknownFailure(
+            message: 'Unable to pay from your ledger account right now.'),
       );
     }
   }

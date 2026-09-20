@@ -150,10 +150,10 @@ class _SegmentContent extends StatelessWidget {
     // > 90° from top) — flip them back a half turn so every label stays
     // readable without tilting your head past vertical.
     final normalizedAngle = angle % (2 * math.pi);
-    final contentRotation = (normalizedAngle > math.pi / 2 &&
-            normalizedAngle < math.pi * 1.5)
-        ? angle + math.pi
-        : angle;
+    final contentRotation =
+        (normalizedAngle > math.pi / 2 && normalizedAngle < math.pi * 1.5)
+            ? angle + math.pi
+            : angle;
 
     return Transform.translate(
       offset: Offset(dx, dy),

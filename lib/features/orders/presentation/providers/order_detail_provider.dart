@@ -10,7 +10,8 @@ import 'package:bakaloo_flutter_app/features/orders/presentation/providers/order
 // refetching. Socket-driven invalidation (order_live_sync_provider)
 // only helps while connected; this guarantees a fresh fetch on every
 // screen visit regardless of missed/late socket events.
-final orderDetailProvider = FutureProvider.autoDispose.family<OrderEntity, String>((
+final orderDetailProvider =
+    FutureProvider.autoDispose.family<OrderEntity, String>((
   Ref ref,
   String orderId,
 ) async {

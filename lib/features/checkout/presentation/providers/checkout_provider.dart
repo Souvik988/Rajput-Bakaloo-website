@@ -550,9 +550,9 @@ class CheckoutNotifier extends _$CheckoutNotifier {
   }) async {
     try {
       final cancelResponse = await ref.read(dioClientProvider).post<dynamic>(
-            ApiConstants.orderCancel(orderId),
-            data: <String, dynamic>{'reason': reason},
-          );
+        ApiConstants.orderCancel(orderId),
+        data: <String, dynamic>{'reason': reason},
+      );
       if (_isPaymentConfirmedResponse(cancelResponse.data)) {
         _onPaymentConfirmedDuringCancel(orderId);
         return;
@@ -680,8 +680,7 @@ class CheckoutNotifier extends _$CheckoutNotifier {
         // kept silently using the old default, because it still existed in
         // the list and matched by id, so this loop never got as far as
         // re-resolving which address is default now.
-        selected =
-            current.isDefault ? _defaultAddress(addresses) : stillExists;
+        selected = current.isDefault ? _defaultAddress(addresses) : stillExists;
       }
     }
 

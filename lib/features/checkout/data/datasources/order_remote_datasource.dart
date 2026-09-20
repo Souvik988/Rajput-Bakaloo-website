@@ -36,7 +36,9 @@ class OrderRemoteDataSource {
 
     // Fallback: try parsing from the orders array
     final ordersArray = dataMap['orders'];
-    if (ordersArray is List && ordersArray.isNotEmpty && ordersArray.first is Map) {
+    if (ordersArray is List &&
+        ordersArray.isNotEmpty &&
+        ordersArray.first is Map) {
       return OrderModel.fromJson(Map<String, dynamic>.from(ordersArray.first));
     }
 

@@ -33,9 +33,7 @@ class AppearanceToggle extends ConsumerWidget {
               ),
               child: Center(
                 child: PhosphorIcon(
-                  isDark
-                      ? PhosphorIcons.moon
-                      : PhosphorIcons.sun,
+                  isDark ? PhosphorIcons.moon : PhosphorIcons.sun,
                   size: 18.sp,
                   color: AppColors.textPrimary,
                 ),

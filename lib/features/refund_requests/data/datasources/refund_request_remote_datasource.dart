@@ -33,7 +33,8 @@ class RefundRequestRemoteDataSource {
       adminNote: _readNullableString(json, <String>['admin_note', 'adminNote']),
       refundAmount: _toDouble(json['refund_amount'] ?? json['refundAmount']),
       refundTo: _readNullableString(json, <String>['refund_to', 'refundTo']),
-      createdAt: _readDateTime(json, <String>['created_at', 'createdAt']) ?? DateTime.now(),
+      createdAt: _readDateTime(json, <String>['created_at', 'createdAt']) ??
+          DateTime.now(),
     );
   }
 

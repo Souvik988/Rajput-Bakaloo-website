@@ -21,7 +21,8 @@ class SpinWheelRepositoryImpl implements SpinWheelRepository {
   Future<Either<Failure, List<SpinPrize>>> getConfig() async {
     try {
       final models = await _remoteDataSource.getConfig();
-      final sorted = [...models]..sort((a, b) => a.displayOrder.compareTo(b.displayOrder));
+      final sorted = [...models]
+        ..sort((a, b) => a.displayOrder.compareTo(b.displayOrder));
       return Right(
         <SpinPrize>[
           for (var i = 0; i < sorted.length; i++) sorted[i].toEntity(i),
@@ -45,7 +46,8 @@ class SpinWheelRepositoryImpl implements SpinWheelRepository {
       return Left(handleDioError(error));
     } catch (_) {
       return const Left(
-        UnknownFailure(message: 'Unable to load spin wheel appearance right now.'),
+        UnknownFailure(
+            message: 'Unable to load spin wheel appearance right now.'),
       );
     }
   }
