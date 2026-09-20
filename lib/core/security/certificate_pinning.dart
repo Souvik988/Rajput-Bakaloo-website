@@ -9,7 +9,10 @@ class CertificatePinning {
   CertificatePinning._();
 
   static Interceptor? createInterceptor() {
-    if (kDebugMode) {
+    // WEB PORT: the browser already validates the TLS chain (HSTS plus its
+    // own trust store); the native pinning plugin has no web implementation
+    // and its interceptor would throw MissingPluginException per request.
+    if (kIsWeb || kDebugMode) {
       return null;
     }
 

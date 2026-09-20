@@ -1,5 +1,7 @@
 import 'dart:io';
 
+import 'package:flutter/foundation.dart';
+
 import 'package:dio/dio.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
@@ -44,6 +46,12 @@ class AppVersionCheckResult {
 /// network hiccup.
 @riverpod
 Future<AppVersionCheckResult> appVersionCheck(Ref ref) async {
+  // WEB PORT: the store-forced update flow only applies to app-store
+  // binaries; a browser tab always serves the deployed build. Return none
+  // before touching dart:io's Platform, which throws on web.
+  if (kIsWeb) {
+    return AppVersionCheckResult.none;
+  }
   try {
     final packageInfo = await PackageInfo.fromPlatform();
     final buildNumber = int.tryParse(packageInfo.buildNumber) ?? 0;

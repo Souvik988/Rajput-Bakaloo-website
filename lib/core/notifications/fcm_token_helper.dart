@@ -10,6 +10,13 @@ import 'package:flutter/foundation.dart';
 /// for the FCM token. Android has no APNs concept and returns its token
 /// immediately regardless.
 Future<String?> getFcmTokenAwaitingApns(FirebaseMessaging messaging) async {
+  // WEB PORT: Firebase is intentionally uninitialized on web; requesting a
+  // token here would throw inside the login flow. Returning null makes the
+  // callers skip token registration exactly like a device that has no
+  // FCM token yet.
+  if (kIsWeb) {
+    return null;
+  }
   if (defaultTargetPlatform == TargetPlatform.iOS ||
       defaultTargetPlatform == TargetPlatform.macOS) {
     var apnsToken = await messaging.getAPNSToken();

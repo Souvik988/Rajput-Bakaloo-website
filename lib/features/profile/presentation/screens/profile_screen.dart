@@ -7,7 +7,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
 import 'package:go_router/go_router.dart';
 import 'package:in_app_review/in_app_review.dart';
-import 'package:local_auth/local_auth.dart';
+import 'package:bakaloo_flutter_app/core/platform/biometric_gate.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:phosphoricons_flutter/phosphoricons_flutter.dart';
 import 'package:share_plus/share_plus.dart';
@@ -53,7 +53,7 @@ class ProfileScreen extends ConsumerStatefulWidget {
 }
 
 class _ProfileScreenState extends ConsumerState<ProfileScreen> {
-  final LocalAuthentication _localAuth = LocalAuthentication();
+  final BiometricGate _localAuth = const BiometricGate();
   final InAppReview _inAppReview = InAppReview.instance;
 
   String _appVersion = '1.0.0';

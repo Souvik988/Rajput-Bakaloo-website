@@ -1,6 +1,6 @@
 import 'dart:async';
 
-import 'package:firebase_crashlytics/firebase_crashlytics.dart';
+import 'package:bakaloo_flutter_app/core/platform/crash_reporter.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:geolocator/geolocator.dart';
 
@@ -107,7 +107,7 @@ Future<LocationAutoDetectResult> detectAndSaveCurrentLocation(
       position = await getResilientCurrentPosition();
     } catch (err, stack) {
       unawaited(
-        FirebaseCrashlytics.instance.recordError(
+        recordNonFatalError(
           err,
           stack,
           reason: 'detectAndSaveCurrentLocation: getResilientCurrentPosition '
@@ -121,7 +121,7 @@ Future<LocationAutoDetectResult> detectAndSaveCurrentLocation(
     return _geocodeAndSave(ref, position);
   } catch (err, stack) {
     unawaited(
-      FirebaseCrashlytics.instance.recordError(
+      recordNonFatalError(
         err,
         stack,
         reason: 'detectAndSaveCurrentLocation: unexpected failure',
@@ -158,7 +158,7 @@ Future<LocationAutoDetectResult> _geocodeAndSave(
           road.isEmpty &&
           displayName.isEmpty)) {
     unawaited(
-      FirebaseCrashlytics.instance.recordError(
+      recordNonFatalError(
         StateError('Ola reverseGeocode returned nothing usable'),
         StackTrace.current,
         reason: '_geocodeAndSave: reverse geocoding failed',
@@ -282,7 +282,7 @@ Future<LocationAutoDetectResult> _geocodeAndSave(
       return LocationAutoDetectResult.notServiceable;
     }
     unawaited(
-      FirebaseCrashlytics.instance.recordError(
+      recordNonFatalError(
         StateError(result.failure?.message ?? 'unknown'),
         StackTrace.current,
         reason: '_geocodeAndSave: ${existingDefaultId != null ? 'update' : 'create'}Address failed',

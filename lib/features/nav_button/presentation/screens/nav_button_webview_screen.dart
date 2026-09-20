@@ -2,8 +2,8 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:webview_flutter/webview_flutter.dart';
 
+import 'package:bakaloo_flutter_app/core/platform/embedded_browser.dart';
 import 'package:bakaloo_flutter_app/core/theme/app_colors.dart';
 import 'package:bakaloo_flutter_app/features/nav_button/presentation/providers/nav_button_provider.dart';
 
@@ -30,7 +30,7 @@ class NavButtonWebviewScreen extends ConsumerStatefulWidget {
 
 class _NavButtonWebviewScreenState
     extends ConsumerState<NavButtonWebviewScreen> {
-  late final WebViewController _controller;
+  late final EmbeddedBrowser _browser;
   bool _loading = true;
   bool _resolvingIdentity;
 
@@ -40,18 +40,10 @@ class _NavButtonWebviewScreenState
   void initState() {
     super.initState();
     _resolvingIdentity = widget.passIdentity;
-    _controller = WebViewController()
-      ..setJavaScriptMode(JavaScriptMode.unrestricted)
-      ..setNavigationDelegate(
-        NavigationDelegate(
-          onPageStarted: (_) {
-            if (mounted) setState(() => _loading = true);
-          },
-          onPageFinished: (_) {
-            if (mounted) setState(() => _loading = false);
-          },
-        ),
-      );
+    _browser = EmbeddedBrowser()
+      ..onLoaded = () {
+        if (mounted) setState(() => _loading = false);
+      };
     unawaited(_load());
   }
 
@@ -80,7 +72,7 @@ class _NavButtonWebviewScreenState
     }
     if (!mounted) return;
     setState(() => _resolvingIdentity = false);
-    await _controller.loadRequest(Uri.parse(target));
+    await _browser.load(Uri.parse(target));
   }
 
   @override
@@ -92,7 +84,7 @@ class _NavButtonWebviewScreenState
         body: SafeArea(
           child: Stack(
             children: <Widget>[
-              if (!_resolvingIdentity) WebViewWidget(controller: _controller),
+              if (!_resolvingIdentity) _browser.buildView(),
               if (_loading || _resolvingIdentity)
                 const Center(
                   child: CircularProgressIndicator(

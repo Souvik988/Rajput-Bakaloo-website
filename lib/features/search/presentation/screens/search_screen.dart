@@ -10,7 +10,8 @@ import 'package:gap/gap.dart';
 import 'package:go_router/go_router.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 import 'package:phosphoricons_flutter/phosphoricons_flutter.dart';
-import 'package:speech_to_text/speech_to_text.dart';
+import 'package:speech_to_text/speech_to_text.dart' show SpeechListenOptions;
+import 'package:bakaloo_flutter_app/core/platform/voice_input.dart';
 
 import 'package:bakaloo_flutter_app/core/theme/app_colors.dart';
 import 'package:bakaloo_flutter_app/core/theme/app_dimensions.dart';
@@ -160,7 +161,7 @@ class _SearchScreenState extends ConsumerState<SearchScreen>
 
   final TextEditingController _searchController = TextEditingController();
   final FocusNode _focusNode = FocusNode();
-  final SpeechToText _speech = SpeechToText();
+  final VoiceInput _speech = VoiceInput();
   bool _isListening = false;
   final PagingController<int, ProductEntity> _pagingController =
       PagingController<int, ProductEntity>(firstPageKey: 1);

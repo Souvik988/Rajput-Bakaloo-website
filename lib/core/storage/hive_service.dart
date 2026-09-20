@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:path_provider/path_provider.dart';
 
@@ -19,8 +20,14 @@ class HiveService {
   static late Box<dynamic> remoteThemeBox;
 
   static Future<void> init() async {
-    final directory = await getApplicationDocumentsDirectory();
-    await Hive.initFlutter(directory.path);
+    // WEB PORT: path_provider throws on web; hive_flutter already persists
+    // to IndexedDB when initialized without an explicit directory.
+    if (kIsWeb) {
+      await Hive.initFlutter();
+    } else {
+      final directory = await getApplicationDocumentsDirectory();
+      await Hive.initFlutter(directory.path);
+    }
     final cipher = await EncryptionHelper().getHiveCipher();
 
     productsBox = await Hive.openBox<dynamic>(StorageKeys.productsBox);

@@ -6,7 +6,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
 import 'package:go_router/go_router.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
-import 'package:local_auth/local_auth.dart';
+import 'package:bakaloo_flutter_app/core/platform/biometric_gate.dart';
 import 'package:phosphoricons_flutter/phosphoricons_flutter.dart';
 import 'package:flutter/services.dart';
 
@@ -33,7 +33,7 @@ class WalletScreen extends ConsumerStatefulWidget {
 class _WalletScreenState extends ConsumerState<WalletScreen> {
   static const int _pageSize = 20;
 
-  final LocalAuthentication _localAuth = LocalAuthentication();
+  final BiometricGate _localAuth = const BiometricGate();
   late final PagingController<int, TransactionEntity> _pagingController;
 
   WalletTransactionFilter _filter = WalletTransactionFilter.all;

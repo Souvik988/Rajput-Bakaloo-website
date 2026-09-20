@@ -6,7 +6,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
 import 'package:go_router/go_router.dart';
-import 'package:local_auth/local_auth.dart';
+import 'package:bakaloo_flutter_app/core/platform/biometric_gate.dart';
 import 'package:phosphoricons_flutter/phosphoricons_flutter.dart';
 
 import 'package:bakaloo_flutter_app/core/constants/app_constants.dart';
@@ -35,7 +35,7 @@ class SendMoneyScreen extends ConsumerStatefulWidget {
 class _SendMoneyScreenState extends ConsumerState<SendMoneyScreen> {
   final TextEditingController _phoneController = TextEditingController();
   final TextEditingController _amountController = TextEditingController();
-  final LocalAuthentication _localAuth = LocalAuthentication();
+  final BiometricGate _localAuth = const BiometricGate();
 
   WalletRecipientEntity? _selectedRecipient;
   bool _isSending = false;

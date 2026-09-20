@@ -1,9 +1,11 @@
 import 'dart:async';
-import 'dart:io';
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/widgets.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:location/location.dart' as location_pkg;
+
+import 'package:bakaloo_flutter_app/core/security/native_platform.dart';
 
 /// Prompts the customer to turn device location ON using Android's native
 /// Google Play Services "Location Accuracy" resolution dialog — the same
@@ -27,7 +29,16 @@ import 'package:location/location.dart' as location_pkg;
 /// in-app — so there this falls back to opening Settings directly, same as
 /// before.
 Future<bool> requestEnableLocationService() async {
-  if (!Platform.isAndroid) {
+  // WEB PORT: the browser has no device-wide Location Services switch —
+  // geolocation availability is reported by geolocator's web implementation
+  // and the permission prompt fires with the first position request. Report
+  // the browser's state and let the existing denied-permission flow handle
+  // the rest.
+  if (kIsWeb) {
+    return Geolocator.isLocationServiceEnabled();
+  }
+
+  if (!isAndroidRuntime()) {
     await Geolocator.openLocationSettings();
     return _waitForServiceEnabled();
   }
@@ -96,6 +107,12 @@ Future<bool> _waitForServiceEnabled() async {
 /// point just resolves instantly with the same deniedForever result — this
 /// app Settings deep link is the only way back.
 Future<void> openLocationPermissionSettings() {
+  // WEB PORT: there is no per-site settings page to deep-link into (the
+  // browser owns that UI); a no-op keeps the denied-permission dialog's
+  // manual-address path reachable instead of throwing.
+  if (kIsWeb) {
+    return Future<void>.value();
+  }
   return Geolocator.openAppSettings();
 }
 

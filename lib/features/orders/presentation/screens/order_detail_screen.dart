@@ -5,9 +5,10 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
 import 'package:go_router/go_router.dart';
 import 'package:lottie/lottie.dart';
-import 'package:open_file/open_file.dart';
+import 'package:open_file/open_file.dart' show OpenResult, ResultType;
 import 'package:phosphoricons_flutter/phosphoricons_flutter.dart';
 
+import 'package:bakaloo_flutter_app/core/platform/local_invoice.dart';
 import 'package:bakaloo_flutter_app/core/theme/app_colors.dart';
 import 'package:bakaloo_flutter_app/core/utils/app_toast.dart';
 import 'package:bakaloo_flutter_app/core/theme/app_dimensions.dart';
@@ -198,7 +199,7 @@ class _OrderDetailScreenState extends ConsumerState<OrderDetailScreen> {
         AppToast.show(context, failure.message);
       },
       (file) async {
-        final openResult = await OpenFile.open(file.path);
+        final openResult = await openSavedInvoice(file.path);
         if (!mounted) {
           return;
         }

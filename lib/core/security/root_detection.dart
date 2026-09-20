@@ -1,8 +1,9 @@
-import 'dart:io' show Platform;
-
+import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_jailbreak_detection/flutter_jailbreak_detection.dart';
+
+import 'package:bakaloo_flutter_app/core/security/native_platform.dart';
 
 class RootDetection {
   RootDetection._();
@@ -43,11 +44,19 @@ class RootDetection {
   }
 
   static Future<bool> _isCompromised() async {
+    // WEB PORT: the browser sandbox is neither rooted nor jailbroken in the
+    // sense this check guards against, and the plugin below has no web
+    // implementation. Fall through to "not compromised" — mobile behavior
+    // is unchanged because isAndroidRuntime() is true exactly where
+    // Platform.isAndroid was.
+    if (kIsWeb) {
+      return false;
+    }
     try {
       final rooted = await FlutterJailbreakDetection.jailbroken;
       return rooted;
     } catch (_) {
-      if (Platform.isAndroid) {
+      if (isAndroidRuntime()) {
         try {
           return await _channel.invokeMethod<bool>('isDeviceCompromised') ??
               false;

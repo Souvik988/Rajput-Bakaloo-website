@@ -26,7 +26,12 @@ import 'package:geolocator/geolocator.dart';
 /// and report it exactly as they would a plain `getCurrentPosition()`
 /// call — no call site needs to change its existing catch-block logic.
 Future<Position> getResilientCurrentPosition() async {
-  final cached = await Geolocator.getLastKnownPosition();
+  // WEB PORT: geolocator_web throws "unsupported" for the cached-position
+  // probe instead of returning null — fall through to the live fix, which
+  // is what a first-ever browser visit would do anyway.
+  final Position? cached = await Geolocator.getLastKnownPosition().catchError(
+    (Object _) => null,
+  );
   if (cached != null) {
     return cached;
   }

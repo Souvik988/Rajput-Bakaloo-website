@@ -13,6 +13,7 @@ import 'package:bakaloo_flutter_app/core/storage/app_cache_manager.dart';
 import 'package:bakaloo_flutter_app/core/storage/hive_service.dart';
 import 'package:bakaloo_flutter_app/core/storage/remote_layout_cache_manager.dart';
 import 'package:bakaloo_flutter_app/firebase_options.dart';
+import 'package:bakaloo_flutter_app/shared/widgets/web_app_shell.dart';
 
 /// On iOS, the native Firebase SDK auto-configures the default app from
 /// GoogleService-Info.plist before Dart ever runs — so calling
@@ -24,6 +25,15 @@ import 'package:bakaloo_flutter_app/firebase_options.dart';
 /// and treat `duplicate-app` specifically as success — everything else
 /// still surfaces as a real failure.
 Future<void> _ensureFirebaseInitialized() async {
+  // WEB PORT: firebase_options.dart ships Android/iOS configurations only —
+  // DefaultFirebaseOptions.currentPlatform throws on web, and the plugins
+  // wired to it here (Crashlytics, FCM) have no web integration in this
+  // app. Skip entirely so startup is deterministic; every Firebase consumer
+  // is either web-gated or already try/caught (see
+  // core/notifications/fcm_service.dart, core/analytics/analytics_service.dart).
+  if (kIsWeb) {
+    return;
+  }
   try {
     await Firebase.initializeApp(
       options: DefaultFirebaseOptions.currentPlatform,
@@ -99,7 +109,9 @@ Future<void> main() async {
 
   runApp(
     const ProviderScope(
-      child: App(),
+      child: WebAppShell(
+        child: App(),
+      ),
     ),
   );
 }

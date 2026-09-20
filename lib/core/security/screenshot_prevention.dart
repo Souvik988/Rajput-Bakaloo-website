@@ -1,7 +1,7 @@
-import 'dart:io' show Platform;
-
 import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
+
+import 'package:bakaloo_flutter_app/core/security/native_platform.dart';
 
 class ScreenshotPrevention {
   ScreenshotPrevention._();
@@ -12,7 +12,7 @@ class ScreenshotPrevention {
     if (kIsWeb) {
       return;
     }
-    if (Platform.isAndroid) {
+    if (isAndroidRuntime()) {
       try {
         await _channel.invokeMethod<void>('enableSecure');
       } catch (_) {
@@ -25,7 +25,7 @@ class ScreenshotPrevention {
     if (kIsWeb) {
       return;
     }
-    if (Platform.isAndroid) {
+    if (isAndroidRuntime()) {
       try {
         await _channel.invokeMethod<void>('disableSecure');
       } catch (_) {

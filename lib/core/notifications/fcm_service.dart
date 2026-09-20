@@ -49,6 +49,14 @@ String _platformNameFor(TargetPlatform platform) {
 
 @Riverpod(keepAlive: true)
 Future<void> initializeFcm(Ref ref) async {
+  // WEB PORT: no Firebase on web — constructing FCMService would touch
+  // FirebaseMessaging.instance before any Firebase app exists and every
+  // subscription below has no browser equivalent in this app. In-app
+  // notification history (features/notifications) still works via polling;
+  // only push delivery, which needs FCM, is absent.
+  if (kIsWeb) {
+    return;
+  }
   await ref.watch(fcmServiceProvider).init();
 
   // The login flow (auth_notifier.dart) registers the FCM token once, right

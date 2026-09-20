@@ -69,6 +69,10 @@ dependencies:
   package_info_plus: ^8.1.1
   in_app_review: ^2.0.10
   synchronized: ^3.1.0+1
+  # WEB PORT: browser-side adapters (invoice download, embedded iframe
+  # browser, Razorpay Checkout) use package:web for JS interop. Resolved
+  # transitively at 1.1.1 already; declared directly since app code imports it.
+  web: ^1.1.0
   jwt_decoder: ^2.0.1
   dartz: ^0.10.1
   equatable: ^2.0.7
