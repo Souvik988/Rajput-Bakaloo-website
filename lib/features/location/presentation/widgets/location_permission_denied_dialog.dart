@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 
@@ -60,6 +61,19 @@ Future<LocationPermission> resolveLocationPermission(
   var permission = await Geolocator.checkPermission();
   if (permission == LocationPermission.denied) {
     permission = await Geolocator.requestPermission();
+    // WEB PORT: geolocator_web's requestPermission maps EVERY failure —
+    // including a transient "position unavailable" while the browser's
+    // provider warms up — to deniedForever, which would dead-end the flow
+    // with the permanent-denial dialog. Re-query the browser's actual
+    // permission state: unless it reports a genuine block, downgrade to
+    // `denied` so the caller's retryable path (toast + manual retry)
+    // applies. Mobile is untouched.
+    if (kIsWeb && permission == LocationPermission.deniedForever) {
+      final recheck = await Geolocator.checkPermission();
+      if (recheck != LocationPermission.deniedForever) {
+        permission = recheck;
+      }
+    }
   }
 
   if (permission != LocationPermission.deniedForever || !context.mounted) {

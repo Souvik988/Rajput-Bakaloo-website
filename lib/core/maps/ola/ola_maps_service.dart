@@ -57,19 +57,30 @@ class OlaMapsService {
   final ApiClient _apiClient;
 
   Future<OlaMapsStyle> getStyle() async {
-    try {
-      final response = await _apiClient.getOlaMapsStyleUrl();
-      final data = _extractData(response.data);
-      return OlaMapsStyle(
-        configured: data['configured'] == true,
-        styleUrl: (data['styleUrl'] as String?)?.trim(),
-      );
-    } catch (error, stackTrace) {
-      if (kDebugMode) {
-        debugPrint('OlaMapsService.getStyle exception: $error');
-        debugPrint('$stackTrace');
+    // WEB PORT + resilience: this call runs once per map-picker visit, and a
+    // transient network hiccup used to be cached as `configured: false` for
+    // the whole visit ("Map unavailable right now" with the pin/search UI
+    // dead). Retry exceptions briefly before surfacing the failure — a
+    // genuine `configured: false` answer from the backend is returned
+    // immediately without retries.
+    for (var attempt = 1;; attempt++) {
+      try {
+        final response = await _apiClient.getOlaMapsStyleUrl();
+        final data = _extractData(response.data);
+        return OlaMapsStyle(
+          configured: data['configured'] == true,
+          styleUrl: (data['styleUrl'] as String?)?.trim(),
+        );
+      } catch (error, stackTrace) {
+        if (attempt >= 3) {
+          if (kDebugMode) {
+            debugPrint('OlaMapsService.getStyle exception: $error');
+            debugPrint('$stackTrace');
+          }
+          return const OlaMapsStyle(configured: false);
+        }
+        await Future<void>.delayed(const Duration(milliseconds: 400));
       }
-      return const OlaMapsStyle(configured: false);
     }
   }
 
