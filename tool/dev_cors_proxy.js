@@ -3,12 +3,19 @@
 // NOT part of the backend — production deployments on *.bakaloo.in origins
 // talk to the API directly (its allowlist covers them).
 //
+// Also rewrites the Ola Maps styleUrl returned by /maps/ola/style-url to
+// this proxy, so the MapLibre style document is fetched same-origin (the
+// production backend only emits CORS headers for *.bakaloo.in origins, and
+// its styleUrl embeds its own public host). Ola's tile/sprite/glyph CDN
+// sends Access-Control-Allow-Origin: * and is fetched directly.
+//
 // Usage: node tool/dev_cors_proxy.js  (listens on 127.0.0.1:9443)
 const http = require('http');
 const https = require('https');
 
 const UPSTREAM = 'api.bakaloo.in';
 const PORT = 9443;
+const STYLE_URL_PATH = '/api/v1/maps/ola/style-url';
 
 function addCors(req, res) {
   res.setHeader('Access-Control-Allow-Origin', req.headers.origin || '*');
@@ -23,30 +30,59 @@ function addCors(req, res) {
   );
 }
 
+function proxy(req, res, transform) {
+  const headers = { ...req.headers, host: UPSTREAM };
+  if (transform) {
+    // Body rewriting needs uncompressed bytes.
+    headers['accept-encoding'] = 'identity';
+  }
+  const upstream = https.request(
+    {
+      hostname: UPSTREAM,
+      port: 443,
+      path: req.url,
+      method: req.method,
+      headers,
+    },
+    (up) => {
+      addCors(req, res);
+      if (!transform) {
+        res.writeHead(up.statusCode, up.headers);
+        up.pipe(res);
+        return;
+      }
+      const chunks = [];
+      up.on('data', (c) => chunks.push(c));
+      up.on('end', () => {
+        let body = Buffer.concat(chunks).toString('utf8');
+        body = transform(body);
+        res.writeHead(up.statusCode, {
+          ...up.headers,
+          'content-length': Buffer.byteLength(body),
+        });
+        res.end(body);
+      });
+    },
+  );
+  upstream.on('error', (err) => {
+    res.writeHead(502, { 'Content-Type': 'application/json' });
+    res.end(JSON.stringify({ error: 'proxy_upstream_failed', detail: String(err) }));
+  });
+  req.pipe(upstream);
+}
+
 const server = http.createServer((req, res) => {
-  const options = {
-    hostname: UPSTREAM,
-    port: 443,
-    path: req.url,
-    method: req.method,
-    headers: { ...req.headers, host: UPSTREAM },
-  };
   if (req.method === 'OPTIONS') {
     addCors(req, res);
     res.writeHead(204);
     res.end();
     return;
   }
-  const upstream = https.request(options, (up) => {
-    addCors(req, res);
-    res.writeHead(up.statusCode, up.headers);
-    up.pipe(res);
-  });
-  upstream.on('error', (err) => {
-    res.writeHead(502, { 'Content-Type': 'application/json' });
-    res.end(JSON.stringify({ error: 'proxy_upstream_failed', detail: String(err) }));
-  });
-  req.pipe(upstream);
+  const isStyleUrl = req.url.startsWith(STYLE_URL_PATH);
+  proxy(req, res, isStyleUrl
+    ? (body) =>
+        body.split('https://api.bakaloo.in').join(`http://127.0.0.1:${PORT}`)
+    : null);
 });
 
 // WebSocket passthrough (Socket.IO websocket transport)
