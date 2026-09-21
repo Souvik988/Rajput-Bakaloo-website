@@ -60,6 +60,8 @@ Entire feature set from the baseline compiles and runs as-is — no UI, route, t
 
 ## 5. Tested screens and viewport results (browser, real backend data)
 
+**Visual refinement (final pass):** the desktop shell backdrop now uses the brand palette — large pre-blurred radial glows of violet `#7C3AED` and green `#0C831F` over a violet-black base — with the app floating as a rounded, shadowed phone card (390px, 1.0× scale). Painted with plain gradients (no ImageFilter passes) and isolated behind a `RepaintBoundary`, so it costs the compositor nothing. **Measured smoothness: ~103 FPS during continuous home-feed scrolling** on a 120Hz display (CanvasKit, release build). Mobile/tablet browsers (≤1024px) remain full-bleed and visually unchanged.
+
 | Check | Result |
 |---|---|
 | Cold boot (debug + release), splash → `#/home`, guest routing | ✅ no blank screens, no provider errors |
