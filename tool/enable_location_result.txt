@@ -1,0 +1,6 @@
+﻿broker restart at 09/21/2026 16:43:57
+09/21/2026 16:43:58 restarted SensorService
+09/21/2026 16:43:58 restarted lfsvc
+lfsvc: Running
+SensorService: Running
+done
