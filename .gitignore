@@ -63,3 +63,4 @@ android/*.jks
 
 # FVM Version Cache
 .fvm/
+gui-test-screenshots/

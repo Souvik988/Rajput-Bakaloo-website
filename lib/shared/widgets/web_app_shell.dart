@@ -64,6 +64,10 @@ class WebAppShell extends StatelessWidget {
           ),
           child: Stack(
             fit: StackFit.expand,
+            // This shell builds ABOVE MaterialApp, where no Directionality
+            // exists yet. The default AlignmentDirectional.topStart would
+            // need one and red-screen every debug run at desktop width.
+            alignment: Alignment.topLeft,
             children: <Widget>[
               // Brand glow — violet, upper-left.
               const DecoratedBox(

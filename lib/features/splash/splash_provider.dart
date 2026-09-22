@@ -48,6 +48,13 @@ class SplashController extends _$SplashController {
       // start — matching the original behavior there.
       final pendingStartupLocation =
           ref.read(pendingStartupLocationProvider.notifier).take();
+      // WEB PORT: the one-shot splash detour must never fire on THIS
+      // navigation. When the browser opens the bare root URL ("/"),
+      // go_router boots straight to initialLocation (/splash) without
+      // evaluating "/", so the detour's first pass never ran and its guard
+      // is still false — letting it fire here would bounce this very
+      // restore back to the splash forever (the reported "stuck on splash").
+      ref.read(startupRestoreRedirectDoneProvider.notifier).markDone();
       final postRestoreDestination = pendingStartupLocation ?? RouteNames.home;
 
       if (!context.mounted) {

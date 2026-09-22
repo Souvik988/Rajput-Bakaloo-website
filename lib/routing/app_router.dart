@@ -133,6 +133,16 @@ GoRouter appRouter(Ref ref) {
       return null;
     },
     routes: <RouteBase>[
+      // WEB PORT: the site root has no screen of its own, but every visitor
+      // lands here. The splash's session restore navigates back to the
+      // remembered entry URL — without this route that is a location no
+      // route matches, the navigation fails silently (no onException is
+      // configured), and the app stays on the splash forever.
+      GoRoute(
+        path: '/',
+        redirect: (BuildContext context, GoRouterState state) =>
+            RouteNames.home,
+      ),
       GoRoute(
         path: RouteNames.splash,
         builder: (BuildContext context, GoRouterState state) {
