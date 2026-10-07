@@ -9,11 +9,11 @@ import 'package:flutter/material.dart';
 /// across a 1920px window (which makes ScreenUtil scale text and layout far
 /// past what the fixed-height components budget for).
 ///
-/// The backdrop uses the brand palette (violet `#7C3AED`, green `#0C831F`)
-/// as large pre-blurred radial glows over a violet-black base: the soft
-/// "blurry brand color" look, painted with plain gradients so it costs the
-/// compositor nothing (no ImageFilter passes) and scrolling inside the app
-/// never re-paints it (RepaintBoundary below).
+/// The backdrop keeps the brand palette but stays light: a whitish
+/// lavender-tinted base with large pre-blurred radial washes of violet
+/// `#7C3AED` and green `#0C831F` at low opacity. Painted with plain
+/// gradients so it costs the compositor nothing (no ImageFilter passes)
+/// and scrolling inside the app never re-paints it (RepaintBoundary below).
 ///
 /// The constraint only rewrites the surface Size; routing, overlays,
 /// dialogs, snackbars and the ProviderScope all stay exactly as they were —
@@ -53,13 +53,13 @@ class WebAppShell extends StatelessWidget {
         final BorderRadius cardRadius = BorderRadius.circular(20);
 
         return Container(
-          // Violet-black base, subtly graded so the backdrop feels deep
+          // Whitish lavender base, subtly graded so the backdrop feels airy
           // rather than flat.
           decoration: const BoxDecoration(
             gradient: LinearGradient(
               begin: Alignment.topLeft,
               end: Alignment.bottomRight,
-              colors: <Color>[Color(0xFF16101F), Color(0xFF0C0B12)],
+              colors: <Color>[Color(0xFFF8F7FB), Color(0xFFECEAF4)],
             ),
           ),
           child: Stack(
@@ -69,33 +69,33 @@ class WebAppShell extends StatelessWidget {
             // need one and red-screen every debug run at desktop width.
             alignment: Alignment.topLeft,
             children: <Widget>[
-              // Brand glow — violet, upper-left.
+              // Brand wash — violet, upper-left.
               const DecoratedBox(
                 decoration: BoxDecoration(
                   gradient: RadialGradient(
                     center: Alignment(-0.55, -0.65),
                     radius: 0.85,
-                    colors: <Color>[Color(0x597C3AED), Color(0x007C3AED)],
+                    colors: <Color>[Color(0x337C3AED), Color(0x007C3AED)],
                   ),
                 ),
               ),
-              // Brand glow — green, lower-right.
+              // Brand wash — green, lower-right.
               const DecoratedBox(
                 decoration: BoxDecoration(
                   gradient: RadialGradient(
                     center: Alignment(0.65, 0.75),
                     radius: 0.75,
-                    colors: <Color>[Color(0x400C831F), Color(0x000C831F)],
+                    colors: <Color>[Color(0x260C831F), Color(0x000C831F)],
                   ),
                 ),
               ),
-              // Brand glow — faint violet echo, lower-left, for balance.
+              // Brand wash — faint violet echo, lower-left, for balance.
               const DecoratedBox(
                 decoration: BoxDecoration(
                   gradient: RadialGradient(
                     center: Alignment(-0.7, 0.85),
                     radius: 0.5,
-                    colors: <Color>[Color(0x2E7C3AED), Color(0x007C3AED)],
+                    colors: <Color>[Color(0x1A7C3AED), Color(0x007C3AED)],
                   ),
                 ),
               ),
@@ -105,14 +105,17 @@ class WebAppShell extends StatelessWidget {
                   height: shellHeight,
                   decoration: BoxDecoration(
                     borderRadius: cardRadius,
+                    // Hairline edge so the white app card still reads
+                    // against the whitish backdrop.
+                    border: Border.all(color: const Color(0x14000000)),
                     boxShadow: const <BoxShadow>[
                       BoxShadow(
-                        color: Color(0x99000000),
+                        color: Color(0x29241B3A),
                         blurRadius: 48,
                         offset: Offset(0, 14),
                       ),
                       BoxShadow(
-                        color: Color(0x3D000000),
+                        color: Color(0x1A241B3A),
                         blurRadius: 12,
                         offset: Offset(0, 3),
                       ),
